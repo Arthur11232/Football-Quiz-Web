@@ -54,7 +54,7 @@ We do not guarantee that all questions, answers, statistics, or explanations wil
 
 ## 8. Advertising and Third-Party Services
 
-Football Quiz may display ads through Google AdMob and may use Google/Firebase services for authentication, analytics, messaging, storage, and cloud data.
+Football Quiz may display ads through Google AdMob and may use Google/Firebase services for authentication, analytics, messaging, and cloud data.
 
 Third-party services are governed by their own terms and privacy policies. We are not responsible for third-party services, content, policies, or practices.
 
@@ -68,17 +68,21 @@ You are responsible for any data charges, roaming charges, carrier fees, or othe
 
 Your use of the app is also governed by our Privacy Policy. Please read it carefully to understand how information is collected, used, stored, and deleted.
 
-Privacy Policy: [URL to be added]
+Privacy Policy: https://github.com/Arthur11232/Football-Quiz-Web/blob/main/privacy_policy.md
 
 ## 11. Data Deletion
 
-You may request deletion of your Football Quiz account data and cloud progress by contacting:
+If you are signed in, you can request deletion of your Football Quiz account data and cloud progress from the Profile screen inside the app.
+
+The in-app deletion option removes the Firestore progress data associated with your app account, removes local game progress and locally stored custom profile photo data from the app, signs you out, and attempts to delete the Firebase Authentication app account record. In some cases, Firebase Authentication may require a recent sign-in before the app account record can be deleted.
+
+You may also request deletion by contacting:
 
 arthuralexandryan@gmail.com
 
 Please include the email address used to sign in to the app so we can locate the correct account.
 
-Deleting cloud account data does not automatically delete local data stored on your device. You can remove local data by deleting the app, clearing app data in your device settings, or using an in-app delete/reset feature if available.
+If you request deletion by email, we can delete the app data we control in cloud services, but we cannot remotely delete data that exists only on your device. You can remove local data by using the in-app deletion option, deleting the app, or clearing app data in your device settings.
 
 ## 12. No Warranty
 

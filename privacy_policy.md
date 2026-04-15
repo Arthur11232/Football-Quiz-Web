@@ -17,6 +17,8 @@ If you choose to sign in with Google, we may collect and store the following inf
 - Your Firebase Authentication user ID.
 - Your game progress, including scores, answered question counts, category progress, and last synchronization time.
 
+If you choose a custom profile photo inside the app, the image is stored locally on your device and the app stores a local file path so it can display the image again. We do not upload custom profile photos to our cloud services.
+
 The app may also process technical information through third-party services, such as:
 
 - Device information.
@@ -44,7 +46,7 @@ When you sign in with Google, your progress may be uploaded to Firebase Cloud Fi
 
 Public quiz questions are stored separately in Firestore in the `questions` collection. These public questions are not personal data and are not linked to your account.
 
-Local data stored on your device may remain there until you delete the app, clear the app data, or use an in-app reset/delete feature if available.
+Local data stored on your device may remain there until you delete the app, clear the app data, or use an in-app reset/delete feature. If you choose a custom profile photo, it is stored only in the app's local storage on your device.
 
 ## 4. Third-Party Services
 
@@ -55,10 +57,9 @@ Football Quiz uses third-party services that may collect or process information 
 - Firebase Cloud Firestore: https://firebase.google.com/support/privacy
 - Firebase Analytics: https://firebase.google.com/support/privacy
 - Firebase Cloud Messaging: https://firebase.google.com/support/privacy
-- Firebase Storage: https://firebase.google.com/support/privacy
 - Google AdMob: https://policies.google.com/technologies/ads
 
-These third-party services may process data for authentication, cloud storage, analytics, notifications, advertising, fraud prevention, security, and service improvement.
+These third-party services may process data for authentication, cloud progress synchronization, analytics, notifications, advertising, fraud prevention, security, and service improvement.
 
 ## 5. Advertising
 
@@ -93,9 +94,13 @@ Some data processed by third-party services may be retained according to those p
 
 ## 9. Data Deletion Requests
 
-You may request deletion of your Football Quiz account data and cloud progress at any time.
+You may delete your Football Quiz account data and cloud progress at any time.
 
-To request deletion, contact us at:
+If you are signed in, you can use the in-app deletion option in the Profile screen. This deletes the Firestore progress data associated with your app account, removes local game progress and locally stored custom profile photo data from the app, signs you out, and attempts to delete the Firebase Authentication app account record.
+
+In some cases, Firebase Authentication may require a recent sign-in before the app account record can be deleted. If this happens, you can sign in again and repeat the deletion process, or contact us for help.
+
+You can also request deletion by contacting us at:
 
 arthuralexandryan@gmail.com
 
@@ -105,7 +110,7 @@ After receiving a valid request, we will delete the app data we control, includi
 
 We aim to respond to deletion requests without undue delay and within 30 days, unless a longer period is permitted by applicable law.
 
-Data stored locally on your device can be removed by deleting the app, clearing the app data from your device settings, or using an in-app delete/reset feature if available.
+Data stored locally on your device can be removed by using the in-app deletion option, deleting the app, or clearing the app data from your device settings. If you contact us by email, we cannot remotely delete data that exists only on your device.
 
 ## 10. Your Privacy Rights
 
