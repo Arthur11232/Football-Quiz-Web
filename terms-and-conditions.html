@@ -3,31 +3,188 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Terms and Conditions</title>
+  <title>Terms and Conditions - Football Quiz</title>
   <style>
-    body { font-family: Arial, sans-serif; line-height: 1.6; max-width: 900px; margin: 40px auto; padding: 0 20px; color: #222; }
-    h1, h2 { color: #111; }
+    :root {
+      color-scheme: light;
+      --bg: #f6f1e8;
+      --paper: #fffdf8;
+      --ink: #1c1b18;
+      --muted: #6b6458;
+      --accent: #0f5d4f;
+      --line: #dfd2bd;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at top right, rgba(15, 93, 79, 0.14), transparent 32rem),
+        linear-gradient(135deg, #f6f1e8 0%, #efe2cd 100%);
+      color: var(--ink);
+      font-family: Georgia, "Times New Roman", serif;
+      line-height: 1.65;
+    }
+
+    main {
+      width: min(920px, calc(100% - 32px));
+      margin: 32px auto;
+      padding: clamp(24px, 5vw, 56px);
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      box-shadow: 0 24px 80px rgba(74, 55, 30, 0.14);
+    }
+
+    h1, h2 {
+      line-height: 1.15;
+      color: var(--ink);
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      letter-spacing: -0.045em;
+    }
+
+    h2 {
+      margin-top: 2.1rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--line);
+      font-size: 1.35rem;
+    }
+
+    p, li {
+      font-size: 1rem;
+    }
+
+    a {
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    ul {
+      padding-left: 1.25rem;
+    }
+
+    .meta {
+      margin: 0 0 2rem;
+      color: var(--muted);
+      font-size: 0.98rem;
+    }
+
+    .notice {
+      padding: 1rem 1.15rem;
+      border-left: 4px solid var(--accent);
+      background: #eef6f1;
+      border-radius: 0 14px 14px 0;
+    }
+
+    .nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 2.5rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--line);
+    }
+
+    .nav a {
+      display: inline-flex;
+      padding: 0.65rem 0.9rem;
+      border: 1px solid var(--accent);
+      border-radius: 999px;
+      text-decoration: none;
+    }
   </style>
 </head>
 <body>
-  <h1>Terms and Conditions</h1>
-  <p>Last updated: April 15, 2026</p>
+  <main>
+    <h1>Terms and Conditions for Football Quiz</h1>
+    <p class="meta">Last updated: April 15, 2026</p>
 
-  <p>By using Football Quiz, you agree to the following terms.</p>
+    <p>These Terms and Conditions ("Terms") govern your use of the Football Quiz mobile application developed and operated by Artur Aleksandryan ("we", "us", "our", or "Developer").</p>
 
-  <h2>Usage</h2>
-  <p>This app is provided for entertainment purposes only.</p>
+    <p class="notice">By downloading, installing, accessing, or using Football Quiz, you agree to these Terms. If you do not agree, please do not use the app.</p>
 
-  <h2>Intellectual Property</h2>
-  <p>All content in the app is owned or licensed appropriately.</p>
+    <h2>1. The App</h2>
+    <p>Football Quiz is a free quiz game about football. The app provides football-related questions, categories, scores, progress tracking, optional Google Sign-In, cloud progress synchronization, and advertising-supported gameplay.</p>
+    <p>We may update, modify, suspend, or discontinue any part of the app at any time.</p>
 
-  <h2>Limitation of Liability</h2>
-  <p>We are not responsible for any damages arising from use of the app.</p>
+    <h2>2. Eligibility</h2>
+    <p>You must be at least 13 years old or the minimum age required by applicable law in your country to use the app. If you are under the age of majority, you should use the app only with permission from a parent or legal guardian.</p>
 
-  <h2>Changes</h2>
-  <p>We may update these Terms at any time. Continued use means acceptance.</p>
+    <h2>3. Accounts and Google Sign-In</h2>
+    <p>You can use parts of Football Quiz without signing in.</p>
+    <p>If you choose to sign in with Google, the app uses Firebase Authentication to identify your app account and synchronize your game progress. You are responsible for maintaining access to your Google account and for keeping your device secure.</p>
+    <p>We are not responsible for unauthorized access caused by your failure to secure your device, Google account, or authentication credentials.</p>
 
-  <h2>Contact</h2>
-  <p>If you have questions, contact us.</p>
+    <h2>4. Game Progress and Cloud Sync</h2>
+    <p>Football Quiz may store progress locally on your device. If you sign in, the app may upload and restore your game progress using Firebase Cloud Firestore.</p>
+    <p>Cloud sync is provided for convenience. We try to keep it reliable, but we cannot guarantee that progress synchronization will always be uninterrupted, error-free, or available on every device or network.</p>
+
+    <h2>5. Acceptable Use</h2>
+    <p>You agree not to:</p>
+    <ul>
+      <li>Copy, modify, reverse engineer, decompile, or attempt to extract the source code of the app, except where permitted by applicable law.</li>
+      <li>Use the app for unlawful, harmful, fraudulent, or abusive purposes.</li>
+      <li>Interfere with the app, its servers, Firebase services, advertising systems, or other users.</li>
+      <li>Attempt to gain unauthorized access to any account, system, database, or network.</li>
+      <li>Use automated tools, scripts, or bots to manipulate gameplay, ads, analytics, or app behavior.</li>
+    </ul>
+
+    <h2>6. Intellectual Property</h2>
+    <p>The app, including its design, code, structure, branding, and original content, is owned by Artur Aleksandryan or licensed to us and is protected by applicable intellectual property laws.</p>
+    <p>Football club names, logos, player names, competition names, and related references may be trademarks or intellectual property of their respective owners. Football Quiz is an independent quiz app and is not affiliated with, endorsed by, or sponsored by any football club, league, player, federation, or competition unless explicitly stated.</p>
+
+    <h2>7. Questions and Accuracy</h2>
+    <p>We work to keep quiz questions accurate and up to date. However, football records, squads, statistics, competitions, and historical interpretations can change or be corrected over time.</p>
+    <p>We do not guarantee that all questions, answers, statistics, or explanations will always be complete, current, or error-free.</p>
+
+    <h2>8. Advertising and Third-Party Services</h2>
+    <p>Football Quiz may display ads through Google AdMob and may use Google/Firebase services for authentication, analytics, messaging, storage, and cloud data.</p>
+    <p>Third-party services are governed by their own terms and privacy policies. We are not responsible for third-party services, content, policies, or practices.</p>
+
+    <h2>9. Internet Connection and Device Charges</h2>
+    <p>Some features require an internet connection, including signing in, cloud sync, fetching questions, analytics, messaging, and ads.</p>
+    <p>You are responsible for any data charges, roaming charges, carrier fees, or other costs that may apply when using the app.</p>
+
+    <h2>10. Privacy</h2>
+    <p>Your use of the app is also governed by our Privacy Policy. Please read it carefully to understand how information is collected, used, stored, and deleted.</p>
+    <p>Privacy Policy: <a href="privacy-policy.html">privacy-policy.html</a></p>
+
+    <h2>11. Data Deletion</h2>
+    <p>You may request deletion of your Football Quiz account data and cloud progress by contacting:</p>
+    <p><a href="mailto:arthuralexandryan@gmail.com">arthuralexandryan@gmail.com</a></p>
+    <p>Please include the email address used to sign in to the app so we can locate the correct account.</p>
+    <p>Deleting cloud account data does not automatically delete local data stored on your device. You can remove local data by deleting the app, clearing app data in your device settings, or using an in-app delete/reset feature if available.</p>
+
+    <h2>12. No Warranty</h2>
+    <p>Football Quiz is provided "as is" and "as available" without warranties of any kind, whether express or implied.</p>
+    <p>We do not guarantee that the app will always be available, secure, uninterrupted, error-free, compatible with every device, or free from defects.</p>
+
+    <h2>13. Limitation of Liability</h2>
+    <p>To the maximum extent permitted by applicable law, Artur Aleksandryan will not be liable for any indirect, incidental, special, consequential, or punitive damages, or for any loss of data, progress, profits, revenue, or goodwill arising from your use of or inability to use the app.</p>
+    <p>Nothing in these Terms limits rights that cannot be limited under applicable consumer protection laws.</p>
+
+    <h2>14. Updates and Changes</h2>
+    <p>We may update the app from time to time. Some features may require you to install the latest version.</p>
+    <p>We may also update these Terms. When we update them, we will change the "Last updated" date above. Continued use of the app after changes means that you accept the updated Terms.</p>
+
+    <h2>15. Termination</h2>
+    <p>We may suspend or terminate access to the app if you violate these Terms, misuse the app, interfere with services, or create legal or security risks.</p>
+    <p>You may stop using the app at any time by uninstalling it.</p>
+
+    <h2>16. Contact Us</h2>
+    <p>If you have questions or suggestions about these Terms, contact us at:</p>
+    <p><a href="mailto:arthuralexandryan@gmail.com">arthuralexandryan@gmail.com</a></p>
+
+    <nav class="nav" aria-label="Related documents">
+      <a href="privacy-policy.html">Privacy Policy</a>
+    </nav>
+  </main>
 </body>
 </html>

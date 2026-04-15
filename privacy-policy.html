@@ -3,31 +3,234 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Privacy Policy</title>
+  <title>Privacy Policy - Football Quiz</title>
   <style>
-    body { font-family: Arial, sans-serif; line-height: 1.6; max-width: 900px; margin: 40px auto; padding: 0 20px; color: #222; }
-    h1, h2 { color: #111; }
+    :root {
+      color-scheme: light;
+      --bg: #f6f1e8;
+      --paper: #fffdf8;
+      --ink: #1c1b18;
+      --muted: #6b6458;
+      --accent: #0f5d4f;
+      --line: #dfd2bd;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at top left, rgba(15, 93, 79, 0.14), transparent 32rem),
+        linear-gradient(135deg, #f6f1e8 0%, #efe2cd 100%);
+      color: var(--ink);
+      font-family: Georgia, "Times New Roman", serif;
+      line-height: 1.65;
+    }
+
+    main {
+      width: min(920px, calc(100% - 32px));
+      margin: 32px auto;
+      padding: clamp(24px, 5vw, 56px);
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      box-shadow: 0 24px 80px rgba(74, 55, 30, 0.14);
+    }
+
+    h1, h2 {
+      line-height: 1.15;
+      color: var(--ink);
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      letter-spacing: -0.045em;
+    }
+
+    h2 {
+      margin-top: 2.1rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--line);
+      font-size: 1.35rem;
+    }
+
+    p, li {
+      font-size: 1rem;
+    }
+
+    a {
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    ul {
+      padding-left: 1.25rem;
+    }
+
+    code {
+      padding: 0.12rem 0.32rem;
+      border-radius: 0.35rem;
+      background: #efe6d6;
+      font-family: "SFMono-Regular", Consolas, monospace;
+      font-size: 0.92em;
+    }
+
+    .meta {
+      margin: 0 0 2rem;
+      color: var(--muted);
+      font-size: 0.98rem;
+    }
+
+    .notice {
+      padding: 1rem 1.15rem;
+      border-left: 4px solid var(--accent);
+      background: #eef6f1;
+      border-radius: 0 14px 14px 0;
+    }
+
+    .nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 2.5rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--line);
+    }
+
+    .nav a {
+      display: inline-flex;
+      padding: 0.65rem 0.9rem;
+      border: 1px solid var(--accent);
+      border-radius: 999px;
+      text-decoration: none;
+    }
   </style>
 </head>
 <body>
-  <h1>Privacy Policy</h1>
-  <p>Last updated: April 15, 2026</p>
+  <main>
+    <h1>Privacy Policy for Football Quiz</h1>
+    <p class="meta">Last updated: April 15, 2026</p>
 
-  <p>This Privacy Policy explains how Football Quiz handles user information.</p>
+    <p>Football Quiz is a free mobile application developed and operated by Artur Aleksandryan ("we", "us", "our", or "Developer"). This Privacy Policy explains what information the app collects, how it is used, how it is stored, and how you can request deletion of your data.</p>
 
-  <h2>Information We Collect</h2>
-  <p>Football Quiz does not collect personal information directly from users.</p>
+    <p class="notice">If you do not agree with this Privacy Policy, please do not use the app.</p>
 
-  <h2>Third-Party Services</h2>
-  <p>The app may use third-party services such as analytics, advertising, or platform services. These services may collect information according to their own privacy policies.</p>
+    <h2>1. Information We Collect</h2>
+    <p>Football Quiz can be used without signing in. In guest mode, your game progress is stored locally on your device.</p>
+    <p>If you choose to sign in with Google, we may collect and store the following information:</p>
+    <ul>
+      <li>Your Google account display name.</li>
+      <li>Your Google account email address.</li>
+      <li>Your Firebase Authentication user ID.</li>
+      <li>Your game progress, including scores, answered question counts, category progress, and last synchronization time.</li>
+    </ul>
+    <p>The app may also process technical information through third-party services, such as:</p>
+    <ul>
+      <li>Device information.</li>
+      <li>App usage and diagnostics.</li>
+      <li>Advertising identifiers or related advertising data, where applicable.</li>
+      <li>Approximate technical data such as IP address, operating system version, app version, and timestamps.</li>
+    </ul>
 
-  <h2>Children's Privacy</h2>
-  <p>We do not knowingly collect personal information from children.</p>
+    <h2>2. How We Use Information</h2>
+    <p>We use the information described above to:</p>
+    <ul>
+      <li>Provide the app and its quiz functionality.</li>
+      <li>Save and restore your game progress.</li>
+      <li>Synchronize your progress between devices when you are signed in.</li>
+      <li>Display advertising.</li>
+      <li>Understand app usage and improve the app.</li>
+      <li>Detect, prevent, and troubleshoot technical issues.</li>
+      <li>Respond to support, privacy, and data deletion requests.</li>
+    </ul>
 
-  <h2>Changes to This Policy</h2>
-  <p>We may update this Privacy Policy from time to time. Changes will be posted on this page.</p>
+    <h2>3. Cloud Sync and Local Storage</h2>
+    <p>When you are not signed in, your progress is stored locally on your device.</p>
+    <p>When you sign in with Google, your progress may be uploaded to Firebase Cloud Firestore under a user-specific document, such as <code>users/{uid}</code>. This allows the app to restore your progress if you reinstall the app or use another device.</p>
+    <p>Public quiz questions are stored separately in Firestore in the <code>questions</code> collection. These public questions are not personal data and are not linked to your account.</p>
+    <p>Local data stored on your device may remain there until you delete the app, clear the app data, or use an in-app reset/delete feature if available.</p>
 
-  <h2>Contact</h2>
-  <p>If you have questions about this Privacy Policy, please contact us.</p>
+    <h2>4. Third-Party Services</h2>
+    <p>Football Quiz uses third-party services that may collect or process information according to their own privacy policies. These services may include:</p>
+    <ul>
+      <li>Google Play Services: <a href="https://policies.google.com/privacy">https://policies.google.com/privacy</a></li>
+      <li>Firebase Authentication: <a href="https://firebase.google.com/support/privacy">https://firebase.google.com/support/privacy</a></li>
+      <li>Firebase Cloud Firestore: <a href="https://firebase.google.com/support/privacy">https://firebase.google.com/support/privacy</a></li>
+      <li>Firebase Analytics: <a href="https://firebase.google.com/support/privacy">https://firebase.google.com/support/privacy</a></li>
+      <li>Firebase Cloud Messaging: <a href="https://firebase.google.com/support/privacy">https://firebase.google.com/support/privacy</a></li>
+      <li>Firebase Storage: <a href="https://firebase.google.com/support/privacy">https://firebase.google.com/support/privacy</a></li>
+      <li>Google AdMob: <a href="https://policies.google.com/technologies/ads">https://policies.google.com/technologies/ads</a></li>
+    </ul>
+    <p>These third-party services may process data for authentication, cloud storage, analytics, notifications, advertising, fraud prevention, security, and service improvement.</p>
+
+    <h2>5. Advertising</h2>
+    <p>Football Quiz may display ads through Google AdMob. AdMob may use advertising identifiers and other information to show ads, measure ad performance, prevent fraud, and improve advertising services.</p>
+    <p>Depending on your location and device settings, you may be asked to provide consent for personalized ads or related data processing. You can also manage ad personalization through your Google account or device settings.</p>
+
+    <h2>6. Legal Bases for Processing</h2>
+    <p>If you are located in the European Economic Area, the United Kingdom, Switzerland, or another region with similar privacy laws, we process personal data only where we have a legal basis, such as:</p>
+    <ul>
+      <li>Your consent, where required, for example for certain advertising or analytics processing.</li>
+      <li>Performance of a service you request, such as signing in and synchronizing progress.</li>
+      <li>Legitimate interests, such as app security, fraud prevention, debugging, and improving the app.</li>
+      <li>Compliance with legal obligations.</li>
+    </ul>
+
+    <h2>7. Data Sharing</h2>
+    <p>We do not sell your personal data.</p>
+    <p>We may share or allow processing of data by third-party service providers listed in this Privacy Policy, only as needed to operate, secure, analyze, improve, or monetize the app.</p>
+    <p>We may disclose information if required by law, regulation, legal process, or a valid governmental request.</p>
+
+    <h2>8. Data Retention</h2>
+    <p>We keep cloud progress and account-related app data for as long as needed to provide the app functionality, unless you request deletion or we no longer need the data.</p>
+    <p>If you request deletion, we will delete or anonymize the personal data we control, including cloud progress associated with your app account, unless we are required to keep certain information for legal, security, or fraud-prevention reasons.</p>
+    <p>Some data processed by third-party services may be retained according to those providers' own retention policies.</p>
+
+    <h2>9. Data Deletion Requests</h2>
+    <p>You may request deletion of your Football Quiz account data and cloud progress at any time.</p>
+    <p>To request deletion, contact us at:</p>
+    <p><a href="mailto:arthuralexandryan@gmail.com">arthuralexandryan@gmail.com</a></p>
+    <p>Please include the email address used to sign in to Football Quiz. If possible, also include your Firebase user ID or a screenshot of your profile screen. This helps us locate the correct account.</p>
+    <p>After receiving a valid request, we will delete the app data we control, including the Firestore user progress document associated with your account. We will also delete or disable the Firebase Authentication app account record where technically applicable. This does not delete your Google account itself, which is managed by Google.</p>
+    <p>We aim to respond to deletion requests without undue delay and within 30 days, unless a longer period is permitted by applicable law.</p>
+    <p>Data stored locally on your device can be removed by deleting the app, clearing the app data from your device settings, or using an in-app delete/reset feature if available.</p>
+
+    <h2>10. Your Privacy Rights</h2>
+    <p>Depending on your location, you may have rights to:</p>
+    <ul>
+      <li>Request access to personal data we hold about you.</li>
+      <li>Request correction of inaccurate data.</li>
+      <li>Request deletion of your data.</li>
+      <li>Object to or restrict certain processing.</li>
+      <li>Withdraw consent where processing is based on consent.</li>
+      <li>Lodge a complaint with your local data protection authority.</li>
+    </ul>
+    <p>To exercise these rights, contact us at:</p>
+    <p><a href="mailto:arthuralexandryan@gmail.com">arthuralexandryan@gmail.com</a></p>
+
+    <h2>11. Children's Privacy</h2>
+    <p>Football Quiz is not directed to children under 13 years old or the minimum age required by applicable law in your country.</p>
+    <p>We do not knowingly collect personal information from children below the required age. If you believe that a child has provided personal information through the app, please contact us at <a href="mailto:arthuralexandryan@gmail.com">arthuralexandryan@gmail.com</a> and we will take appropriate steps to delete the information.</p>
+
+    <h2>12. Security</h2>
+    <p>We use commercially reasonable measures to protect the information we process. However, no method of transmission over the internet or electronic storage is completely secure. We cannot guarantee absolute security.</p>
+
+    <h2>13. International Processing</h2>
+    <p>The services used by Football Quiz, including Firebase and Google services, may process data on servers located in different countries. By using the app, you understand that your information may be processed outside your country of residence, subject to applicable legal safeguards.</p>
+
+    <h2>14. Changes to This Privacy Policy</h2>
+    <p>We may update this Privacy Policy from time to time. When we update it, we will change the "Last updated" date above. Continued use of the app after changes means that you accept the updated Privacy Policy.</p>
+
+    <h2>15. Contact Us</h2>
+    <p>If you have any questions, suggestions, or requests about this Privacy Policy, contact us at:</p>
+    <p><a href="mailto:arthuralexandryan@gmail.com">arthuralexandryan@gmail.com</a></p>
+
+    <nav class="nav" aria-label="Related documents">
+      <a href="terms-and-conditions.html">Terms and Conditions</a>
+    </nav>
+  </main>
 </body>
 </html>
