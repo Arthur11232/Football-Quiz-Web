@@ -1,6 +1,6 @@
 # Privacy Policy for Football Quiz
 
-Last updated: April 15, 2026
+Last updated: April 18, 2026
 
 Football Quiz is a free mobile application developed and operated by Artur Aleksandryan ("we", "us", "our", or "Developer"). This Privacy Policy explains what information the app collects, how it is used, how it is stored, and how you can request deletion of your data.
 
@@ -23,7 +23,6 @@ The app may also process technical information through third-party services, suc
 
 - Device information.
 - App usage and diagnostics.
-- Advertising identifiers or related advertising data, where applicable.
 - Approximate technical data such as IP address, operating system version, app version, and timestamps.
 
 ## 2. How We Use Information
@@ -33,7 +32,6 @@ We use the information described above to:
 - Provide the app and its quiz functionality.
 - Save and restore your game progress.
 - Synchronize your progress between devices when you are signed in.
-- Display advertising.
 - Understand app usage and improve the app.
 - Detect, prevent, and troubleshoot technical issues.
 - Respond to support, privacy, and data deletion requests.
@@ -56,22 +54,20 @@ Football Quiz uses third-party services that may collect or process information 
 - Firebase Authentication: https://firebase.google.com/support/privacy
 - Firebase Cloud Firestore: https://firebase.google.com/support/privacy
 - Firebase Analytics: https://firebase.google.com/support/privacy
-- Firebase Cloud Messaging: https://firebase.google.com/support/privacy
-- Google AdMob: https://policies.google.com/technologies/ads
 
-These third-party services may process data for authentication, cloud progress synchronization, analytics, notifications, advertising, fraud prevention, security, and service improvement.
+These third-party services may process data for authentication, cloud progress synchronization, analytics, fraud prevention, security, and service improvement.
 
 ## 5. Advertising
 
-Football Quiz may display ads through Google AdMob. AdMob may use advertising identifiers and other information to show ads, measure ad performance, prevent fraud, and improve advertising services.
+Football Quiz does not display advertising in version 1.0.0 and does not include Google AdMob in this release.
 
-Depending on your location and device settings, you may be asked to provide consent for personalized ads or related data processing. You can also manage ad personalization through your Google account or device settings.
+If advertising is added in a future version, this Privacy Policy will be updated before ads are enabled in the app.
 
 ## 6. Legal Bases for Processing
 
 If you are located in the European Economic Area, the United Kingdom, Switzerland, or another region with similar privacy laws, we process personal data only where we have a legal basis, such as:
 
-- Your consent, where required, for example for certain advertising or analytics processing.
+- Your consent, where required, for example for certain analytics processing.
 - Performance of a service you request, such as signing in and synchronizing progress.
 - Legitimate interests, such as app security, fraud prevention, debugging, and improving the app.
 - Compliance with legal obligations.
@@ -80,7 +76,7 @@ If you are located in the European Economic Area, the United Kingdom, Switzerlan
 
 We do not sell your personal data.
 
-We may share or allow processing of data by third-party service providers listed in this Privacy Policy, only as needed to operate, secure, analyze, improve, or monetize the app.
+We may share or allow processing of data by third-party service providers listed in this Privacy Policy, only as needed to operate, secure, analyze, and improve the app.
 
 We may disclose information if required by law, regulation, legal process, or a valid governmental request.
 
