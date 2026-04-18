@@ -59,7 +59,7 @@ These third-party services may process data for authentication, cloud progress s
 
 ## 5. Advertising
 
-Football Quiz does not display advertising in version 1.0.0 and does not include Google AdMob in this release.
+Football Quiz does not display advertising in version 1.0.0. The app may contain disabled advertising integration code for future use, but ads are not shown and advertising requests are not made while advertising is disabled.
 
 If advertising is added in a future version, this Privacy Policy will be updated before ads are enabled in the app.
 
