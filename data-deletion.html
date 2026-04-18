@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Data Deletion - Football Quiz</title>
+  <style>
+    :root { color-scheme: light; --bg: #f6f1e8; --paper: #fffdf8; --ink: #1c1b18; --muted: #6b6458; --accent: #0f5d4f; --line: #dfd2bd; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: radial-gradient(circle at top left, rgba(15, 93, 79, 0.14), transparent 32rem), linear-gradient(135deg, #f6f1e8 0%, #efe2cd 100%); color: var(--ink); font-family: Georgia, "Times New Roman", serif; line-height: 1.65; }
+    main { width: min(920px, calc(100% - 32px)); margin: 32px auto; padding: clamp(24px, 5vw, 56px); background: var(--paper); border: 1px solid var(--line); border-radius: 28px; box-shadow: 0 24px 80px rgba(74, 55, 30, 0.14); }
+    h1, h2 { line-height: 1.15; color: var(--ink); }
+    h1 { margin: 0 0 8px; font-size: clamp(2.2rem, 5vw, 4rem); letter-spacing: -0.045em; }
+    h2 { margin-top: 2.1rem; padding-top: 1rem; border-top: 1px solid var(--line); font-size: 1.35rem; }
+    p, li { font-size: 1rem; }
+    a { color: var(--accent); font-weight: 700; }
+    .meta { margin: 0 0 2rem; color: var(--muted); font-size: 0.98rem; }
+    .notice { padding: 1rem 1.15rem; border-left: 4px solid var(--accent); background: #eef6f1; border-radius: 0 14px 14px 0; }
+    .nav { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 2.5rem; padding-top: 1.25rem; border-top: 1px solid var(--line); }
+    .nav a { display: inline-flex; padding: 0.65rem 0.9rem; border: 1px solid var(--accent); border-radius: 999px; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Data Deletion for Football Quiz</h1>
+    <p class="meta">Last updated: April 18, 2026</p>
+    <p class="notice">Football Quiz lets users delete their app account data and cloud progress.</p>
+
+    <h2>Delete Data in the App</h2>
+    <p>If you are signed in, open the Profile screen in Football Quiz and choose the delete data option.</p>
+    <p>This action deletes the Firestore progress data associated with your Football Quiz app account, removes local game progress from the app, removes locally stored custom profile photo data, signs you out, and attempts to delete the Firebase Authentication app account record.</p>
+    <p>In some cases, Firebase Authentication may require a recent sign-in before the authentication account record can be deleted. If this happens, sign in again and repeat the deletion process, or contact us for help.</p>
+
+    <h2>Request Deletion by Email</h2>
+    <p>You can also request deletion by email: <a href="mailto:arthuralexandryan@gmail.com">arthuralexandryan@gmail.com</a>.</p>
+    <p>Please include the email address used to sign in to Football Quiz. If possible, also include your Firebase user ID or a screenshot of your Profile screen. This helps us locate the correct account.</p>
+    <p>After receiving a valid request, we will delete the app data we control, including the Firestore user progress document associated with your account. We aim to respond without undue delay and within 30 days, unless a longer period is permitted by applicable law.</p>
+    <p>Deleting Football Quiz app data does not delete your Google account itself, which is managed by Google.</p>
+
+    <nav class="nav" aria-label="Related documents">
+      <a href="privacy-policy.html">Privacy Policy</a>
+      <a href="terms-and-conditions.html">Terms and Conditions</a>
+    </nav>
+  </main>
+</body>
+</html>
