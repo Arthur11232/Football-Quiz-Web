@@ -1,6 +1,6 @@
 # Terms and Conditions for Football Quiz
 
-Last updated: April 15, 2026
+Last updated: April 18, 2026
 
 These Terms and Conditions ("Terms") govern your use of the Football Quiz mobile application developed and operated by Artur Aleksandryan ("we", "us", "our", or "Developer").
 
@@ -8,7 +8,7 @@ By downloading, installing, accessing, or using Football Quiz, you agree to thes
 
 ## 1. The App
 
-Football Quiz is a free quiz game about football. The app provides football-related questions, categories, scores, progress tracking, optional Google Sign-In, cloud progress synchronization, and advertising-supported gameplay.
+Football Quiz is a free quiz game about football. The app provides football-related questions, categories, scores, progress tracking, optional Google Sign-In, and cloud progress synchronization.
 
 We may update, modify, suspend, or discontinue any part of the app at any time.
 
@@ -36,9 +36,9 @@ You agree not to:
 
 - Copy, modify, reverse engineer, decompile, or attempt to extract the source code of the app, except where permitted by applicable law.
 - Use the app for unlawful, harmful, fraudulent, or abusive purposes.
-- Interfere with the app, its servers, Firebase services, advertising systems, or other users.
+- Interfere with the app, its servers, Firebase services, or other users.
 - Attempt to gain unauthorized access to any account, system, database, or network.
-- Use automated tools, scripts, or bots to manipulate gameplay, ads, analytics, or app behavior.
+- Use automated tools, scripts, or bots to manipulate gameplay, analytics, or app behavior.
 
 ## 6. Intellectual Property
 
@@ -52,15 +52,15 @@ We work to keep quiz questions accurate and up to date. However, football record
 
 We do not guarantee that all questions, answers, statistics, or explanations will always be complete, current, or error-free.
 
-## 8. Advertising and Third-Party Services
+## 8. Third-Party Services
 
-Football Quiz may display ads through Google AdMob and may use Google/Firebase services for authentication, analytics, messaging, and cloud data.
+Football Quiz version 1.0.0 does not display advertising. The app may use Google/Firebase services for authentication, analytics, and cloud data.
 
 Third-party services are governed by their own terms and privacy policies. We are not responsible for third-party services, content, policies, or practices.
 
 ## 9. Internet Connection and Device Charges
 
-Some features require an internet connection, including signing in, cloud sync, fetching questions, analytics, messaging, and ads.
+Some features require an internet connection, including signing in, cloud sync, fetching questions, and analytics.
 
 You are responsible for any data charges, roaming charges, carrier fees, or other costs that may apply when using the app.
 
