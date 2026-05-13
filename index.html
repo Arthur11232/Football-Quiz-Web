@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Football Quiz</title>
+  <meta name="description" content="Football Quiz is a football trivia game about players, clubs, tournaments, and cloud-synced progress.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="page">
+    <header class="topbar">
+      <a class="brand" href="/">
+        <img src="football_quiz_icon.png" alt="Football Quiz app icon">
+        <div class="brand-title">
+          <strong data-i18n="brand_name">Football Quiz</strong>
+          <span data-i18n="brand_sub">Official site</span>
+        </div>
+      </a>
+      <nav class="top-actions" aria-label="Quick links">
+        <a class="pill-link" href="#features" data-i18n="nav_features">Features</a>
+        <a class="pill-link" href="#documents" data-i18n="nav_policies">Policies</a>
+        <div class="lang-switcher">
+          <button class="lang-btn active" data-lang="en">🇺🇸 EN</button>
+          <button class="lang-btn" data-lang="ru">🇷🇺 RU</button>
+          <button class="lang-btn" data-lang="am">🇦🇲 AM</button>
+        </div>
+      </nav>
+    </header>
+
+    <section class="hero reveal">
+      <div class="hero-copy">
+        <div class="eyebrow" data-i18n="hero_eyebrow">Football trivia • Cloud sync • Google Play</div>
+        <h1 data-i18n="hero_h1">Play the football quiz that feels like match day.</h1>
+        <p class="lead" data-i18n="hero_lead">Football Quiz brings players, clubs, tournaments, and progress tracking into one clean mobile experience. Jump in as a guest, sign in with Google, and keep your quiz journey synced across devices.</p>
+
+        <div class="highlights" aria-label="Highlights">
+          <span data-i18n="highlight_players">Players</span>
+          <span data-i18n="highlight_clubs">Clubs</span>
+          <span data-i18n="highlight_tournaments">Tournaments</span>
+          <span data-i18n="highlight_sync">Cloud Sync</span>
+        </div>
+
+        <div class="cta-row">
+          <a class="button primary" href="https://play.google.com/store/apps/details?id=com.arthuralexandryan.footballquiz">
+            <svg viewBox="0 0 24 24" aria-hidden="true" fill="none">
+              <path d="M3.4 2.7L14.9 12L3.4 21.3c-.2-.3-.4-.8-.4-1.4V4.1c0-.6.2-1.1.4-1.4Z" fill="#00D26A"/>
+              <path d="M16.8 13.5L19.7 15.9c.9.7.9 1.9 0 2.5l-3.5 2-4.1-6.5 4.7-.4Z" fill="#FFB000"/>
+              <path d="M16.2 3.6l3.5 2c.9.6.9 1.8 0 2.5l-2.9 2.4-4.7-.4 4.1-6.5Z" fill="#00A3FF"/>
+              <path d="M12.1 10l4.7 3.5-4.7 3-8.7 4.8L14.9 12 3.4 2.7 12.1 10Z" fill="#FF4B55"/>
+            </svg>
+            <span data-i18n="btn_google_play">Google Play</span>
+          </a>
+          <a class="button secondary" href="#documents" data-i18n="btn_policies">Privacy, Terms & Data</a>
+        </div>
+
+        <p class="mini-note" data-i18n="hero_mini_note">Built for football fans who love quiz nights, club history, legendary players, and tournament trivia.</p>
+      </div>
+
+      <div class="hero-visual" aria-label="Football Quiz preview">
+        <div class="visual-top">
+          <div>
+            <strong data-i18n="visual_brand">Football Quiz</strong>
+            <span data-i18n="visual_sub">Players • Clubs • Cups</span>
+          </div>
+          <div class="qr-chip" data-i18n="visual_qr_chip">Scan to install</div>
+        </div>
+
+        <div class="phone-shell">
+          <div class="phone-screen">
+            <div>
+              <div class="phone-top">
+                <div class="phone-badge">
+                  <img src="football_quiz_icon.png" alt="">
+                  <span data-i18n="phone_badge_live">Live quiz mode</span>
+                </div>
+                <div class="phone-badge" data-i18n="phone_badge_sync">Cloud sync</div>
+              </div>
+
+              <div class="screen-copy">
+                <h2 id="mock-question" data-i18n="mock_q1">Who won the 2014 World Cup?</h2>
+                <p data-i18n="phone_p">Fast rounds, football history, and a clean interface that keeps the focus on the game.</p>
+              </div>
+
+              <div class="mock-answers" id="mock-answers" aria-hidden="true">
+                <div>Argentina</div>
+                <div style="border: 2px solid var(--gold); box-shadow: 0 0 20px hsla(35, 97%, 62%, 0.3)">Germany</div>
+                <div>Brazil</div>
+              </div>
+            </div>
+
+            <div class="screen-bottom">
+              <div class="stat-card">
+                <strong>Guest or Google</strong>
+                <span>Play instantly, then sync progress when you are ready.</span>
+              </div>
+              <div class="qr-card">
+                <img src="football_quiz_play_qr.png" alt="QR code for Football Quiz on Google Play">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reveal" id="features">
+      <h2 class="section-title" data-i18n="features_title">Built around football knowledge, not clutter.</h2>
+      <p class="section-copy" data-i18n="features_copy">The site now leads with the product itself: a football trivia app with progress, profile management, optional Google Sign-In, and cloud restore. Legal pages stay easy to reach, but they no longer dominate the experience.</p>
+
+      <div class="features">
+        <article class="feature-card">
+          <div class="icon">01</div>
+          <h3 data-i18n="feature_1_h">Real football quiz energy</h3>
+          <p data-i18n="feature_1_p">Questions are centered around players, clubs, tournaments, and classic football knowledge instead of generic trivia filler.</p>
+        </article>
+
+        <article class="feature-card">
+          <div class="icon">02</div>
+          <h3 data-i18n="feature_2_h">Play first, sign in later</h3>
+          <p data-i18n="feature_2_p">Users can jump in as guests, then connect their Google account whenever they want to restore and sync progress.</p>
+        </article>
+
+        <article class="feature-card">
+          <div class="icon">03</div>
+          <h3 data-i18n="feature_3_h">Clean support and trust layer</h3>
+          <p data-i18n="feature_3_p">Privacy Policy, Terms and Conditions, and Data Deletion are easy to find for users, reviewers, and store compliance.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="docs reveal" id="documents">
+      <h2 class="section-title" data-i18n="docs_title">Policies and support, all in one place.</h2>
+      <p class="section-copy" data-i18n="docs_copy">This section keeps the serious documents accessible without turning the whole site into a wall of legal text.</p>
+
+      <div class="docs-grid">
+        <article class="doc-card">
+          <h3 data-i18n="doc_1_h">Privacy Policy</h3>
+          <p data-i18n="doc_1_p">See what data the app collects, how cloud sync works, and how privacy requests are handled.</p>
+          <a href="privacy-policy.html" data-i18n="doc_1_link">Open Privacy Policy</a>
+        </article>
+
+        <article class="doc-card">
+          <h3 data-i18n="doc_2_h">Terms and Conditions</h3>
+          <p data-i18n="doc_2_p">Read the app terms, acceptable use rules, disclaimers, and service expectations.</p>
+          <a href="terms-and-conditions.html" data-i18n="doc_2_link">Open Terms and Conditions</a>
+        </article>
+
+        <article class="doc-card">
+          <h3 data-i18n="doc_3_h">Data Deletion</h3>
+          <p data-i18n="doc_3_p">Learn how signed-in users can remove cloud progress and app account data.</p>
+          <a href="data-deletion.html" data-i18n="doc_3_link">Open Data Deletion</a>
+        </article>
+      </div>
+    </section>
+
+    <footer class="footer-card reveal">
+      <p data-i18n="footer_text">Football Quiz is developed by Artur Aleksandryan. For support, privacy requests, or store review questions, contact <a href="mailto:arthuralexandryan@gmail.com">arthuralexandryan@gmail.com</a>.</p>
+      <div class="footer-links">
+        <a class="pill-link" href="https://play.google.com/store/apps/details?id=com.arthuralexandryan.footballquiz" data-i18n="footer_link_gp">Google Play</a>
+        <a class="pill-link" href="privacy-policy.html" data-i18n="footer_link_privacy">Privacy</a>
+        <a class="pill-link" href="terms-and-conditions.html" data-i18n="footer_link_terms">Terms</a>
+        <a class="pill-link" href="data-deletion.html" data-i18n="footer_link_deletion">Deletion</a>
+      </div>
+    </footer>
+  </div>
+
+  <script src="translations.js"></script>
+  <script src="main.js" defer></script>
+</body>
+</html>
