@@ -1,6 +1,13 @@
 // Multi-language Logic
 let currentLang = localStorage.getItem('football_quiz_lang') || 'en';
 
+function trackEvent(eventName, params = {}) {
+  // Use Firebase Analytics if available
+  if (typeof window.logFirebaseEvent === 'function') {
+    window.logFirebaseEvent(eventName, params);
+  }
+}
+
 function setLanguage(lang) {
   currentLang = lang;
   localStorage.setItem('football_quiz_lang', lang);
@@ -9,7 +16,6 @@ function setLanguage(lang) {
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
     if (translations[lang] && translations[lang][key]) {
-      // If it's the mock question, we handle it specially in updateMock
       if (key !== 'mock_q1' && key !== 'mock_q2' && key !== 'mock_q3') {
         el.textContent = translations[lang][key];
       }
@@ -21,8 +27,8 @@ function setLanguage(lang) {
     btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
   });
 
-  // Update mock immediately if it's visible
   updateMockContent();
+  trackEvent('change_language', { language: lang });
 }
 
 // Initial set
@@ -32,6 +38,20 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.lang-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       setLanguage(btn.getAttribute('data-lang'));
+    });
+  });
+
+  // Analytics for CTA clicks
+  document.querySelectorAll('.button.primary').forEach(btn => {
+    btn.addEventListener('click', () => {
+      trackEvent('click_google_play', { location: 'hero' });
+    });
+  });
+
+  document.querySelectorAll('.button.secondary, .pill-link').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const label = e.target.getAttribute('data-i18n') || e.target.textContent;
+      trackEvent('click_nav', { target: label });
     });
   });
 });
@@ -50,7 +70,7 @@ document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 // Interactive Phone Mockup
 const mockData = [
   { 
-    keys: { q: "mock_q1", a: ["Argentina", "Germany", "Brazil"] }, // Answers are names, usually don't need translation or are special
+    keys: { q: "mock_q1", a: ["Argentina", "Germany", "Brazil"] },
     correct: 1 
   },
   { 
@@ -81,9 +101,7 @@ function updateMockContent() {
 
 function updateMock() {
   if (!qEl || !aEl) return;
-  
   currentIdx = (currentIdx + 1) % mockData.length;
-  
   qEl.style.opacity = 0;
   aEl.style.opacity = 0;
 
