@@ -179,7 +179,12 @@ a { color: inherit; }
 
 .pill-link:hover,
 .button:hover {
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+}
+
+.pill-link:active,
+.button:active {
+  transform: translateY(0) scale(0.96);
 }
 
 .hero {
@@ -297,16 +302,32 @@ h1 {
 .button.primary::after {
   content: "";
   position: absolute;
-  top: 0; left: -100%;
-  width: 50%; height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  top: 0; left: -150%;
+  width: 80%; height: 100%;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(255,255,255,0.2) 20%,
+    rgba(255,255,255,0.6) 50%,
+    rgba(255,255,255,0.2) 80%,
+    transparent
+  );
   transform: skewX(-25deg);
   transition: none;
 }
 
 .button.primary:hover::after {
   left: 150%;
-  transition: left 0.6s var(--ease-out);
+  transition: left 0.8s var(--ease-out);
+}
+
+.button.primary svg {
+  filter: drop-shadow(0 0 2px rgba(0,0,0,0.2));
+  transition: transform 0.3s var(--ease-out), filter 0.3s var(--ease-out);
+}
+
+.button.primary:hover svg {
+  transform: scale(1.1) rotate(5deg);
+  filter: drop-shadow(0 0 8px rgba(252, 174, 64, 0.4));
 }
 
 .button.secondary {
