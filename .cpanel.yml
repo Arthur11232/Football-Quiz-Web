@@ -1,0 +1,14 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/ixvldavx/public_html/
+    - /bin/cp .htaccess $DEPLOYPATH
+    - /bin/cp index.html $DEPLOYPATH
+    - /bin/cp style.css $DEPLOYPATH
+    - /bin/cp main.js $DEPLOYPATH
+    - /bin/cp translations.js $DEPLOYPATH
+    - /bin/cp privacy-policy.html $DEPLOYPATH
+    - /bin/cp terms-and-conditions.html $DEPLOYPATH
+    - /bin/cp data-deletion.html $DEPLOYPATH
+    - /bin/cp football_quiz_icon.png $DEPLOYPATH
+    - /bin/cp football_quiz_play_qr.png $DEPLOYPATH
