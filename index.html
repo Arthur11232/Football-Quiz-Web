@@ -41,6 +41,7 @@
         </div>
       </a>
       <nav class="top-actions" aria-label="Quick links">
+        <a class="pill-link" href="#certificates" data-i18n="nav_certificates">Certificates</a>
         <a class="pill-link" href="#features" data-i18n="nav_features">Features</a>
         <a class="pill-link" href="#documents" data-i18n="nav_policies">Policies</a>
         <div class="lang-switcher">
@@ -54,6 +55,10 @@
     <section class="hero reveal">
       <div class="hero-copy">
         <div class="eyebrow" data-i18n="hero_eyebrow">Football trivia • Cloud sync • Google Play</div>
+        <a class="hero-update-badge" href="#certificates" aria-label="See achievement certificates">
+          <span data-i18n="hero_update_label">New in 2.1.0</span>
+          <strong data-i18n="hero_update_text">Achievement certificates</strong>
+        </a>
         <h1 data-i18n="hero_h1">Play the football quiz that feels like match day.</h1>
         <p class="lead" data-i18n="hero_lead">Football Quiz brings players, clubs, tournaments, and progress tracking into one clean mobile experience. Jump in as a guest, sign in with Google, and keep your quiz journey synced across devices.</p>
 
@@ -123,6 +128,94 @@
             </div>
           </div>
         </div>
+      </div>
+    </section>
+
+    <section class="achievement-news reveal" id="certificates" aria-labelledby="certificates-title">
+      <!-- Decorative floating particles -->
+      <div class="cert-particles" aria-hidden="true">
+        <span class="cert-particle"></span>
+        <span class="cert-particle"></span>
+        <span class="cert-particle"></span>
+        <span class="cert-particle"></span>
+        <span class="cert-particle"></span>
+      </div>
+
+      <div class="news-copy">
+        <div class="news-kicker" data-i18n="cert_news_kicker">New in Football Quiz</div>
+        <h2 id="certificates-title" data-i18n="cert_news_title">Achievement certificates are now part of the game.</h2>
+        <p data-i18n="cert_news_copy">Complete football stages, unlock a dedicated reward moment, and keep your certificates inside your profile. It is a new way to celebrate real progress in Football Quiz.</p>
+        <div class="news-actions">
+          <a class="button primary compact" href="https://play.google.com/store/apps/details?id=com.arthuralexandryan.footballquiz" data-i18n="cert_news_cta">Get the update on Google Play</a>
+          <span class="release-tag" data-i18n="cert_news_release">Available in version 2.1.0</span>
+        </div>
+      </div>
+
+      <div class="certificate-preview-card" aria-label="Achievement certificate preview">
+        <div class="cert-shimmer" aria-hidden="true"></div>
+        <div class="certificate-ribbon" data-i18n="cert_preview_badge">Example certificate</div>
+        <div class="certificate-border">
+          <div class="certificate-seal">
+            <span class="seal-text">FQ</span>
+            <div class="seal-ring" aria-hidden="true"></div>
+          </div>
+          <p class="certificate-label" data-i18n="cert_preview_label">Achievement unlocked</p>
+          <h3 data-i18n="cert_preview_title">France Stage Complete</h3>
+          <p data-i18n="cert_preview_text">Awarded for completing a football stage in Football Quiz.</p>
+
+          <div class="certificate-sample-details">
+            <div>
+              <span data-i18n="cert_sample_awarded_to">Awarded to</span>
+              <strong data-i18n="cert_sample_player">Football Fan</strong>
+            </div>
+            <div>
+              <span data-i18n="cert_sample_date_label">Issued</span>
+              <strong data-i18n="cert_sample_date">July 2026</strong>
+            </div>
+          </div>
+
+          <div class="certificate-sample-footer">
+            <span data-i18n="cert_sample_id">ID: FQ-TOP5-FRANCE</span>
+            <span data-i18n="cert_sample_signature">Signed by Artur Aleksandryan</span>
+          </div>
+        </div>
+        <div class="certificate-meta">
+          <span data-i18n="cert_preview_profile">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+            Saved in Profile
+          </span>
+          <span data-i18n="cert_preview_guest">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            Guest rewards supported
+          </span>
+        </div>
+      </div>
+
+      <div class="certificate-steps" aria-label="Certificate flow">
+        <article>
+          <div class="step-icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          </div>
+          <strong>01</strong>
+          <h3 data-i18n="cert_step_1_h">Complete a stage</h3>
+          <p data-i18n="cert_step_1_p">Finish France, Germany, UEFA, World Cup, Versus, or another supported challenge.</p>
+        </article>
+        <article>
+          <div class="step-icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+          </div>
+          <strong>02</strong>
+          <h3 data-i18n="cert_step_2_h">Unlock a reward</h3>
+          <p data-i18n="cert_step_2_p">A congratulations screen marks the moment and opens your certificate preview.</p>
+        </article>
+        <article>
+          <div class="step-icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
+          <strong>03</strong>
+          <h3 data-i18n="cert_step_3_h">Keep it in Profile</h3>
+          <p data-i18n="cert_step_3_p">Signed-in players can return to their certificates later from the profile screen.</p>
+        </article>
       </div>
     </section>
 
