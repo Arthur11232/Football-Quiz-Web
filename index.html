@@ -3,8 +3,20 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Football Quiz</title>
-  <meta name="description" content="Football Quiz is a football trivia game about players, clubs, tournaments, and cloud-synced progress.">
+  <title>Football Quiz — 689 Football Questions in 6 Languages</title>
+  <meta name="description" content="Test your football knowledge with 689 questions about players, clubs and tournaments. Play free, save progress and unlock achievement certificates.">
+  <link rel="canonical" href="https://footballquiz.club/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Football Quiz — Prove Your Football Knowledge">
+  <meta property="og:description" content="689 football questions, 6 languages, progress and achievement certificates.">
+  <meta property="og:url" content="https://footballquiz.club/">
+  <meta property="og:image" content="https://footballquiz.club/assets/og/football-quiz-1200x630.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Football Quiz — Prove Your Football Knowledge">
+  <meta name="twitter:description" content="689 football questions, 6 languages, progress and achievement certificates.">
+  <meta name="twitter:image" content="https://footballquiz.club/assets/og/football-quiz-1200x630.png">
   <link rel="icon" type="image/png" sizes="192x192" href="football_quiz_icon.png">
   <link rel="shortcut icon" type="image/png" href="football_quiz_icon.png">
   <link rel="apple-touch-icon" href="football_quiz_icon.png">
@@ -44,9 +56,10 @@
         </div>
       </a>
       <nav class="top-actions" aria-label="Quick links">
+        <a class="pill-link" href="#how-it-works" data-i18n="nav_how">How it works</a>
         <a class="pill-link" href="#certificates" data-i18n="nav_certificates">Certificates</a>
         <a class="pill-link" href="#features" data-i18n="nav_features">Features</a>
-        <a class="pill-link" href="#documents" data-i18n="nav_policies">Policies</a>
+        <a class="pill-link install-link" href="https://play.google.com/store/apps/details?id=com.arthuralexandryan.footballquiz" data-cta-placement="header" data-i18n="nav_install">Install free</a>
         <div class="lang-switcher">
           <button class="lang-btn active" data-lang="en">🇺🇸 EN</button>
           <button class="lang-btn" data-lang="ru">🇷🇺 RU</button>
@@ -57,35 +70,35 @@
 
     <section class="hero reveal">
       <div class="hero-copy">
-        <div class="eyebrow" data-i18n="hero_eyebrow">Football trivia • Cloud sync • Google Play</div>
+        <div class="eyebrow" data-i18n="hero_eyebrow">FOOTBALL QUIZ · 6 LANGUAGES · PLAY FREE</div>
         <a class="hero-update-badge" href="#certificates" aria-label="See achievement certificates">
-          <span data-i18n="hero_update_label">New in 2.1.0</span>
+          <span data-i18n="hero_update_label">New</span>
           <strong data-i18n="hero_update_text">Achievement certificates</strong>
         </a>
-        <h1 data-i18n="hero_h1">Play the football quiz that feels like match day.</h1>
-        <p class="lead" data-i18n="hero_lead">Football Quiz brings players, clubs, tournaments, and progress tracking into one clean mobile experience. Jump in as a guest, sign in with Google, and keep your quiz journey synced across devices.</p>
-
-        <div class="highlights" aria-label="Highlights">
-          <span data-i18n="highlight_players">Players</span>
-          <span data-i18n="highlight_clubs">Clubs</span>
-          <span data-i18n="highlight_tournaments">Tournaments</span>
-          <span data-i18n="highlight_sync">Cloud Sync</span>
-        </div>
+        <h1 data-i18n="hero_h1">Think you know football? Prove it.</h1>
+        <p class="lead" data-i18n="hero_lead">Take on 689 questions about legendary players, clubs and tournaments. Play in your language, track your progress and unlock achievement certificates.</p>
 
         <div class="cta-row">
-          <a class="button primary" href="https://play.google.com/store/apps/details?id=com.arthuralexandryan.footballquiz">
+          <a class="button primary" href="https://play.google.com/store/apps/details?id=com.arthuralexandryan.footballquiz" data-cta-placement="hero">
             <svg viewBox="0 0 24 24" aria-hidden="true" fill="none">
               <path d="M3.4 2.7L14.9 12L3.4 21.3c-.2-.3-.4-.8-.4-1.4V4.1c0-.6.2-1.1.4-1.4Z" fill="#00D26A"/>
               <path d="M16.8 13.5L19.7 15.9c.9.7.9 1.9 0 2.5l-3.5 2-4.1-6.5 4.7-.4Z" fill="#FFB000"/>
               <path d="M16.2 3.6l3.5 2c.9.6.9 1.8 0 2.5l-2.9 2.4-4.7-.4 4.1-6.5Z" fill="#00A3FF"/>
               <path d="M12.1 10l4.7 3.5-4.7 3-8.7 4.8L14.9 12 3.4 2.7 12.1 10Z" fill="#FF4B55"/>
             </svg>
-            <span data-i18n="btn_google_play">Google Play</span>
+            <span data-i18n="btn_google_play">Install free on Google Play</span>
           </a>
           <a class="button secondary" href="#documents" data-i18n="btn_policies">Privacy, Terms & Data</a>
         </div>
 
-        <p class="mini-note" data-i18n="hero_mini_note">Built for football fans who love quiz nights, club history, legendary players, and tournament trivia.</p>
+        <p class="mini-note" data-i18n="hero_mini_note">Play as a guest. Use Google Sign-In when you want to save progress across devices.</p>
+
+        <div class="highlights proof-strip" aria-label="Football Quiz proof points">
+          <span data-i18n="highlight_players">689 questions</span>
+          <span data-i18n="highlight_clubs">6 languages</span>
+          <span data-i18n="highlight_tournaments">Guest mode</span>
+          <span data-i18n="highlight_sync">Cloud save</span>
+        </div>
       </div>
 
       <div class="hero-visual" aria-label="Football Quiz preview">
@@ -99,38 +112,44 @@
 
         <div class="phone-shell">
           <div class="phone-screen">
-            <div>
-              <div class="phone-top">
-                <div class="phone-badge">
-                  <img src="football_quiz_icon.png" alt="">
-                  <span data-i18n="phone_badge_live">Live quiz mode</span>
-                </div>
-                <div class="phone-badge" data-i18n="phone_badge_sync">Cloud sync</div>
-              </div>
-
-              <div class="screen-copy">
-                <h2 id="mock-question" data-i18n="mock_q1">Who won the 2014 World Cup?</h2>
-                <p data-i18n="phone_p">Fast rounds, football history, and a clean interface that keeps the focus on the game.</p>
-              </div>
-
-              <div class="mock-answers" id="mock-answers" aria-hidden="true">
-                <div>Argentina</div>
-                <div style="border: 2px solid var(--gold); box-shadow: 0 0 20px hsla(35, 97%, 62%, 0.3)">Germany</div>
-                <div>Brazil</div>
-              </div>
-            </div>
-
-            <div class="screen-bottom">
-              <div class="stat-card">
-                <strong>Guest or Google</strong>
-                <span>Play instantly, then sync progress when you are ready.</span>
-              </div>
-              <div class="qr-card">
-                <img src="football_quiz_play_qr.png" alt="QR code for Football Quiz on Google Play">
-              </div>
-            </div>
+            <img class="app-screen main-screen" src="assets/screenshots/football-quiz-question-screen.jpg" alt="Football Quiz question screen with answer options">
           </div>
         </div>
+
+        <a class="qr-card qr-install-card" href="https://play.google.com/store/apps/details?id=com.arthuralexandryan.footballquiz" data-qr-placement="hero" data-cta-placement="hero_qr" aria-label="Open Football Quiz on Google Play">
+          <img src="football_quiz_play_qr.png" alt="QR code for Football Quiz on Google Play">
+          <span data-i18n="qr_install_text">Scan or tap to install</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="product-proof reveal" id="how-it-works" aria-labelledby="proof-title">
+      <div class="proof-copy">
+        <div class="news-kicker" data-i18n="proof_kicker">How it works</div>
+        <h2 id="proof-title" data-i18n="proof_title">Choose a challenge. Answer football questions. Complete stages.</h2>
+        <p data-i18n="proof_copy">Football Quiz is built around a simple loop: pick a category, test your football knowledge, save your progress and return to your achievements later.</p>
+        <p class="preview-hint" data-i18n="proof_preview_hint">Tap any screenshot to preview it larger.</p>
+      </div>
+
+      <div class="proof-media">
+        <figure class="proof-phone proof-phone-large">
+          <button class="preview-trigger" type="button" data-preview-src="assets/screenshots/football-quiz-question-screen.jpg" data-preview-alt="Question round in Football Quiz">
+            <img src="assets/screenshots/football-quiz-question-screen.jpg" alt="Question round in Football Quiz">
+          </button>
+          <figcaption data-i18n="proof_screen_question">Live question round</figcaption>
+        </figure>
+        <figure class="proof-phone">
+          <button class="preview-trigger" type="button" data-preview-src="assets/screenshots/football-quiz-category-screen.jpg" data-preview-alt="Category selection screen in Football Quiz">
+            <img src="assets/screenshots/football-quiz-category-screen.jpg" alt="Category selection screen in Football Quiz">
+          </button>
+          <figcaption data-i18n="proof_screen_category">Category progress</figcaption>
+        </figure>
+        <figure class="proof-phone">
+          <button class="preview-trigger" type="button" data-preview-src="assets/screenshots/football-quiz-certificate-screen.jpg" data-preview-alt="Achievement certificate screen in Football Quiz">
+            <img src="assets/screenshots/football-quiz-certificate-screen.jpg" alt="Achievement certificate screen in Football Quiz">
+          </button>
+          <figcaption data-i18n="proof_screen_certificate">Certificate reward</figcaption>
+        </figure>
       </div>
     </section>
 
@@ -149,8 +168,8 @@
         <h2 id="certificates-title" data-i18n="cert_news_title">Achievement certificates are now part of the game.</h2>
         <p data-i18n="cert_news_copy">Complete football stages, unlock a dedicated reward moment, and keep your certificates inside your profile. It is a new way to celebrate real progress in Football Quiz.</p>
         <div class="news-actions">
-          <a class="button primary compact" href="https://play.google.com/store/apps/details?id=com.arthuralexandryan.footballquiz" data-i18n="cert_news_cta">Get the update on Google Play</a>
-          <span class="release-tag" data-i18n="cert_news_release">Available in version 2.1.0</span>
+          <a class="button primary compact" href="https://play.google.com/store/apps/details?id=com.arthuralexandryan.footballquiz" data-cta-placement="certificate" data-i18n="cert_news_cta">Start your challenge on Google Play</a>
+          <span class="release-tag" data-i18n="cert_news_release">Available now in Football Quiz</span>
         </div>
       </div>
 
@@ -273,14 +292,23 @@
     </section>
 
     <footer class="footer-card reveal">
-      <p data-i18n="footer_text">Football Quiz is developed by Artur Aleksandryan. For support, privacy requests, or store review questions, contact <a href="mailto:arthuralexandryan@gmail.com">arthuralexandryan@gmail.com</a>.</p>
+      <p><span data-i18n="footer_text">Football Quiz is developed by Artur Aleksandryan. For support, privacy requests, or store review questions, contact</span> <a href="mailto:support@footballquiz.club">support@footballquiz.club</a>.</p>
       <div class="footer-links">
-        <a class="pill-link" href="https://play.google.com/store/apps/details?id=com.arthuralexandryan.footballquiz" data-i18n="footer_link_gp">Google Play</a>
+        <a class="pill-link install-link" href="https://play.google.com/store/apps/details?id=com.arthuralexandryan.footballquiz" data-cta-placement="footer" data-i18n="footer_link_gp">Google Play</a>
         <a class="pill-link" href="privacy-policy.html" data-i18n="footer_link_privacy">Privacy</a>
         <a class="pill-link" href="terms-and-conditions.html" data-i18n="footer_link_terms">Terms</a>
         <a class="pill-link" href="data-deletion.html" data-i18n="footer_link_deletion">Deletion</a>
       </div>
     </footer>
+  </div>
+
+  <div class="media-modal" id="screenshot-preview" hidden>
+    <button class="modal-backdrop" type="button" data-close-preview aria-label="Close screenshot preview"></button>
+    <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="preview-caption">
+      <button class="modal-close" type="button" data-close-preview aria-label="Close screenshot preview">×</button>
+      <img id="preview-image" src="" alt="">
+      <p id="preview-caption"></p>
+    </div>
   </div>
 
   <script src="translations.js"></script>

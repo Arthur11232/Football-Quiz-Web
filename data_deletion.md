@@ -1,6 +1,6 @@
 # Data Deletion for Football Quiz
 
-Last updated: April 18, 2026
+Last updated: September 11, 2026
 
 Football Quiz lets users delete their app account data and cloud progress.
 
@@ -16,7 +16,7 @@ In some cases, Firebase Authentication may require a recent sign-in before the a
 
 You can also request deletion by email:
 
-arthuralexandryan@gmail.com
+support@footballquiz.club
 
 Please include the email address used to sign in to Football Quiz. If possible, also include your Firebase user ID or a screenshot of your Profile screen. This helps us locate the correct account.
 

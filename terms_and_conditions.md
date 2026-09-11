@@ -1,6 +1,6 @@
 # Terms and Conditions for Football Quiz
 
-Last updated: April 18, 2026
+Last updated: September 11, 2026
 
 These Terms and Conditions ("Terms") govern your use of the Football Quiz mobile application developed and operated by Artur Aleksandryan ("we", "us", "our", or "Developer").
 
@@ -78,7 +78,7 @@ The in-app deletion option removes the Firestore progress data associated with y
 
 You may also request deletion by contacting:
 
-arthuralexandryan@gmail.com
+support@footballquiz.club
 
 Please include the email address used to sign in to the app so we can locate the correct account.
 
@@ -112,4 +112,4 @@ You may stop using the app at any time by uninstalling it.
 
 If you have questions or suggestions about these Terms, contact us at:
 
-arthuralexandryan@gmail.com
+support@footballquiz.club

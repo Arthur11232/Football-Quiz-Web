@@ -1,16 +1,31 @@
 // Multi-language Logic
 let currentLang = localStorage.getItem('football_quiz_lang') || 'en';
 
+function getUtmParams() {
+  const searchParams = new URLSearchParams(window.location.search);
+  return {
+    utm_source: searchParams.get('utm_source') || '',
+    utm_medium: searchParams.get('utm_medium') || '',
+    utm_campaign: searchParams.get('utm_campaign') || ''
+  };
+}
+
 function trackEvent(eventName, params = {}) {
   // Use Firebase Analytics if available
   if (typeof window.logFirebaseEvent === 'function') {
-    window.logFirebaseEvent(eventName, params);
+    window.logFirebaseEvent(eventName, {
+      page_locale: currentLang,
+      ...getUtmParams(),
+      ...params
+    });
   }
 }
 
-function setLanguage(lang) {
+function setLanguage(lang, options = {}) {
+  const previousLang = currentLang;
   currentLang = lang;
   localStorage.setItem('football_quiz_lang', lang);
+  document.documentElement.lang = lang === 'am' ? 'hy' : lang;
   
   // Update translatable elements
   document.querySelectorAll('[data-i18n]').forEach(el => {
@@ -28,12 +43,18 @@ function setLanguage(lang) {
   });
 
   updateMockContent();
-  trackEvent('change_language', { language: lang });
+  if (!options.initial && previousLang !== lang) {
+    trackEvent('language_selected', {
+      from_locale: previousLang,
+      to_locale: lang
+    });
+  }
 }
 
 // Initial set
 document.addEventListener('DOMContentLoaded', () => {
-  setLanguage(currentLang);
+  setLanguage(currentLang, { initial: true });
+  trackEvent('landing_view');
   
   document.querySelectorAll('.lang-btn').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -42,17 +63,77 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Analytics for CTA clicks
-  document.querySelectorAll('.button.primary').forEach(btn => {
+  document.querySelectorAll('[data-cta-placement]').forEach(btn => {
     btn.addEventListener('click', () => {
-      trackEvent('click_google_play', { location: 'hero' });
+      trackEvent('play_store_cta_clicked', {
+        placement: btn.getAttribute('data-cta-placement') || 'unknown'
+      });
     });
   });
 
   document.querySelectorAll('.button.secondary, .pill-link').forEach(btn => {
     btn.addEventListener('click', (e) => {
+      if (btn.hasAttribute('data-cta-placement')) return;
       const label = e.target.getAttribute('data-i18n') || e.target.textContent;
       trackEvent('click_nav', { target: label });
     });
+  });
+
+  const qrCard = document.querySelector('.qr-card');
+  if (qrCard) {
+    const qrObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          trackEvent('qr_viewed', { placement: 'hero' });
+          qrObserver.disconnect();
+        }
+      });
+    }, { threshold: 0.6 });
+    qrObserver.observe(qrCard);
+  }
+
+  document.querySelectorAll('[data-qr-placement]').forEach(link => {
+    link.addEventListener('click', () => {
+      trackEvent('qr_cta_clicked', {
+        placement: link.getAttribute('data-qr-placement') || 'unknown'
+      });
+    });
+  });
+
+  const previewModal = document.getElementById('screenshot-preview');
+  const previewImage = document.getElementById('preview-image');
+  const previewCaption = document.getElementById('preview-caption');
+
+  function closePreview() {
+    if (!previewModal || !previewImage || !previewCaption) return;
+    previewModal.hidden = true;
+    previewImage.src = '';
+    previewImage.alt = '';
+    previewCaption.textContent = '';
+    document.body.classList.remove('modal-open');
+  }
+
+  document.querySelectorAll('.preview-trigger').forEach(trigger => {
+    trigger.addEventListener('click', () => {
+      if (!previewModal || !previewImage || !previewCaption) return;
+      const caption = trigger.closest('figure')?.querySelector('figcaption')?.textContent || '';
+      previewImage.src = trigger.getAttribute('data-preview-src') || '';
+      previewImage.alt = trigger.getAttribute('data-preview-alt') || caption;
+      previewCaption.textContent = caption;
+      previewModal.hidden = false;
+      document.body.classList.add('modal-open');
+      trackEvent('screenshot_preview_opened', { caption });
+    });
+  });
+
+  document.querySelectorAll('[data-close-preview]').forEach(button => {
+    button.addEventListener('click', closePreview);
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      closePreview();
+    }
   });
 });
 

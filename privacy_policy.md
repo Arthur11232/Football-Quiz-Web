@@ -1,6 +1,6 @@
 # Privacy Policy for Football Quiz
 
-Last updated: April 18, 2026
+Last updated: September 11, 2026
 
 Football Quiz is a free mobile application developed and operated by Artur Aleksandryan ("we", "us", "our", or "Developer"). This Privacy Policy explains what information the app collects, how it is used, how it is stored, and how you can request deletion of your data.
 
@@ -98,7 +98,7 @@ In some cases, Firebase Authentication may require a recent sign-in before the a
 
 You can also request deletion by contacting us at:
 
-arthuralexandryan@gmail.com
+support@footballquiz.club
 
 Please include the email address used to sign in to Football Quiz. If possible, also include your Firebase user ID or a screenshot of your profile screen. This helps us locate the correct account.
 
@@ -121,13 +121,13 @@ Depending on your location, you may have rights to:
 
 To exercise these rights, contact us at:
 
-arthuralexandryan@gmail.com
+support@footballquiz.club
 
 ## 11. Children's Privacy
 
 Football Quiz is not directed to children under 13 years old or the minimum age required by applicable law in your country.
 
-We do not knowingly collect personal information from children below the required age. If you believe that a child has provided personal information through the app, please contact us at arthuralexandryan@gmail.com and we will take appropriate steps to delete the information.
+We do not knowingly collect personal information from children below the required age. If you believe that a child has provided personal information through the app, please contact us at support@footballquiz.club and we will take appropriate steps to delete the information.
 
 ## 12. Security
 
@@ -145,4 +145,4 @@ We may update this Privacy Policy from time to time. When we update it, we will 
 
 If you have any questions, suggestions, or requests about this Privacy Policy, contact us at:
 
-arthuralexandryan@gmail.com
+support@footballquiz.club

@@ -12,3 +12,4 @@ deployment:
     - /bin/cp data-deletion.html $DEPLOYPATH
     - /bin/cp football_quiz_icon.png $DEPLOYPATH
     - /bin/cp football_quiz_play_qr.png $DEPLOYPATH
+    - /bin/cp -R assets $DEPLOYPATH
