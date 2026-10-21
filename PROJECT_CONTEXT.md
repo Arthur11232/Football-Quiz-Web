@@ -1,11 +1,12 @@
 # Football Quiz Web — Project Context
 
-Дата последнего обновления: `2026-09-11`
+Дата последнего обновления: `2026-10-21`
 
 Этот файл — стартовая точка для нового web/landing-чата по Football Quiz. Перед началом работы читать этот файл, затем при необходимости:
 
 - `README.md`;
 - `docs/web_backend_readiness_roadmap_ru.md`;
+- `docs/news_feature_architecture_ru.md` — модель будущего news-раздела, Public News API, web-страницы и план реализации;
 - `/Users/Arthu/Documents/GitHub/Footbal-Quiz/docs/web_android_chat_sync_ru.md`;
 - `/Users/Arthu/Documents/GitHub/Football-Quiz-Backend/PROJECT_CONTEXT.md`.
 
@@ -54,14 +55,15 @@
 
 ```text
 Path: /Users/Arthu/Documents/GitHub/Football Quiz Web
-Branch: main
+Branch: codex/news-web-integration
 Remote: origin/main
 ```
 
 Текущий git state на момент создания этого файла:
 
 ```text
-main...origin/main
+codex/news-web-integration
+HEAD: acd3ed5 (News MVP находится в незакоммиченном working tree поверх этого commit)
 untracked:
   docs/
   linkedin-cover-football-quiz.png
@@ -125,6 +127,18 @@ Landing P0 conversion pass начат на `2026-09-11` после marketing han
 - добавлены analytics events для landing funnel без PII;
 - footer/legal contact переключён на `support@footballquiz.club`;
 - `.cpanel.yml` обновлён для деплоя `assets/`.
+
+Локальный typography checkpoint `2026-10-13`:
+
+- demo-шрифт `Garlic Sauce` не используется: приложенная версия разрешена только для personal use и не покрывает русский/армянский;
+- для hero `h1` подключён локальный `Rubik` Black/900 для EN/RU — официальный open-source font под SIL OFL 1.1;
+- для армянского hero `h1` подключён локальный `Mardoto Black` — open-source font под Apache 2.0;
+- webfont-файлы и копии лицензий находятся в `assets/fonts/rubik/` и `assets/fonts/mardoto/`;
+- шрифты self-hosted: внешний Google/Adobe font request не нужен;
+- desktop EN/RU/HY проверены визуально;
+- на mobile `390×667` во всех трёх языках horizontal overflow равен `0`, а primary Google Play CTA полностью видна на первом экране;
+- отвергнутые тесты `Rubik Mono One` и `Handjet` в project не оставлены;
+- commit, push и deployment этого typography checkpoint не выполнялись.
 
 Текущие основные секции `index.html`:
 
@@ -271,6 +285,64 @@ Backend философия:
 - API base URL при будущем client slice выносить в отдельный config boundary;
 - Firebase Auth token передавать в backend только через API adapter;
 - не хранить secrets в web repo.
+
+## News feature direction
+
+На `2026-10-05` зафиксирована архитектура будущего раздела новостей об известных футбольных клубах:
+
+```text
+docs/news_feature_architecture_ru.md
+```
+
+Статус: локальный Web News MVP реализован на ветке `codex/news-web-integration`; commit/push/deployment не выполнялись.
+
+Главные решения:
+
+- backend/MySQL будет единственным источником истины;
+- публичное чтение идёт через `/v1/news`, `/v1/news/{slug}`, `/v1/news/clubs` и `/v1/news/competitions`;
+- выбрана URL-стратегия `/en/news/...`, `/ru/news/...`, `/hy/news/...`;
+- добавлены PHP-rendered список, club filter и detail page, использующие Public News API;
+- локально добавлена category taxonomy `All / Top 5 / UEFA / World Cup`; `Versus` сознательно отложен;
+- внутри `Top 5` добавлена отдельная навигация по всем пяти лигам: Premier League, La Liga, Serie A, Bundesliga и Ligue 1; лиги видны даже при нулевом количестве материалов;
+- статья может относиться к нескольким категориям; категория и клуб комбинируются в одном API-запросе и UI-фильтре;
+- category, competition и club комбинируются в API; выбор новой категории сбрасывает лигу/клуб, выбор лиги ограничивает club filter;
+- clean routes включают `/{locale}/news/{category}/`, `/{locale}/news/top-5/{competition}/` и варианты `/club/{club}/`, а localhost использует безопасный query fallback;
+- category page получает собственные SSR title и canonical; клубные chips показываются только для статей активной категории;
+- landing получил видимую кнопку News и блок трёх последних материалов;
+- hero получил локализованный EN/RU/AM анонс нового News feature со ссылкой на соответствующий новостной раздел;
+- News links имеют рабочий PHP query fallback `/news/index.php?locale=...`, а свежий `main.js` переводит их на clean routes в production; landing assets versioned query защищает от старого browser cache;
+- header News CTA усилен зелёно-золотым контрастным стилем и адаптивной компоновкой; проверены `320`, `360` и `390` px без обрезания и horizontal overflow;
+- добавлены SSR title/description/canonical/Open Graph/NewsArticle JSON-LD, источники и Google Play CTA;
+- добавлены mobile/desktop styles и локальный fallback URL для обычного `php -S` без Apache rewrite;
+- `.htaccess` содержит production clean routes, `.cpanel.yml` включает News runtime files;
+- локально проверены EN/RU/HY, club filter, cursor «Показать ещё», article detail и API-unavailable boundary;
+- category API/Web smoke проверяет `top-5`, `uefa`, пустой `world-cup`, сочетание `uefa + real-madrid` и отклонение `versus` с `400`;
+- league API/Web smoke проверяет все пять Top 5 competitions, нулевые empty states, La Liga/Bundesliga content и отклонение несовместимого competition/category;
+- mobile `390×844`: все пять лиг видны сеткой, page overflow равен `0`, league navigation доступна с клавиатуры;
+- mobile `390×667`: horizontal overflow отсутствует, landing CTA остаётся полностью видимой;
+- локальный редакционный каталог содержит новости Real Madrid, FC Bayern, FC Barcelona, Arsenal, Inter и Paris Saint-Germain: `6` статей, `18` переводов и `7` ссылок на официальные клубные источники;
+- в Premier League, La Liga, Serie A, Bundesliga и Ligue 1 теперь есть минимум один реальный опубликованный материал;
+- тексты написаны специально для Football Quiz, без копирования исходных публикаций; сторонние фото и логотипы не используются, карточки пока показывают собственный FQ placeholder;
+- fixture-материалы локально архивированы; landing preview, список, pagination `2 + 1`, club filters и detail-страницы проверены на реальном каталоге;
+- подготовлены неактивные `.cpanel.staging.yml.example` и `.htaccess.staging`; active production `.cpanel.yml` не менялась;
+- `staging.footballquiz.club` автоматически использует `api-staging.footballquiz.club`, получает `X-Robots-Tag: noindex` и описан в `docs/staging_deployment_ru.md`;
+- `2026-10-21` server-side staging env создан отдельно с правами `600`; из-за лимита MySQL `1/1` backend staging временно разделяет production DB, причём разрешены только добавочные `news_*` migrations и запрещены изменения questions/scoring/legal;
+- контент публикуется после human review, с видимыми источниками и без копирования чужих статей;
+- автоматический scraper, автоматическая AI-публикация, комментарии и персональная лента не входят в MVP;
+- news-функция не должна влиять на offline-first gameplay, landing, legal pages или Google Play flow.
+
+Основные локальные News files:
+
+```text
+news/lib.php
+news/index.php
+news/article.php
+news/news.css
+news/news-list.js
+news-preview.js
+```
+
+Расширенный реальный редакционный каталог и staging-конфигурация подготовлены и проверены локально; в cPanel созданы staging-поддомены и private staging env. Production API, схема/данные production DB и публичный сайт не изменены. До отдельного подтверждения владельца не делать commit, push, migrations или deployment.
 
 ## Web/backend roadmap
 

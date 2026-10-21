@@ -1,5 +1,15 @@
 RewriteEngine On
 
+# Football Quiz News clean URLs
+RewriteRule ^(en|ru|hy)/news/?$ news/index.php?locale=$1 [L,QSA]
+RewriteRule ^(en|ru|hy)/news/top-5/(premier-league|la-liga|serie-a|bundesliga|ligue-1)/club/([a-z0-9-]+)/?$ news/index.php?locale=$1&category=top-5&competition=$2&club=$3 [L,QSA]
+RewriteRule ^(en|ru|hy)/news/top-5/(premier-league|la-liga|serie-a|bundesliga|ligue-1)/?$ news/index.php?locale=$1&category=top-5&competition=$2 [L,QSA]
+RewriteRule ^(en|ru|hy)/news/(top-5|uefa|world-cup)/club/([a-z0-9-]+)/?$ news/index.php?locale=$1&category=$2&club=$3 [L,QSA]
+RewriteRule ^(en|ru|hy)/news/(top-5|uefa|world-cup)/?$ news/index.php?locale=$1&category=$2 [L,QSA]
+RewriteRule ^(en|ru|hy)/news/club/([a-z0-9-]+)/?$ news/index.php?locale=$1&club=$2 [L,QSA]
+RewriteRule ^(en|ru|hy)/news/([a-z0-9-]+)/?$ news/article.php?locale=$1&slug=$2 [L,QSA]
+RewriteRule ^news/?$ en/news/ [R=302,L]
+
 # Redirect index.html to /
 RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /.*index\.html\ HTTP/
 RewriteRule ^(.*)index\.html$ /$1 [L,R=301]

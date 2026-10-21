@@ -6,6 +6,7 @@ deployment:
     - /bin/cp index.html $DEPLOYPATH
     - /bin/cp style.css $DEPLOYPATH
     - /bin/cp main.js $DEPLOYPATH
+    - /bin/cp news-preview.js $DEPLOYPATH
     - /bin/cp translations.js $DEPLOYPATH
     - /bin/cp privacy-policy.html $DEPLOYPATH
     - /bin/cp terms-and-conditions.html $DEPLOYPATH
@@ -13,3 +14,4 @@ deployment:
     - /bin/cp football_quiz_icon.png $DEPLOYPATH
     - /bin/cp football_quiz_play_qr.png $DEPLOYPATH
     - /bin/cp -R assets $DEPLOYPATH
+    - /bin/cp -R news $DEPLOYPATH

@@ -1,0 +1,19 @@
+---
+# Template for the dedicated staging-only cPanel repository.
+# Confirm DEPLOYPATH in cPanel before renaming this file to .cpanel.yml.
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/ixvldavx/public_html/staging/
+    - /bin/cp .htaccess.staging $DEPLOYPATH.htaccess
+    - /bin/cp index.html $DEPLOYPATH
+    - /bin/cp style.css $DEPLOYPATH
+    - /bin/cp main.js $DEPLOYPATH
+    - /bin/cp news-preview.js $DEPLOYPATH
+    - /bin/cp translations.js $DEPLOYPATH
+    - /bin/cp privacy-policy.html $DEPLOYPATH
+    - /bin/cp terms-and-conditions.html $DEPLOYPATH
+    - /bin/cp data-deletion.html $DEPLOYPATH
+    - /bin/cp football_quiz_icon.png $DEPLOYPATH
+    - /bin/cp football_quiz_play_qr.png $DEPLOYPATH
+    - /bin/cp -R assets $DEPLOYPATH
+    - /bin/cp -R news $DEPLOYPATH

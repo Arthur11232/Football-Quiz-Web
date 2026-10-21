@@ -43,6 +43,16 @@ function setLanguage(lang, options = {}) {
   });
 
   updateMockContent();
+  const newsLocale = lang === 'am' ? 'hy' : lang;
+  const newsHref = ['127.0.0.1', 'localhost'].includes(window.location.hostname)
+    ? `/news/index.php?locale=${newsLocale}`
+    : `/${newsLocale}/news/`;
+  document.querySelectorAll('.news-nav-link, .latest-news-all, .hero-news-badge').forEach(link => {
+    link.setAttribute('href', newsHref);
+  });
+  if (!options.initial) {
+    window.dispatchEvent(new CustomEvent('footballquiz:language', { detail: { lang } }));
+  }
   if (!options.initial && previousLang !== lang) {
     trackEvent('language_selected', {
       from_locale: previousLang,
@@ -74,7 +84,10 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.button.secondary, .pill-link').forEach(btn => {
     btn.addEventListener('click', (e) => {
       if (btn.hasAttribute('data-cta-placement')) return;
-      const label = e.target.getAttribute('data-i18n') || e.target.textContent;
+      const translatedLabel = btn.querySelector('[data-i18n]');
+      const label = btn.getAttribute('data-i18n')
+        || translatedLabel?.getAttribute('data-i18n')
+        || btn.textContent.trim();
       trackEvent('click_nav', { target: label });
     });
   });

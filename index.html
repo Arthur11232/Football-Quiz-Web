@@ -20,7 +20,7 @@
   <link rel="icon" type="image/png" sizes="192x192" href="football_quiz_icon.png">
   <link rel="shortcut icon" type="image/png" href="football_quiz_icon.png">
   <link rel="apple-touch-icon" href="football_quiz_icon.png">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=20261013-heading-font">
   <!-- Firebase SDK -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
@@ -56,6 +56,9 @@
         </div>
       </a>
       <nav class="top-actions" aria-label="Quick links">
+        <a class="pill-link news-nav-link" href="/news/index.php?locale=en">
+          <span data-i18n="nav_news">News</span>
+        </a>
         <a class="pill-link" href="#how-it-works" data-i18n="nav_how">How it works</a>
         <a class="pill-link" href="#certificates" data-i18n="nav_certificates">Certificates</a>
         <a class="pill-link" href="#features" data-i18n="nav_features">Features</a>
@@ -71,10 +74,16 @@
     <section class="hero reveal">
       <div class="hero-copy">
         <div class="eyebrow" data-i18n="hero_eyebrow">FOOTBALL QUIZ · 6 LANGUAGES · PLAY FREE</div>
-        <a class="hero-update-badge" href="#certificates" aria-label="See achievement certificates">
-          <span data-i18n="hero_update_label">New</span>
-          <strong data-i18n="hero_update_text">Achievement certificates</strong>
-        </a>
+        <div class="hero-update-list" aria-label="What is new in Football Quiz">
+          <a class="hero-update-badge" href="#certificates" aria-label="See achievement certificates">
+            <span data-i18n="hero_update_label">New</span>
+            <strong data-i18n="hero_update_text">Achievement certificates</strong>
+          </a>
+          <a class="hero-update-badge hero-news-badge" href="/news/index.php?locale=en">
+            <span data-i18n="hero_news_label">New</span>
+            <strong data-i18n="hero_news_text">Verified football news</strong>
+          </a>
+        </div>
         <h1 data-i18n="hero_h1">Think you know football? Prove it.</h1>
         <p class="lead" data-i18n="hero_lead">Take on 689 questions about legendary players, clubs and tournaments. Play in your language, track your progress and unlock achievement certificates.</p>
 
@@ -151,6 +160,18 @@
           <figcaption data-i18n="proof_screen_certificate">Certificate reward</figcaption>
         </figure>
       </div>
+    </section>
+
+    <section class="latest-news reveal" id="latest-news" aria-labelledby="latest-news-title" hidden>
+      <div class="latest-news-heading">
+        <div>
+          <div class="news-kicker" data-i18n="latest_news_kicker">From the football world</div>
+          <h2 id="latest-news-title" data-i18n="latest_news_title">Latest football news</h2>
+          <p data-i18n="latest_news_copy">Short, reviewed updates with visible sources.</p>
+        </div>
+        <a class="button secondary latest-news-all" href="/news/index.php?locale=en" data-i18n="latest_news_all">All news</a>
+      </div>
+      <div class="latest-news-grid" id="latest-news-grid" aria-live="polite"></div>
     </section>
 
     <section class="achievement-news reveal" id="certificates" aria-labelledby="certificates-title">
@@ -311,7 +332,8 @@
     </div>
   </div>
 
-  <script src="translations.js"></script>
-  <script src="main.js" defer></script>
+  <script src="translations.js?v=20261011-news"></script>
+  <script src="main.js?v=20261011-news" defer></script>
+  <script src="news-preview.js?v=20261011-news" defer></script>
 </body>
 </html>
