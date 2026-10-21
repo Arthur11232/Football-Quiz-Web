@@ -178,6 +178,66 @@ function news_api_get(string $path, array $query = []): array
     if ($query !== []) {
         $url .= '?' . http_build_query($query, '', '&', PHP_QUERY_RFC3986);
     }
+
+    $curlResult = news_api_curl_get($url);
+    if ($curlResult !== null) {
+        [$raw, $status] = $curlResult;
+    } else {
+        [$raw, $status] = news_api_stream_get($url);
+    }
+
+    if (!is_string($raw) || $raw === '') {
+        return ['ok' => false, 'status' => $status, 'data' => null];
+    }
+    try {
+        $payload = json_decode($raw, true, 64, JSON_THROW_ON_ERROR);
+    } catch (JsonException) {
+        return ['ok' => false, 'status' => $status, 'data' => null];
+    }
+
+    return [
+        'ok' => $status >= 200 && $status < 300 && ($payload['success'] ?? false) === true,
+        'status' => $status,
+        'data' => $payload['data'] ?? null,
+    ];
+}
+
+/** @return array{0: string|false, 1: int}|null */
+function news_api_curl_get(string $url): ?array
+{
+    if (!function_exists('curl_init')) {
+        return null;
+    }
+
+    $curl = curl_init($url);
+    if ($curl === false) {
+        return null;
+    }
+
+    $options = [
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_CONNECTTIMEOUT => 2,
+        CURLOPT_TIMEOUT => 3,
+        CURLOPT_FOLLOWLOCATION => false,
+        CURLOPT_HTTPHEADER => ['Accept: application/json'],
+        CURLOPT_USERAGENT => 'FootballQuizWeb/0.1',
+    ];
+    $resolve = news_api_resolve_override();
+    if ($resolve !== null) {
+        $options[CURLOPT_RESOLVE] = [$resolve];
+    }
+
+    curl_setopt_array($curl, $options);
+    $raw = curl_exec($curl);
+    $status = (int) curl_getinfo($curl, CURLINFO_RESPONSE_CODE);
+    curl_close($curl);
+
+    return [$raw, $status];
+}
+
+/** @return array{0: string|false, 1: int} */
+function news_api_stream_get(string $url): array
+{
     $context = stream_context_create([
         'http' => [
             'method' => 'GET',
@@ -193,20 +253,22 @@ function news_api_get(string $path, array $query = []): array
             $status = (int) $matches[1];
         }
     }
-    if (!is_string($raw) || $raw === '') {
-        return ['ok' => false, 'status' => $status, 'data' => null];
-    }
-    try {
-        $payload = json_decode($raw, true, 64, JSON_THROW_ON_ERROR);
-    } catch (JsonException) {
-        return ['ok' => false, 'status' => $status, 'data' => null];
+
+    return [$raw, $status];
+}
+
+function news_api_resolve_override(): ?string
+{
+    $configured = $_SERVER['FOOTBALL_QUIZ_NEWS_API_RESOLVE'] ?? getenv('FOOTBALL_QUIZ_NEWS_API_RESOLVE');
+    if (!is_string($configured)) {
+        return null;
     }
 
-    return [
-        'ok' => $status >= 200 && $status < 300 && ($payload['success'] ?? false) === true,
-        'status' => $status,
-        'data' => $payload['data'] ?? null,
-    ];
+    $configured = trim($configured);
+
+    return preg_match('/^[a-z0-9.-]+:\d{1,5}:(?:\d{1,3}\.){3}\d{1,3}$/i', $configured) === 1
+        ? $configured
+        : null;
 }
 
 function news_e(mixed $value): string

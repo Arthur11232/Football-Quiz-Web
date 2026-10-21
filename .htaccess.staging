@@ -5,6 +5,11 @@ RewriteEngine On
   Header always set X-Robots-Tag "noindex, nofollow, noarchive"
 </IfModule>
 
+# The hosting resolver cannot resolve its own staging API hostname reliably.
+# CURLOPT_RESOLVE keeps HTTPS hostname and certificate verification intact while
+# connecting to the server's known public address.
+SetEnv FOOTBALL_QUIZ_NEWS_API_RESOLVE api-staging.footballquiz.club:443:2.56.204.6
+
 # Football Quiz News clean URLs
 RewriteRule ^(en|ru|hy)/news/?$ news/index.php?locale=$1 [L,QSA]
 RewriteRule ^(en|ru|hy)/news/top-5/(premier-league|la-liga|serie-a|bundesliga|ligue-1)/club/([a-z0-9-]+)/?$ news/index.php?locale=$1&category=top-5&competition=$2&club=$3 [L,QSA]
