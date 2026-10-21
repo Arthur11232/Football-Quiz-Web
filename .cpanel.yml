@@ -1,8 +1,8 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/ixvldavx/public_html/
-    - /bin/cp .htaccess $DEPLOYPATH
+    - export DEPLOYPATH=/home/ixvldavx/public_html/staging/
+    - /bin/cp .htaccess.staging $DEPLOYPATH.htaccess
     - /bin/cp index.html $DEPLOYPATH
     - /bin/cp style.css $DEPLOYPATH
     - /bin/cp main.js $DEPLOYPATH
