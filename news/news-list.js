@@ -63,6 +63,14 @@
     ].join('.');
   }
 
+  function articleVisual(item) {
+    const visuals = {
+      'real-madrid-five-match-october-run': { variant: 'real-schedule', metric: 5 },
+      'barcelona-three-golden-boy-finalists': { variant: 'barcelona-talents', metric: 3 }
+    };
+    return visuals[item.slug] || null;
+  }
+
   function card(item) {
     const article = document.createElement('article');
     article.className = 'news-card';
@@ -70,9 +78,27 @@
     const art = document.createElement('div');
     art.className = 'news-card-art';
     art.setAttribute('aria-hidden', 'true');
-    const mark = document.createElement('span');
-    mark.textContent = 'FQ';
-    art.append(mark);
+    const visual = articleVisual(item);
+    if (visual) {
+      art.classList.add(`news-card-art--${visual.variant}`);
+      const club = document.createElement('span');
+      club.className = 'news-card-art-club';
+      club.textContent = item.clubs?.[0]?.name || 'Football Quiz';
+      const metric = document.createElement('strong');
+      metric.className = 'news-card-art-metric';
+      metric.textContent = String(visual.metric);
+      const marks = document.createElement('span');
+      marks.className = 'news-card-art-marks';
+      for (let index = 0; index < visual.metric; index += 1) {
+        marks.append(document.createElement('i'));
+      }
+      art.append(club, metric, marks);
+    } else {
+      const mark = document.createElement('span');
+      mark.className = 'news-card-art-fallback';
+      mark.textContent = 'FQ';
+      art.append(mark);
+    }
 
     const body = document.createElement('div');
     body.className = 'news-card-body';

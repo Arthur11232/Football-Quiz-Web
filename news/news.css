@@ -2,6 +2,88 @@
   width: min(1180px, calc(100% - 32px));
 }
 
+.news-body--premier-league {
+  --league-background: url("/assets/news/league-backgrounds/premier-league-subtle.png");
+}
+
+.news-body--la-liga {
+  --league-background: url("/assets/news/league-backgrounds/la-liga-subtle.png");
+}
+
+.news-body--serie-a {
+  --league-background: url("/assets/news/league-backgrounds/serie-a-subtle.png");
+}
+
+.news-body--bundesliga {
+  --league-background: url("/assets/news/league-backgrounds/bundesliga-subtle.png");
+}
+
+.news-body--ligue-1 {
+  --league-background: url("/assets/news/league-backgrounds/ligue-1-subtle.png");
+}
+
+.news-body--category-top-5 {
+  --category-background: url("/assets/news/category-backgrounds/top-5-flags-v3.png");
+}
+
+.news-body--category-uefa {
+  --category-background: url("/assets/news/category-backgrounds/uefa-four-trophies-v2.png");
+}
+
+.news-body--category-world-cup {
+  --category-background: url("/assets/news/category-backgrounds/world-cup-map-v2.png");
+}
+
+.news-body--all-news {
+  --category-background: url("/assets/news/category-backgrounds/all-news-v1.png");
+}
+
+.news-body--league,
+.news-body--category,
+.news-body--all-news {
+  background-color: #030806;
+  background-image: none;
+}
+
+.news-body--league::before,
+.news-body--category::before,
+.news-body--all-news::before {
+  z-index: 1;
+  opacity: 0.18;
+}
+
+.news-body--league::after,
+.news-body--category::after,
+.news-body--all-news::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(1, 8, 5, 0.28) 0%, rgba(1, 8, 5, 0.58) 56%, rgba(1, 8, 5, 0.94) 100%),
+    var(--league-background, var(--category-background)) center top / cover no-repeat;
+}
+
+.news-body--category-top-5::after,
+.news-body--category-uefa::after {
+  background-position: center top, center -140px;
+}
+
+.news-body--category-world-cup::after {
+  background-position: center top, center -70px;
+}
+
+.news-body--all-news::after {
+  background-position: center top, center -55px;
+}
+
+.news-body--league .news-page,
+.news-body--category .news-page,
+.news-body--all-news .news-page {
+  z-index: 2;
+}
+
 .news-topbar .lang-btn {
   text-decoration: none;
 }
@@ -16,6 +98,15 @@
     radial-gradient(circle at 80% 10%, rgba(252, 174, 64, 0.18), transparent 24rem),
     linear-gradient(145deg, rgba(9, 46, 20, 0.98), rgba(5, 20, 9, 0.98));
   box-shadow: 0 40px 100px var(--shadow);
+}
+
+.news-body--league .news-hero,
+.news-body--category .news-hero,
+.news-body--all-news .news-hero {
+  border-color: rgba(255, 255, 255, 0.2);
+  background: linear-gradient(145deg, rgba(3, 20, 11, 0.38), rgba(2, 8, 5, 0.56));
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.58);
+  backdrop-filter: blur(1.5px);
 }
 
 .news-hero h1,
@@ -46,6 +137,7 @@
 }
 
 .category-filter a {
+  position: relative;
   min-width: 0;
   min-height: 58px;
   display: grid;
@@ -69,10 +161,29 @@
 }
 
 .category-filter a.active {
-  border-color: rgba(252, 174, 64, 0.62);
-  background: linear-gradient(145deg, rgba(7, 122, 54, 0.9), rgba(5, 78, 31, 0.96));
-  color: #fff4d9;
-  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.24), inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+  border-color: rgba(252, 191, 88, 0.88);
+  background:
+    radial-gradient(circle at 50% 0%, rgba(252, 174, 64, 0.14), transparent 72%),
+    rgba(3, 18, 10, 0.32);
+  color: #fff7e8;
+  box-shadow:
+    0 14px 34px rgba(0, 0, 0, 0.24),
+    inset 0 0 0 1px rgba(255, 221, 153, 0.12),
+    0 0 24px rgba(252, 174, 64, 0.08);
+  backdrop-filter: blur(8px);
+}
+
+.category-filter a.active::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 8px;
+  width: 42px;
+  height: 3px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(252, 174, 64, 0.28), #ffd36f, rgba(252, 174, 64, 0.28));
+  transform: translateX(-50%);
+  box-shadow: 0 0 12px rgba(252, 174, 64, 0.5);
 }
 
 .competition-filter {
@@ -87,6 +198,7 @@
 }
 
 .competition-filter a {
+  position: relative;
   min-width: 0;
   min-height: 48px;
   display: flex;
@@ -107,14 +219,33 @@
 }
 
 .competition-filter a:hover,
-.competition-filter a.active {
+.club-filter a:hover {
   border-color: rgba(252, 174, 64, 0.5);
   background: rgba(252, 174, 64, 0.13);
   color: #fff0cd;
 }
 
 .competition-filter a.active {
-  box-shadow: inset 0 0 0 1px rgba(252, 174, 64, 0.08);
+  border-color: rgba(252, 191, 88, 0.8);
+  background: rgba(3, 18, 10, 0.3);
+  color: #fff7e8;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 221, 153, 0.1),
+    0 0 18px rgba(252, 174, 64, 0.07);
+  backdrop-filter: blur(7px);
+}
+
+.competition-filter a.active::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 5px;
+  width: 28px;
+  height: 2px;
+  border-radius: 999px;
+  background: #ffd36f;
+  transform: translateX(-50%);
+  box-shadow: 0 0 9px rgba(252, 174, 64, 0.45);
 }
 
 .competition-filter span {
@@ -151,11 +282,20 @@
   text-decoration: none;
 }
 
-.club-filter a.active,
 .club-filter a:hover {
   border-color: rgba(252, 174, 64, 0.42);
   background: rgba(252, 174, 64, 0.14);
   color: #fff0cd;
+}
+
+.club-filter a.active {
+  border-color: rgba(252, 191, 88, 0.82);
+  background: rgba(3, 18, 10, 0.3);
+  color: #fff7e8;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 221, 153, 0.1),
+    0 0 16px rgba(252, 174, 64, 0.07);
+  backdrop-filter: blur(7px);
 }
 
 .club-filter span {
@@ -190,15 +330,18 @@
 }
 
 .news-card-art {
+  position: relative;
   min-height: 170px;
   display: grid;
   place-items: center;
+  overflow: hidden;
+  isolation: isolate;
   background:
     radial-gradient(circle at 30% 20%, rgba(252, 174, 64, 0.2), transparent 12rem),
     linear-gradient(145deg, #0d5b25, #05210d);
 }
 
-.news-card-art span {
+.news-card-art-fallback {
   display: grid;
   width: 74px;
   height: 74px;
@@ -209,6 +352,102 @@
   color: var(--gold-2);
   font-size: 1.4rem;
   font-weight: 1000;
+}
+
+.news-card-art--real-schedule,
+.news-card-art--barcelona-talents {
+  min-height: 220px;
+  align-content: center;
+  justify-items: start;
+  padding: 30px 34px;
+}
+
+.news-card-art--real-schedule::before,
+.news-card-art--barcelona-talents::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.5;
+}
+
+.news-card-art--real-schedule {
+  background:
+    radial-gradient(circle at 82% 20%, rgba(255, 211, 111, 0.28), transparent 24%),
+    linear-gradient(135deg, #14152f 0%, #35215c 58%, #0b1730 100%);
+}
+
+.news-card-art--real-schedule::before {
+  background:
+    linear-gradient(112deg, transparent 0 55%, rgba(255, 255, 255, 0.08) 55% 57%, transparent 57%),
+    repeating-linear-gradient(90deg, transparent 0 47px, rgba(255, 255, 255, 0.055) 48px 49px);
+}
+
+.news-card-art--barcelona-talents {
+  background:
+    radial-gradient(circle at 80% 25%, rgba(252, 174, 64, 0.32), transparent 23%),
+    linear-gradient(135deg, #071d4a 0%, #153d83 48%, #741936 100%);
+}
+
+.news-card-art--barcelona-talents::before {
+  background:
+    linear-gradient(118deg, transparent 0 60%, rgba(255, 255, 255, 0.075) 60% 62%, transparent 62%),
+    repeating-linear-gradient(105deg, transparent 0 54px, rgba(255, 255, 255, 0.045) 55px 56px);
+}
+
+.news-card-art-club {
+  position: relative;
+  z-index: 1;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.news-card-art-metric {
+  position: relative;
+  z-index: 1;
+  margin-top: -4px;
+  color: #fff7e5;
+  font-size: clamp(4.5rem, 9vw, 7rem);
+  font-weight: 1000;
+  line-height: 0.95;
+  letter-spacing: -0.08em;
+  text-shadow: 0 16px 40px rgba(0, 0, 0, 0.38);
+}
+
+.news-card-art-marks {
+  position: absolute;
+  right: 32px;
+  bottom: 30px;
+  z-index: 1;
+  display: flex;
+  gap: 8px;
+}
+
+.news-card-art-marks i {
+  display: block;
+  width: 12px;
+  height: 12px;
+  border: 2px solid rgba(255, 255, 255, 0.78);
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.22);
+}
+
+.news-card-art--barcelona-talents .news-card-art-marks {
+  gap: 10px;
+}
+
+.news-card-art--barcelona-talents .news-card-art-marks i {
+  width: 22px;
+  height: 22px;
+  border: 0;
+  border-radius: 0;
+  background: #ffd36f;
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 94%, 50% 72%, 21% 94%, 32% 57%, 2% 35%, 39% 35%);
+  filter: drop-shadow(0 7px 12px rgba(0, 0, 0, 0.28));
 }
 
 .news-card-body {
@@ -431,6 +670,23 @@
 }
 
 @media (max-width: 640px) {
+  .news-body--league::after {
+    background-position: center top;
+  }
+
+  .news-body--category-top-5::after,
+  .news-body--category-uefa::after {
+    background-position: center top, center -120px;
+  }
+
+  .news-body--category-world-cup::after {
+    background-position: center top, center -45px;
+  }
+
+  .news-body--all-news::after {
+    background-position: center top, center -35px;
+  }
+
   .news-page {
     width: min(100%, calc(100% - 20px));
   }

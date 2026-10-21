@@ -65,9 +65,9 @@ $pageTitle = news_category_page_title($locale, $category, $copy['title'], $compe
   <meta property="og:image" content="https://footballquiz.club/assets/og/football-quiz-1200x630.png">
   <link rel="icon" type="image/png" href="/football_quiz_icon.png">
   <link rel="stylesheet" href="/style.css?v=20261013-heading-font">
-  <link rel="stylesheet" href="/news/news.css?v=20261019-league-navigation">
+  <link rel="stylesheet" href="/news/news.css?v=20261022-transparent-filters-v1">
 </head>
-<body>
+<body class="news-body<?= $competition !== null ? ' news-body--league news-body--' . news_e($competition) : '' ?><?= $competition === null && $category !== null ? ' news-body--category news-body--category-' . news_e($category) : '' ?><?= $category === null ? ' news-body--all-news' : '' ?>">
   <div class="page news-page">
     <header class="topbar news-topbar">
       <a class="brand" href="/">
@@ -131,8 +131,28 @@ $pageTitle = news_category_page_title($locale, $category, $copy['title'], $compe
       <?php else: ?>
         <section class="news-grid" aria-label="<?= news_e($copy['title']) ?>">
           <?php foreach ($items as $item): ?>
+            <?php
+              $itemSlug = (string) ($item['slug'] ?? '');
+              $artVariant = match ($itemSlug) {
+                  'real-madrid-five-match-october-run' => 'real-schedule',
+                  'barcelona-three-golden-boy-finalists' => 'barcelona-talents',
+                  default => null,
+              };
+              $artMetric = $artVariant === 'real-schedule' ? '5' : ($artVariant === 'barcelona-talents' ? '3' : '');
+              $artClub = (string) ($item['clubs'][0]['name'] ?? 'Football Quiz');
+            ?>
             <article class="news-card">
-              <div class="news-card-art" aria-hidden="true"><span>FQ</span></div>
+              <?php if ($artVariant !== null): ?>
+                <div class="news-card-art news-card-art--<?= news_e($artVariant) ?>" aria-hidden="true">
+                  <span class="news-card-art-club"><?= news_e($artClub) ?></span>
+                  <strong class="news-card-art-metric"><?= news_e($artMetric) ?></strong>
+                  <span class="news-card-art-marks">
+                    <?php for ($markIndex = 0; $markIndex < (int) $artMetric; $markIndex++): ?><i></i><?php endfor; ?>
+                  </span>
+                </div>
+              <?php else: ?>
+                <div class="news-card-art" aria-hidden="true"><span class="news-card-art-fallback">FQ</span></div>
+              <?php endif; ?>
               <div class="news-card-body">
                 <div class="news-meta">
                   <time datetime="<?= news_e($item['published_at'] ?? '') ?>"><?= news_e(news_date($item['published_at'] ?? null, $locale)) ?></time>
@@ -169,6 +189,6 @@ $pageTitle = news_category_page_title($locale, $category, $copy['title'], $compe
       <div class="footer-links"><a class="pill-link" href="/"><?= news_e($copy['home']) ?></a><a class="pill-link install-link" href="https://play.google.com/store/apps/details?id=com.arthuralexandryan.footballquiz"><?= news_e($copy['play']) ?></a></div>
     </footer>
   </div>
-  <script src="/news/news-list.js?v=20261019-league-navigation" defer></script>
+  <script src="/news/news-list.js?v=20261022-article-covers-v1" defer></script>
 </body>
 </html>
