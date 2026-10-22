@@ -315,8 +315,10 @@
 }
 
 .news-card {
+  position: relative;
   min-width: 0;
   overflow: hidden;
+  cursor: pointer;
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.035));
@@ -327,6 +329,13 @@
 .news-card:hover {
   transform: translateY(-5px);
   border-color: rgba(252, 174, 64, 0.32);
+}
+
+.news-card:focus-within {
+  border-color: rgba(252, 191, 88, 0.88);
+  box-shadow:
+    0 24px 60px rgba(0, 0, 0, 0.3),
+    0 0 0 3px rgba(252, 174, 64, 0.18);
 }
 
 .news-card-art {
@@ -355,7 +364,11 @@
 }
 
 .news-card-art--real-schedule,
-.news-card-art--barcelona-talents {
+.news-card-art--barcelona-talents,
+.news-card-art--arsenal-champions,
+.news-card-art--bayern-schedule,
+.news-card-art--inter-schedule,
+.news-card-art--psg-comeback {
   min-height: 220px;
   align-content: center;
   justify-items: start;
@@ -363,7 +376,11 @@
 }
 
 .news-card-art--real-schedule::before,
-.news-card-art--barcelona-talents::before {
+.news-card-art--barcelona-talents::before,
+.news-card-art--arsenal-champions::before,
+.news-card-art--bayern-schedule::before,
+.news-card-art--inter-schedule::before,
+.news-card-art--psg-comeback::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -393,6 +410,54 @@
   background:
     linear-gradient(118deg, transparent 0 60%, rgba(255, 255, 255, 0.075) 60% 62%, transparent 62%),
     repeating-linear-gradient(105deg, transparent 0 54px, rgba(255, 255, 255, 0.045) 55px 56px);
+}
+
+.news-card-art--arsenal-champions {
+  background:
+    radial-gradient(circle at 82% 18%, rgba(255, 221, 125, 0.42), transparent 25%),
+    linear-gradient(135deg, #6f0713 0%, #be1428 58%, #3a030a 100%);
+}
+
+.news-card-art--arsenal-champions::before {
+  background:
+    linear-gradient(115deg, transparent 0 58%, rgba(255, 255, 255, 0.1) 58% 60%, transparent 60%),
+    radial-gradient(circle at 78% 30%, transparent 0 42px, rgba(255, 215, 112, 0.2) 43px 45px, transparent 46px);
+}
+
+.news-card-art--bayern-schedule {
+  background:
+    radial-gradient(circle at 82% 20%, rgba(255, 255, 255, 0.24), transparent 24%),
+    linear-gradient(135deg, #770419 0%, #d10b2f 54%, #32000b 100%);
+}
+
+.news-card-art--bayern-schedule::before {
+  background:
+    linear-gradient(118deg, transparent 0 59%, rgba(255, 255, 255, 0.1) 59% 61%, transparent 61%),
+    repeating-linear-gradient(135deg, transparent 0 46px, rgba(255, 255, 255, 0.05) 47px 49px);
+}
+
+.news-card-art--inter-schedule {
+  background:
+    radial-gradient(circle at 82% 20%, rgba(68, 154, 255, 0.34), transparent 25%),
+    linear-gradient(135deg, #020817 0%, #052c70 55%, #02040b 100%);
+}
+
+.news-card-art--inter-schedule::before {
+  background:
+    linear-gradient(118deg, transparent 0 58%, rgba(78, 162, 255, 0.13) 58% 60%, transparent 60%),
+    repeating-linear-gradient(90deg, transparent 0 48px, rgba(65, 142, 239, 0.08) 49px 51px);
+}
+
+.news-card-art--psg-comeback {
+  background:
+    radial-gradient(circle at 82% 19%, rgba(255, 216, 117, 0.34), transparent 24%),
+    linear-gradient(135deg, #06163f 0%, #12387b 48%, #8c0b2c 100%);
+}
+
+.news-card-art--psg-comeback::before {
+  background:
+    linear-gradient(117deg, transparent 0 60%, rgba(255, 255, 255, 0.09) 60% 62%, transparent 62%),
+    repeating-linear-gradient(0deg, transparent 0 38px, rgba(255, 255, 255, 0.045) 39px 40px);
 }
 
 .news-card-art-club {
@@ -450,6 +515,45 @@
   filter: drop-shadow(0 7px 12px rgba(0, 0, 0, 0.28));
 }
 
+.news-card-art--arsenal-champions .news-card-art-marks i {
+  width: 40px;
+  height: 34px;
+  border: 0;
+  border-radius: 4px 4px 14px 14px;
+  background: linear-gradient(180deg, #ffe49a, #fcae40);
+  clip-path: polygon(8% 0, 28% 0, 34% 22%, 66% 22%, 72% 0, 92% 0, 86% 54%, 64% 72%, 64% 88%, 78% 88%, 78% 100%, 22% 100%, 22% 88%, 36% 88%, 36% 72%, 14% 54%);
+  filter: drop-shadow(0 8px 14px rgba(0, 0, 0, 0.3));
+}
+
+.news-card-art--inter-schedule .news-card-art-marks {
+  width: 74px;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.news-card-art--inter-schedule .news-card-art-marks i {
+  width: 18px;
+  height: 18px;
+  border-color: rgba(125, 190, 255, 0.82);
+  background: rgba(45, 125, 224, 0.28);
+}
+
+.news-card-art--psg-comeback .news-card-art-marks {
+  align-items: flex-end;
+  gap: 7px;
+}
+
+.news-card-art--psg-comeback .news-card-art-marks i {
+  width: 12px;
+  border: 0;
+  border-radius: 999px 999px 4px 4px;
+  background: linear-gradient(180deg, #ffe59f, #fcae40);
+}
+
+.news-card-art--psg-comeback .news-card-art-marks i:nth-child(1) { height: 18px; }
+.news-card-art--psg-comeback .news-card-art-marks i:nth-child(2) { height: 28px; }
+.news-card-art--psg-comeback .news-card-art-marks i:nth-child(3) { height: 40px; }
+
 .news-card-body {
   padding: 22px;
 }
@@ -483,6 +587,19 @@
 
 .news-card h2 a {
   text-decoration: none;
+}
+
+.news-card h2 a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.news-card .news-meta a,
+.news-card .news-read {
+  position: relative;
+  z-index: 2;
 }
 
 .news-card p {
@@ -537,11 +654,90 @@
 .article-shell {
   width: min(900px, 100%);
   margin: 20px auto 0;
-  padding: clamp(24px, 6vw, 64px);
+  padding: 0;
+  overflow: hidden;
   border: 1px solid var(--line);
   border-radius: var(--radius-xl);
-  background: linear-gradient(150deg, rgba(10, 38, 17, 0.98), rgba(5, 17, 8, 0.98));
+  background: linear-gradient(150deg, rgba(7, 25, 12, 0.98), rgba(3, 12, 6, 0.99));
   box-shadow: 0 40px 100px var(--shadow);
+}
+
+.article-masthead {
+  --article-club-glow: rgba(252, 174, 64, 0.2);
+  position: relative;
+  min-height: 580px;
+  display: flex;
+  align-items: center;
+  padding: clamp(34px, 6vw, 64px);
+  overflow: hidden;
+  isolation: isolate;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  background:
+    linear-gradient(90deg, rgba(2, 16, 8, 0.96) 0%, rgba(2, 16, 8, 0.89) 56%, rgba(2, 12, 7, 0.48) 100%),
+    radial-gradient(circle at 84% 28%, var(--article-club-glow), transparent 32%),
+    var(--league-background, var(--category-background, linear-gradient(145deg, #0c632c, #041b0a))) center / cover no-repeat;
+}
+
+.article-masthead::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, transparent 58%, rgba(2, 10, 5, 0.76) 100%),
+    repeating-linear-gradient(115deg, transparent 0 76px, rgba(255, 255, 255, 0.025) 77px 78px);
+}
+
+.article-theme--real-schedule { --article-club-glow: rgba(255, 211, 111, 0.32); }
+.article-theme--barcelona-talents { --article-club-glow: rgba(42, 100, 220, 0.35); }
+.article-theme--arsenal-champions { --article-club-glow: rgba(222, 26, 52, 0.36); }
+.article-theme--bayern-schedule { --article-club-glow: rgba(222, 15, 52, 0.34); }
+.article-theme--inter-schedule { --article-club-glow: rgba(38, 116, 232, 0.4); }
+.article-theme--psg-comeback { --article-club-glow: rgba(170, 16, 57, 0.38); }
+
+.article-masthead-content {
+  position: relative;
+  z-index: 2;
+  width: min(100%, 760px);
+}
+
+.article-masthead-accent {
+  position: absolute;
+  top: 50%;
+  right: clamp(28px, 6vw, 64px);
+  z-index: 1;
+  display: grid;
+  justify-items: end;
+  transform: translateY(-44%);
+  color: rgba(255, 247, 229, 0.19);
+  pointer-events: none;
+  user-select: none;
+}
+
+.article-masthead-accent span {
+  max-width: 18ch;
+  font-size: 0.8rem;
+  font-weight: 1000;
+  letter-spacing: 0.18em;
+  text-align: right;
+  text-transform: uppercase;
+}
+
+.article-masthead-accent strong {
+  margin-top: -8px;
+  font-size: clamp(10rem, 24vw, 16rem);
+  font-weight: 1000;
+  line-height: 0.84;
+  letter-spacing: -0.1em;
+  text-shadow: 0 24px 70px rgba(0, 0, 0, 0.24);
+}
+
+.article-content {
+  padding: clamp(30px, 6vw, 64px);
+  background:
+    radial-gradient(circle at 100% 0%, rgba(252, 174, 64, 0.055), transparent 22rem),
+    linear-gradient(150deg, rgba(7, 25, 12, 0.99), rgba(3, 12, 6, 0.99));
 }
 
 .article-back {
@@ -554,6 +750,7 @@
 
 .article-shell h1 {
   margin-top: 18px;
+  max-width: 14ch;
   font-size: clamp(2.35rem, 5.2vw, 4rem);
   line-height: 1.05;
 }
@@ -604,9 +801,13 @@
 }
 
 .article-body {
-  margin-top: 34px;
+  margin-top: 0;
   font-size: 1.08rem;
   line-height: 1.82;
+}
+
+.article-hero + .article-body {
+  margin-top: 34px;
 }
 
 .article-body p {
@@ -732,8 +933,7 @@
     border-radius: 15px;
   }
 
-  .news-hero,
-  .article-shell {
+  .news-hero {
     padding: 24px 18px;
   }
 
@@ -750,6 +950,38 @@
 
   .article-placeholder {
     min-height: 220px;
+  }
+
+  .article-masthead {
+    min-height: 560px;
+    align-items: flex-end;
+    padding: 30px 20px;
+    background:
+      linear-gradient(180deg, rgba(2, 14, 7, 0.56) 0%, rgba(2, 14, 7, 0.88) 48%, rgba(2, 12, 6, 0.98) 100%),
+      radial-gradient(circle at 82% 22%, var(--article-club-glow), transparent 34%),
+      var(--league-background, var(--category-background, linear-gradient(145deg, #0c632c, #041b0a))) center top / cover no-repeat;
+  }
+
+  .article-masthead-content {
+    width: 100%;
+  }
+
+  .article-masthead-accent {
+    top: 80px;
+    right: 22px;
+    transform: none;
+  }
+
+  .article-masthead-accent span {
+    font-size: 0.67rem;
+  }
+
+  .article-masthead-accent strong {
+    font-size: clamp(7rem, 40vw, 10rem);
+  }
+
+  .article-content {
+    padding: 30px 20px;
   }
 
   .article-cta {

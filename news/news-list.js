@@ -65,8 +65,12 @@
 
   function articleVisual(item) {
     const visuals = {
-      'real-madrid-five-match-october-run': { variant: 'real-schedule', metric: 5 },
-      'barcelona-three-golden-boy-finalists': { variant: 'barcelona-talents', metric: 3 }
+      'real-madrid-five-match-october-run': { variant: 'real-schedule', metric: 5, marks: 5 },
+      'barcelona-three-golden-boy-finalists': { variant: 'barcelona-talents', metric: 3, marks: 3 },
+      'arsenal-2025-26-premier-league-champions': { variant: 'arsenal-champions', metric: 14, marks: 1 },
+      'bayern-seven-matches-in-22-days': { variant: 'bayern-schedule', metric: 7, marks: 7 },
+      'inter-nine-matches-in-29-days': { variant: 'inter-schedule', metric: 9, marks: 9 },
+      'psg-comeback-win-at-strasbourg': { variant: 'psg-comeback', metric: 3, marks: 3 }
     };
     return visuals[item.slug] || null;
   }
@@ -89,7 +93,7 @@
       metric.textContent = String(visual.metric);
       const marks = document.createElement('span');
       marks.className = 'news-card-art-marks';
-      for (let index = 0; index < visual.metric; index += 1) {
+      for (let index = 0; index < visual.marks; index += 1) {
         marks.append(document.createElement('i'));
       }
       art.append(club, metric, marks);
