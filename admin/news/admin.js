@@ -23,7 +23,12 @@ const signInButton = document.querySelector('#sign-in');
 const signOutButton = document.querySelector('#sign-out');
 const authMessage = document.querySelector('#auth-message');
 const draftMessage = document.querySelector('#draft-message');
+const editor = document.querySelector('#article-editor');
+const editorForm = document.querySelector('#editor-form');
+const editorMessage = document.querySelector('#editor-message');
+const locales = ['en', 'ru', 'hy'];
 let token = null;
+let activeArticleId = null;
 
 async function api(path, options = {}) {
   const response = await fetch(`${apiBase}${path}`, {
@@ -63,9 +68,83 @@ async function loadArticles() {
         actions.append(link);
       }
       row.append(actions);
+    } else if (item.status === 'draft') {
+      const edit = document.createElement('button');
+      edit.className = 'article-link article-edit';
+      edit.type = 'button';
+      edit.textContent = 'Редактировать';
+      edit.addEventListener('click', () => openEditor(item.article_id));
+      row.append(edit);
     }
     return row;
   }) : [Object.assign(document.createElement('p'), { textContent: 'Статей пока нет.' })]));
+}
+
+function translationCard(locale) {
+  return editorForm.querySelector(`[data-locale="${locale}"]`);
+}
+
+function setEditorUrl(articleId) {
+  const url = new URL(window.location.href);
+  if (articleId) url.searchParams.set('article', articleId);
+  else url.searchParams.delete('article');
+  window.history.replaceState(null, '', url);
+}
+
+function fillEditor(article) {
+  activeArticleId = article.article_id;
+  document.querySelector('#editor-title').textContent = article.slug;
+  document.querySelector('#editor-slug').value = article.slug;
+  document.querySelector('#editor-news-type').value = article.news_type;
+  document.querySelector('#editor-primary-category').value = article.primary_category || 'top-5';
+  for (const locale of locales) {
+    const card = translationCard(locale);
+    const translation = article.translations[locale];
+    for (const field of ['title', 'summary', 'body_markdown', 'seo_title', 'seo_description']) {
+      card.querySelector(`[data-field="${field}"]`).value = translation[field] || '';
+    }
+  }
+  const source = article.source || {};
+  document.querySelector('#source-publisher').value = source.publisher_name || '';
+  document.querySelector('#source-url').value = source.source_url || '';
+  document.querySelector('#source-published-at').value = source.source_published_at?.slice(0, 10) || '';
+  editor.hidden = false;
+  editorMessage.textContent = '';
+  setEditorUrl(article.article_id);
+}
+
+async function openEditor(articleId) {
+  editor.hidden = false;
+  editorMessage.textContent = 'Загружаем черновик…';
+  editor.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  try {
+    fillEditor(await api(`/v1/admin/news/articles/${encodeURIComponent(articleId)}`));
+  } catch (error) {
+    activeArticleId = null;
+    editorMessage.textContent = error.message;
+  }
+}
+
+function draftPayload() {
+  const translations = {};
+  for (const locale of locales) {
+    const card = translationCard(locale);
+    translations[locale] = Object.fromEntries(
+      ['title', 'summary', 'body_markdown', 'seo_title', 'seo_description']
+        .map((field) => [field, card.querySelector(`[data-field="${field}"]`).value])
+    );
+  }
+  return {
+    slug: document.querySelector('#editor-slug').value,
+    news_type: document.querySelector('#editor-news-type').value,
+    primary_category: document.querySelector('#editor-primary-category').value,
+    translations,
+    source: {
+      publisher_name: document.querySelector('#source-publisher').value,
+      source_url: document.querySelector('#source-url').value,
+      source_published_at: document.querySelector('#source-published-at').value
+    }
+  };
 }
 
 signInButton.addEventListener('click', async () => {
@@ -74,15 +153,36 @@ signInButton.addEventListener('click', async () => {
 });
 signOutButton.addEventListener('click', () => signOut(auth));
 document.querySelector('#refresh').addEventListener('click', () => loadArticles().catch((error) => { draftMessage.textContent = error.message; }));
+document.querySelector('#close-editor').addEventListener('click', () => {
+  activeArticleId = null;
+  editor.hidden = true;
+  setEditorUrl(null);
+});
+editorForm.addEventListener('submit', async (event) => {
+  event.preventDefault();
+  if (!activeArticleId) return;
+  editorMessage.textContent = 'Сохраняем…';
+  try {
+    const article = await api(`/v1/admin/news/articles/${encodeURIComponent(activeArticleId)}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(draftPayload())
+    });
+    fillEditor(article);
+    editorMessage.textContent = 'Черновик сохранён.';
+    await loadArticles();
+  } catch (error) { editorMessage.textContent = error.message; }
+});
 document.querySelector('#draft-form').addEventListener('submit', async (event) => {
   event.preventDefault();
   draftMessage.textContent = 'Создаём…';
   const body = Object.fromEntries(new FormData(event.currentTarget));
   try {
-    await api('/v1/admin/news/articles', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+    const article = await api('/v1/admin/news/articles', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
     event.currentTarget.reset();
     draftMessage.textContent = 'Черновик создан.';
     await loadArticles();
+    await openEditor(article.article_id);
   } catch (error) { draftMessage.textContent = error.message; }
 });
 
@@ -101,6 +201,8 @@ onAuthStateChanged(auth, async (user) => {
     workspace.hidden = false;
     signOutButton.hidden = false;
     await loadArticles();
+    const articleId = new URL(window.location.href).searchParams.get('article');
+    if (articleId) await openEditor(articleId);
   } catch (error) {
     token = null;
     authMessage.textContent = error.message;
