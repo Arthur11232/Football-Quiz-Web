@@ -12,6 +12,8 @@ h1,h2,p { margin-top: 0; } h1 { font-size: clamp(2rem, 5vw, 4rem); margin-bottom
 .button { border: 0; border-radius: 14px; padding: 13px 18px; background: #f7b33c; color: #102514; font: inherit; font-weight: 900; cursor: pointer; }
 .button-secondary { border: 1px solid #41694a; background: #102b18; color: #eefaf0; }
 .workspace-title { margin-top: 56px; }.uid { color: #9fc9a7; font-size: .8rem; overflow-wrap: anywhere; }
+.list-heading { margin-bottom: 20px; }
+.list-heading h2 { margin-bottom: 0; }
 .form-grid { display: grid; grid-template-columns: 2fr 1fr 1fr auto; gap: 16px; align-items: end; }.form-grid h2,.form-grid .message { grid-column: 1 / -1; }
 label { display: grid; gap: 8px; color: #bcd2c0; font-size: .85rem; font-weight: 700; } input,select { width: 100%; border: 1px solid #365d3e; border-radius: 12px; padding: 12px; background: #06140a; color: #fff; font: inherit; }
 .message { min-height: 1.4em; margin: 14px 0 0; color: #f5c773; }.article-list { display: grid; gap: 10px; }.article-row { display: grid; gap: 5px; padding: 15px; border: 1px solid #24452c; border-radius: 14px; background: #07180c; }.article-row span { color: #9fbaa4; font-size: .88rem; }
