@@ -69,12 +69,20 @@ async function loadArticles() {
       }
       row.append(actions);
     } else if (item.status === 'draft') {
+      const actions = document.createElement('div');
+      actions.className = 'article-actions';
       const edit = document.createElement('button');
       edit.className = 'article-link article-edit';
       edit.type = 'button';
       edit.textContent = 'Редактировать';
       edit.addEventListener('click', () => openEditor(item.article_id));
-      row.append(edit);
+      const remove = document.createElement('button');
+      remove.className = 'article-link article-delete';
+      remove.type = 'button';
+      remove.textContent = 'Удалить';
+      remove.addEventListener('click', () => deleteDraft(item.article_id, item.slug, remove));
+      actions.append(edit, remove);
+      row.append(actions);
     }
     return row;
   }) : [Object.assign(document.createElement('p'), { textContent: 'Статей пока нет.' })]));
@@ -122,6 +130,25 @@ async function openEditor(articleId) {
   } catch (error) {
     activeArticleId = null;
     editorMessage.textContent = error.message;
+  }
+}
+
+async function deleteDraft(articleId, slug, button) {
+  if (!window.confirm(`Удалить черновик «${slug}»? Это действие нельзя отменить.`)) return;
+  button.disabled = true;
+  draftMessage.textContent = 'Удаляем черновик…';
+  try {
+    await api(`/v1/admin/news/articles/${encodeURIComponent(articleId)}`, { method: 'DELETE' });
+    if (activeArticleId === articleId) {
+      activeArticleId = null;
+      editor.hidden = true;
+      setEditorUrl(null);
+    }
+    draftMessage.textContent = 'Черновик удалён.';
+    await loadArticles();
+  } catch (error) {
+    button.disabled = false;
+    draftMessage.textContent = error.message;
   }
 }
 
