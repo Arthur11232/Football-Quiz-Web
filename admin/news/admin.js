@@ -254,11 +254,12 @@ editorForm.addEventListener('submit', async (event) => {
 });
 document.querySelector('#draft-form').addEventListener('submit', async (event) => {
   event.preventDefault();
+  const form = event.currentTarget;
   draftMessage.textContent = 'Создаём…';
-  const body = Object.fromEntries(new FormData(event.currentTarget));
+  const body = Object.fromEntries(new FormData(form));
   try {
     const article = await api('/v1/admin/news/articles', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
-    event.currentTarget.reset();
+    form.reset();
     draftMessage.textContent = 'Черновик создан.';
     await loadArticles();
     await openEditor(article.article_id);
