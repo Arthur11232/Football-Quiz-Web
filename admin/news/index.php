@@ -56,14 +56,42 @@ header('X-Robots-Tag: noindex, nofollow, noarchive');
           </div>
 
           <div class="translation-grid">
-            <?php foreach (['en' => 'English', 'ru' => 'Русский', 'hy' => 'Հայերեն'] as $locale => $label): ?>
+            <?php
+            $translationFields = [
+                'en' => [
+                    'language' => 'English',
+                    'title' => 'Title',
+                    'summary' => 'Short description',
+                    'body' => 'Article text (Markdown)',
+                    'seo_title' => 'SEO title',
+                    'seo_description' => 'SEO description',
+                ],
+                'ru' => [
+                    'language' => 'Русский',
+                    'title' => 'Заголовок',
+                    'summary' => 'Краткое описание',
+                    'body' => 'Текст статьи (Markdown)',
+                    'seo_title' => 'SEO-заголовок',
+                    'seo_description' => 'SEO-описание',
+                ],
+                'hy' => [
+                    'language' => 'Հայերեն',
+                    'title' => 'Վերնագիր',
+                    'summary' => 'Կարճ նկարագրություն',
+                    'body' => 'Հոդվածի տեքստ (Markdown)',
+                    'seo_title' => 'SEO վերնագիր',
+                    'seo_description' => 'SEO նկարագրություն',
+                ],
+            ];
+            ?>
+            <?php foreach ($translationFields as $locale => $labels): ?>
               <fieldset class="translation-card" data-locale="<?= $locale ?>">
-                <legend><?= $label ?></legend>
-                <label>Заголовок<input data-field="title" maxlength="220"></label>
-                <label>Краткое описание<textarea data-field="summary" maxlength="2000" rows="3"></textarea></label>
-                <label>Текст статьи (Markdown)<textarea data-field="body_markdown" maxlength="100000" rows="8"></textarea></label>
-                <label>SEO-заголовок<input data-field="seo_title" maxlength="220"></label>
-                <label>SEO-описание<textarea data-field="seo_description" maxlength="320" rows="2"></textarea></label>
+                <legend><?= $labels['language'] ?></legend>
+                <label><?= $labels['title'] ?><input data-field="title" maxlength="220"></label>
+                <label><?= $labels['summary'] ?><textarea data-field="summary" maxlength="2000" rows="3"></textarea></label>
+                <label><?= $labels['body'] ?><textarea data-field="body_markdown" maxlength="100000" rows="8"></textarea></label>
+                <label><?= $labels['seo_title'] ?><input data-field="seo_title" maxlength="220"></label>
+                <label><?= $labels['seo_description'] ?><textarea data-field="seo_description" maxlength="320" rows="2"></textarea></label>
               </fieldset>
             <?php endforeach; ?>
           </div>
