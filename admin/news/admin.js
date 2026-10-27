@@ -41,11 +41,29 @@ async function loadArticles() {
   list.replaceChildren(...(data.items.length ? data.items.map((item) => {
     const row = document.createElement('article');
     row.className = 'article-row';
+    const copy = document.createElement('div');
+    copy.className = 'article-copy';
     const title = document.createElement('strong');
     title.textContent = item.slug;
     const meta = document.createElement('span');
     meta.textContent = `${item.status} · ${item.primary_category || 'без категории'} · переводов: ${item.translation_count}`;
-    row.append(title, meta);
+    copy.append(title, meta);
+    row.append(copy);
+    if (item.status === 'published') {
+      const actions = document.createElement('nav');
+      actions.className = 'article-actions';
+      actions.setAttribute('aria-label', `Открыть ${item.slug} на сайте`);
+      for (const locale of ['ru', 'en', 'hy']) {
+        const link = document.createElement('a');
+        link.className = 'article-link';
+        link.href = `/${locale}/news/${encodeURIComponent(item.slug)}/`;
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        link.textContent = locale.toUpperCase();
+        actions.append(link);
+      }
+      row.append(actions);
+    }
     return row;
   }) : [Object.assign(document.createElement('p'), { textContent: 'Статей пока нет.' })]));
 }
