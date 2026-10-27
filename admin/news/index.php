@@ -11,7 +11,7 @@ header('X-Robots-Tag: noindex, nofollow, noarchive');
   <meta name="robots" content="noindex,nofollow,noarchive">
   <title>News Admin — Football Quiz</title>
   <link rel="icon" href="/football_quiz_icon.png">
-  <link rel="stylesheet" href="/admin/news/admin.css?v=20261027-a5">
+  <link rel="stylesheet" href="/admin/news/admin.css?v=20261027-a6">
 </head>
 <body>
   <main class="admin-shell">
@@ -103,14 +103,31 @@ header('X-Robots-Tag: noindex, nofollow, noarchive');
               <label>URL<input id="source-url" type="url" maxlength="2048" placeholder="https://www.realmadrid.com/..."></label>
               <label>Дата публикации<input id="source-published-at" type="date"></label>
             </div>
+            <a id="open-source" class="article-link source-link" href="#" target="_blank" rel="noopener noreferrer" hidden>Открыть источник</a>
           </fieldset>
 
+          <div class="preview-actions" aria-label="Предпросмотр переводов">
+            <button class="button button-secondary" type="button" data-preview-locale="en">Preview EN</button>
+            <button class="button button-secondary" type="button" data-preview-locale="ru">Preview RU</button>
+            <button class="button button-secondary" type="button" data-preview-locale="hy">Preview HY</button>
+          </div>
           <div class="editor-actions">
-            <button class="button" type="submit">Сохранить черновик</button>
+            <button id="save-draft" class="button" type="submit">Сохранить черновик</button>
+            <button id="submit-review" class="button button-secondary" type="button">Передать на проверку</button>
+            <button id="return-draft" class="button button-secondary" type="button" hidden>Вернуть в черновик</button>
+            <button id="publish-article" class="button button-publish" type="button" hidden>Опубликовать</button>
             <p id="editor-message" class="message" role="status"></p>
           </div>
         </form>
       </section>
+
+      <dialog id="article-preview" class="preview-dialog">
+        <button id="close-preview" class="preview-close" type="button" aria-label="Закрыть">×</button>
+        <p id="preview-locale" class="eyebrow"></p>
+        <h2 id="preview-title"></h2>
+        <p id="preview-summary" class="preview-summary"></p>
+        <div id="preview-body" class="preview-body"></div>
+      </dialog>
 
       <section class="panel">
         <div class="list-heading"><h2>Последние статьи</h2><button id="refresh" class="button button-secondary" type="button">Обновить</button></div>
@@ -118,6 +135,6 @@ header('X-Robots-Tag: noindex, nofollow, noarchive');
       </section>
     </section>
   </main>
-  <script type="module" src="/admin/news/admin.js?v=20261027-a5"></script>
+  <script type="module" src="/admin/news/admin.js?v=20261027-a6"></script>
 </body>
 </html>

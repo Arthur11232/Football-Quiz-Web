@@ -26,9 +26,11 @@ const draftMessage = document.querySelector('#draft-message');
 const editor = document.querySelector('#article-editor');
 const editorForm = document.querySelector('#editor-form');
 const editorMessage = document.querySelector('#editor-message');
+const previewDialog = document.querySelector('#article-preview');
 const locales = ['en', 'ru', 'hy'];
 let token = null;
 let activeArticleId = null;
+let activeArticleStatus = null;
 
 async function api(path, options = {}) {
   const response = await fetch(`${apiBase}${path}`, {
@@ -68,20 +70,23 @@ async function loadArticles() {
         actions.append(link);
       }
       row.append(actions);
-    } else if (item.status === 'draft') {
+    } else if (item.status === 'draft' || item.status === 'review') {
       const actions = document.createElement('div');
       actions.className = 'article-actions';
       const edit = document.createElement('button');
       edit.className = 'article-link article-edit';
       edit.type = 'button';
-      edit.textContent = 'Редактировать';
+      edit.textContent = item.status === 'draft' ? 'Редактировать' : 'Открыть проверку';
       edit.addEventListener('click', () => openEditor(item.article_id));
-      const remove = document.createElement('button');
-      remove.className = 'article-link article-delete';
-      remove.type = 'button';
-      remove.textContent = 'Удалить';
-      remove.addEventListener('click', () => deleteDraft(item.article_id, item.slug, remove));
-      actions.append(edit, remove);
+      actions.append(edit);
+      if (item.status === 'draft') {
+        const remove = document.createElement('button');
+        remove.className = 'article-link article-delete';
+        remove.type = 'button';
+        remove.textContent = 'Удалить';
+        remove.addEventListener('click', () => deleteDraft(item.article_id, item.slug, remove));
+        actions.append(remove);
+      }
       row.append(actions);
     }
     return row;
@@ -101,6 +106,7 @@ function setEditorUrl(articleId) {
 
 function fillEditor(article) {
   activeArticleId = article.article_id;
+  activeArticleStatus = article.status;
   document.querySelector('#editor-title').textContent = article.slug;
   document.querySelector('#editor-slug').value = article.slug;
   document.querySelector('#editor-news-type').value = article.news_type;
@@ -116,9 +122,22 @@ function fillEditor(article) {
   document.querySelector('#source-publisher').value = source.publisher_name || '';
   document.querySelector('#source-url').value = source.source_url || '';
   document.querySelector('#source-published-at').value = source.source_published_at?.slice(0, 10) || '';
+  const sourceLink = document.querySelector('#open-source');
+  sourceLink.hidden = !source.source_url;
+  sourceLink.href = source.source_url || '#';
+  setEditorMode(article.status);
   editor.hidden = false;
   editorMessage.textContent = '';
   setEditorUrl(article.article_id);
+}
+
+function setEditorMode(status) {
+  const editable = status === 'draft';
+  for (const field of editorForm.querySelectorAll('input, textarea, select')) field.disabled = !editable;
+  document.querySelector('#save-draft').hidden = !editable;
+  document.querySelector('#submit-review').hidden = !editable;
+  document.querySelector('#return-draft').hidden = status !== 'review';
+  document.querySelector('#publish-article').hidden = status !== 'review';
 }
 
 async function openEditor(articleId) {
@@ -129,8 +148,31 @@ async function openEditor(articleId) {
     fillEditor(await api(`/v1/admin/news/articles/${encodeURIComponent(articleId)}`));
   } catch (error) {
     activeArticleId = null;
+    activeArticleStatus = null;
     editorMessage.textContent = error.message;
   }
+}
+
+function showPreview(locale) {
+  const card = translationCard(locale);
+  document.querySelector('#preview-locale').textContent = locale.toUpperCase();
+  document.querySelector('#preview-title').textContent = card.querySelector('[data-field="title"]').value || 'Без заголовка';
+  document.querySelector('#preview-summary').textContent = card.querySelector('[data-field="summary"]').value;
+  document.querySelector('#preview-body').textContent = card.querySelector('[data-field="body_markdown"]').value;
+  previewDialog.showModal();
+}
+
+async function articleAction(action, pendingMessage) {
+  if (!activeArticleId) return;
+  editorMessage.textContent = pendingMessage;
+  try {
+    const article = await api(`/v1/admin/news/articles/${encodeURIComponent(activeArticleId)}/actions/${action}`, { method: 'POST' });
+    fillEditor(article);
+    editorMessage.textContent = action === 'submit-review'
+      ? 'Статья передана на проверку.'
+      : action === 'return-draft' ? 'Статья возвращена в черновик.' : 'Статья опубликована.';
+    await loadArticles();
+  } catch (error) { editorMessage.textContent = error.message; }
 }
 
 async function deleteDraft(articleId, slug, button) {
@@ -182,12 +224,22 @@ signOutButton.addEventListener('click', () => signOut(auth));
 document.querySelector('#refresh').addEventListener('click', () => loadArticles().catch((error) => { draftMessage.textContent = error.message; }));
 document.querySelector('#close-editor').addEventListener('click', () => {
   activeArticleId = null;
+  activeArticleStatus = null;
   editor.hidden = true;
   setEditorUrl(null);
 });
+for (const button of document.querySelectorAll('[data-preview-locale]')) {
+  button.addEventListener('click', () => showPreview(button.dataset.previewLocale));
+}
+document.querySelector('#close-preview').addEventListener('click', () => previewDialog.close());
+document.querySelector('#submit-review').addEventListener('click', () => articleAction('submit-review', 'Проверяем готовность…'));
+document.querySelector('#return-draft').addEventListener('click', () => articleAction('return-draft', 'Возвращаем в черновик…'));
+document.querySelector('#publish-article').addEventListener('click', () => {
+  if (window.confirm('Опубликовать статью для всех языков?')) articleAction('publish', 'Публикуем…');
+});
 editorForm.addEventListener('submit', async (event) => {
   event.preventDefault();
-  if (!activeArticleId) return;
+  if (!activeArticleId || activeArticleStatus !== 'draft') return;
   editorMessage.textContent = 'Сохраняем…';
   try {
     const article = await api(`/v1/admin/news/articles/${encodeURIComponent(activeArticleId)}`, {
