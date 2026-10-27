@@ -65,6 +65,7 @@
 
   function articleVisual(item) {
     const visuals = {
+      'real-madrid-wins-clasico-barcelona-2-1': { variant: 'clasico-result', metric: '2:1', marks: 3, label: 'Real Madrid · Barcelona' },
       'real-madrid-five-match-october-run': { variant: 'real-schedule', metric: 5, marks: 5 },
       'barcelona-three-golden-boy-finalists': { variant: 'barcelona-talents', metric: 3, marks: 3 },
       'arsenal-2025-26-premier-league-champions': { variant: 'arsenal-champions', metric: 14, marks: 1 },
@@ -87,7 +88,7 @@
       art.classList.add(`news-card-art--${visual.variant}`);
       const club = document.createElement('span');
       club.className = 'news-card-art-club';
-      club.textContent = item.clubs?.[0]?.name || 'Football Quiz';
+      club.textContent = visual.label || item.clubs?.[0]?.name || 'Football Quiz';
       const metric = document.createElement('strong');
       metric.className = 'news-card-art-metric';
       metric.textContent = String(visual.metric);

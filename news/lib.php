@@ -144,10 +144,11 @@ function news_competition_label(string $locale, string $competition): string
     return news_competitions($locale)[$competition] ?? $competition;
 }
 
-/** @return array{variant: string, metric: int, marks: int}|null */
+/** @return array{variant: string, metric: int|string, marks: int, label?: string}|null */
 function news_article_visual(string $slug): ?array
 {
     return match ($slug) {
+        'real-madrid-wins-clasico-barcelona-2-1' => ['variant' => 'clasico-result', 'metric' => '2:1', 'marks' => 3, 'label' => 'Real Madrid · Barcelona'],
         'real-madrid-five-match-october-run' => ['variant' => 'real-schedule', 'metric' => 5, 'marks' => 5],
         'barcelona-three-golden-boy-finalists' => ['variant' => 'barcelona-talents', 'metric' => 3, 'marks' => 3],
         'arsenal-2025-26-premier-league-champions' => ['variant' => 'arsenal-champions', 'metric' => 14, 'marks' => 1],

@@ -340,7 +340,7 @@
 
 .news-card-art {
   position: relative;
-  min-height: 170px;
+  min-height: 220px;
   display: grid;
   place-items: center;
   overflow: hidden;
@@ -350,20 +350,35 @@
     linear-gradient(145deg, #0d5b25, #05210d);
 }
 
+.news-card-art:not([class*="news-card-art--"])::after {
+  content: "";
+  position: absolute;
+  right: -46px;
+  bottom: -92px;
+  width: 220px;
+  height: 220px;
+  border: 28px solid rgba(255, 255, 255, 0.045);
+  border-radius: 50%;
+}
+
 .news-card-art-fallback {
+  position: relative;
+  z-index: 1;
   display: grid;
-  width: 74px;
-  height: 74px;
+  width: 92px;
+  height: 92px;
   place-items: center;
   border: 1px solid rgba(255, 255, 255, 0.22);
   border-radius: 24px;
   background: rgba(255, 255, 255, 0.08);
   color: var(--gold-2);
-  font-size: 1.4rem;
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.24);
+  font-size: 1.7rem;
   font-weight: 1000;
 }
 
 .news-card-art--real-schedule,
+.news-card-art--clasico-result,
 .news-card-art--barcelona-talents,
 .news-card-art--arsenal-champions,
 .news-card-art--bayern-schedule,
@@ -376,6 +391,7 @@
 }
 
 .news-card-art--real-schedule::before,
+.news-card-art--clasico-result::before,
 .news-card-art--barcelona-talents::before,
 .news-card-art--arsenal-champions::before,
 .news-card-art--bayern-schedule::before,
@@ -398,6 +414,39 @@
   background:
     linear-gradient(112deg, transparent 0 55%, rgba(255, 255, 255, 0.08) 55% 57%, transparent 57%),
     repeating-linear-gradient(90deg, transparent 0 47px, rgba(255, 255, 255, 0.055) 48px 49px);
+}
+
+.news-card-art--clasico-result {
+  background:
+    radial-gradient(circle at 76% 24%, rgba(255, 211, 111, 0.34), transparent 22%),
+    linear-gradient(135deg, #f5f2e8 0 49%, #a20f35 49% 67%, #112b68 67% 100%);
+}
+
+.news-card-art--clasico-result::before {
+  background:
+    linear-gradient(112deg, transparent 0 47%, rgba(255, 255, 255, 0.34) 47% 49%, transparent 49%),
+    repeating-linear-gradient(90deg, transparent 0 47px, rgba(255, 255, 255, 0.065) 48px 49px);
+}
+
+.news-card-art--clasico-result .news-card-art-club {
+  color: #18213a;
+}
+
+.news-card-art--clasico-result .news-card-art-metric {
+  color: #111a32;
+  letter-spacing: -0.06em;
+  text-shadow: 0 14px 34px rgba(255, 255, 255, 0.38);
+}
+
+.news-card-art--clasico-result .news-card-art-marks i:nth-child(1),
+.news-card-art--clasico-result .news-card-art-marks i:nth-child(2) {
+  border-color: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.28);
+}
+
+.news-card-art--clasico-result .news-card-art-marks i:nth-child(3) {
+  border-color: rgba(255, 211, 111, 0.94);
+  background: rgba(255, 211, 111, 0.42);
 }
 
 .news-card-art--barcelona-talents {

@@ -65,7 +65,7 @@ $structuredData = $article === null ? null : [
   <?php if ($article !== null): ?><meta property="article:published_time" content="<?= news_e($article['published_at'] ?? '') ?>"><meta property="article:modified_time" content="<?= news_e($article['updated_at'] ?? '') ?>"><?php endif; ?>
   <link rel="icon" type="image/png" href="/football_quiz_icon.png">
   <link rel="stylesheet" href="/style.css?v=20261013-heading-font">
-  <link rel="stylesheet" href="/news/news.css?v=20261022-clickable-cards-v1">
+  <link rel="stylesheet" href="/news/news.css?v=20261028-card-visuals-v1">
   <?php if ($structuredData !== null): ?><script type="application/ld+json"><?= json_encode($structuredData, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_THROW_ON_ERROR) ?></script><?php endif; ?>
 </head>
 <body class="<?= news_e($articleBodyClass) ?>">
