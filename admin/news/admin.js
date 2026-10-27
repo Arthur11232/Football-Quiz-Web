@@ -1,5 +1,6 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
 import { getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+import { DialogManager } from './dialog-manager.js';
 
 const app = initializeApp({
   apiKey: 'AIzaSyBEuNcamsoPF_4BeBauZOu78c81GXUjhYc',
@@ -27,6 +28,7 @@ const editor = document.querySelector('#article-editor');
 const editorForm = document.querySelector('#editor-form');
 const editorMessage = document.querySelector('#editor-message');
 const previewDialog = document.querySelector('#article-preview');
+const dialogManager = new DialogManager(document.querySelector('#app-dialog'));
 const locales = ['en', 'ru', 'hy'];
 let token = null;
 let activeArticleId = null;
@@ -176,7 +178,14 @@ async function articleAction(action, pendingMessage) {
 }
 
 async function deleteDraft(articleId, slug, button) {
-  if (!window.confirm(`Удалить черновик «${slug}»? Это действие нельзя отменить.`)) return;
+  const confirmed = await dialogManager.confirm({
+    eyebrow: 'Удаление черновика',
+    title: 'Удалить этот черновик?',
+    message: `Черновик «${slug}» будет удалён без возможности восстановления.`,
+    confirmText: 'Удалить',
+    tone: 'danger'
+  });
+  if (!confirmed) return;
   button.disabled = true;
   draftMessage.textContent = 'Удаляем черновик…';
   try {
@@ -234,8 +243,15 @@ for (const button of document.querySelectorAll('[data-preview-locale]')) {
 document.querySelector('#close-preview').addEventListener('click', () => previewDialog.close());
 document.querySelector('#submit-review').addEventListener('click', () => articleAction('submit-review', 'Проверяем готовность…'));
 document.querySelector('#return-draft').addEventListener('click', () => articleAction('return-draft', 'Возвращаем в черновик…'));
-document.querySelector('#publish-article').addEventListener('click', () => {
-  if (window.confirm('Опубликовать статью для всех языков?')) articleAction('publish', 'Публикуем…');
+document.querySelector('#publish-article').addEventListener('click', async () => {
+  const confirmed = await dialogManager.confirm({
+    eyebrow: 'Публикация новости',
+    title: 'Опубликовать статью?',
+    message: 'Новость станет доступна читателям на английском, русском и армянском языках.',
+    confirmText: 'Опубликовать',
+    tone: 'success'
+  });
+  if (confirmed) articleAction('publish', 'Публикуем…');
 });
 editorForm.addEventListener('submit', async (event) => {
   event.preventDefault();

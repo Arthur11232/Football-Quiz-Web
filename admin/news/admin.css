@@ -31,6 +31,14 @@ select { appearance: none; padding-right: 44px; background-image: url("data:imag
 .preview-close { float: right; border: 0; background: transparent; color: #fff; font-size: 2rem; cursor: pointer; }
 .preview-summary { color: #bcd2c0; font-size: 1.05rem; line-height: 1.6; }
 .preview-body { white-space: pre-wrap; line-height: 1.75; overflow-wrap: anywhere; }
+.confirm-dialog { width: min(520px, calc(100% - 32px)); border: 1px solid #41694a; border-radius: 24px; padding: 0; background: #07180c; color: #f5fff7; box-shadow: 0 30px 90px rgba(0, 0, 0, .8); }
+.confirm-dialog::backdrop { background: rgba(0, 0, 0, .76); backdrop-filter: blur(5px); }
+.confirm-dialog-card { display: grid; gap: 14px; padding: clamp(24px, 5vw, 38px); }
+.confirm-dialog-card h2 { margin-bottom: 0; font-size: clamp(1.55rem, 4vw, 2.1rem); }
+.confirm-dialog-message { margin-bottom: 8px; color: #bcd2c0; line-height: 1.65; overflow-wrap: anywhere; }
+.confirm-dialog-actions { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: 12px; margin-top: 8px; }
+.confirm-dialog-submit[data-tone="danger"] { background: #e45f5f; color: #240707; }
+.confirm-dialog-submit[data-tone="success"] { background: #7be495; color: #06200d; }
 .editor-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }.editor-heading h2 { margin-bottom: 0; }.editor-form { display: grid; gap: 24px; }.editor-meta,.source-grid { display: grid; grid-template-columns: minmax(0, 2fr) minmax(180px, 1fr) minmax(180px, 1fr); gap: 16px; }.translation-grid { display: grid; gap: 18px; }.translation-card,.source-card { display: grid; gap: 14px; margin: 0; padding: 20px; border: 1px solid #24452c; border-radius: 16px; }.translation-card legend,.source-card legend { padding: 0 8px; color: #f7c86f; font-weight: 900; }.translation-card textarea { resize: vertical; min-height: 90px; }.translation-card textarea[data-field="body_markdown"] { min-height: 190px; } textarea { width: 100%; min-width: 0; border: 1px solid #365d3e; border-radius: 12px; padding: 12px; background: #06140a; color: #fff; font: inherit; }.editor-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 16px; }.editor-actions .message { margin: 0; }
 [hidden] { display: none !important; }
 @media (max-width: 900px) { .form-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }.form-grid h2,.form-grid .message { grid-column: 1 / -1; }.form-grid .button { justify-self: start; }.editor-meta,.source-grid { grid-template-columns: 1fr 1fr; } }

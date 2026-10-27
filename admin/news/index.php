@@ -11,7 +11,7 @@ header('X-Robots-Tag: noindex, nofollow, noarchive');
   <meta name="robots" content="noindex,nofollow,noarchive">
   <title>News Admin — Football Quiz</title>
   <link rel="icon" href="/football_quiz_icon.png">
-  <link rel="stylesheet" href="/admin/news/admin.css?v=20261027-a6">
+  <link rel="stylesheet" href="/admin/news/admin.css?v=20261028-a1">
 </head>
 <body>
   <main class="admin-shell">
@@ -129,12 +129,24 @@ header('X-Robots-Tag: noindex, nofollow, noarchive');
         <div id="preview-body" class="preview-body"></div>
       </dialog>
 
+      <dialog id="app-dialog" class="confirm-dialog" aria-labelledby="app-dialog-title" aria-describedby="app-dialog-message">
+        <form method="dialog" class="confirm-dialog-card">
+          <p class="eyebrow" data-dialog-eyebrow>Подтверждение</p>
+          <h2 id="app-dialog-title" data-dialog-title>Продолжить?</h2>
+          <p id="app-dialog-message" class="confirm-dialog-message" data-dialog-message></p>
+          <div class="confirm-dialog-actions">
+            <button class="button button-secondary" type="submit" value="cancel" data-dialog-cancel>Отмена</button>
+            <button class="button confirm-dialog-submit" type="submit" value="confirm" data-dialog-confirm>Подтвердить</button>
+          </div>
+        </form>
+      </dialog>
+
       <section class="panel">
         <div class="list-heading"><h2>Последние статьи</h2><button id="refresh" class="button button-secondary" type="button">Обновить</button></div>
         <div id="article-list" class="article-list"></div>
       </section>
     </section>
   </main>
-  <script type="module" src="/admin/news/admin.js?v=20261027-a7"></script>
+  <script type="module" src="/admin/news/admin.js?v=20261028-a1"></script>
 </body>
 </html>
