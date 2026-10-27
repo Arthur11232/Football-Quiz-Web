@@ -11,7 +11,7 @@ header('X-Robots-Tag: noindex, nofollow, noarchive');
   <meta name="robots" content="noindex,nofollow,noarchive">
   <title>News Admin — Football Quiz</title>
   <link rel="icon" href="/football_quiz_icon.png">
-  <link rel="stylesheet" href="/admin/news/admin.css?v=20261026-a1">
+  <link rel="stylesheet" href="/admin/news/admin.css?v=20261027-a2">
 </head>
 <body>
   <main class="admin-shell">
