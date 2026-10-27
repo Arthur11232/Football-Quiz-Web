@@ -23,6 +23,11 @@ select { appearance: none; padding-right: 44px; background-image: url("data:imag
 .article-delete { border-color: #7f3c3c; background: #351414; color: #ffdada; font: inherit; font-size: .8rem; cursor: pointer; }
 .article-delete:hover,.article-delete:focus-visible { border-color: #ff7b7b; color: #fff; }
 .article-delete:disabled { cursor: wait; opacity: .6; }
+.article-unpublish { border-color: #9a6b27; background: #35250d; color: #ffe0a3; font: inherit; font-size: .8rem; cursor: pointer; }
+.article-unpublish:hover,.article-unpublish:focus-visible { border-color: #f7b33c; color: #fff1cc; }
+.article-republish { border-color: #3f8050; background: #113a1c; color: #caffd5; font: inherit; font-size: .8rem; cursor: pointer; }
+.article-republish:hover,.article-republish:focus-visible { border-color: #7be495; color: #effff2; }
+.article-unpublish:disabled,.article-republish:disabled { cursor: wait; opacity: .6; }
 .button-publish { background: #7be495; color: #06200d; }
 .preview-actions { display: flex; flex-wrap: wrap; gap: 10px; }
 .source-link { justify-self: start; }

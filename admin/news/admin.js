@@ -61,7 +61,7 @@ async function loadArticles() {
     if (item.status === 'published') {
       const actions = document.createElement('nav');
       actions.className = 'article-actions';
-      actions.setAttribute('aria-label', `Открыть ${item.slug} на сайте`);
+      actions.setAttribute('aria-label', `Действия со статьёй ${item.slug}`);
       for (const locale of ['ru', 'en', 'hy']) {
         const link = document.createElement('a');
         link.className = 'article-link';
@@ -71,6 +71,18 @@ async function loadArticles() {
         link.textContent = locale.toUpperCase();
         actions.append(link);
       }
+      actions.append(
+        lifecycleButton('Снять с публикации', 'unpublish', item, 'article-unpublish'),
+        lifecycleButton('Архивировать', 'archive', item, 'article-delete')
+      );
+      row.append(actions);
+    } else if (item.status === 'unpublished') {
+      const actions = document.createElement('div');
+      actions.className = 'article-actions';
+      actions.append(
+        lifecycleButton('Опубликовать снова', 'publish', item, 'article-republish'),
+        lifecycleButton('Архивировать', 'archive', item, 'article-delete')
+      );
       row.append(actions);
     } else if (item.status === 'draft' || item.status === 'review') {
       const actions = document.createElement('div');
@@ -93,6 +105,57 @@ async function loadArticles() {
     }
     return row;
   }) : [Object.assign(document.createElement('p'), { textContent: 'Статей пока нет.' })]));
+}
+
+function lifecycleButton(label, action, article, className) {
+  const button = document.createElement('button');
+  button.className = `article-link ${className}`;
+  button.type = 'button';
+  button.textContent = label;
+  button.addEventListener('click', () => runLifecycleAction(action, article, button));
+  return button;
+}
+
+async function runLifecycleAction(action, article, button) {
+  const dialogs = {
+    unpublish: {
+      eyebrow: 'Публичная статья',
+      title: 'Снять статью с публикации?',
+      message: `Статья «${article.slug}» исчезнет из публичного News, но сохранится в админке и сможет быть опубликована снова.`,
+      confirmText: 'Снять с публикации',
+      tone: 'danger'
+    },
+    publish: {
+      eyebrow: 'Повторная публикация',
+      title: 'Опубликовать статью снова?',
+      message: `Статья «${article.slug}» снова появится во всех публичных языковых версиях.`,
+      confirmText: 'Опубликовать',
+      tone: 'success'
+    },
+    archive: {
+      eyebrow: 'Архив News',
+      title: 'Архивировать статью?',
+      message: `Статья «${article.slug}» будет скрыта и перемещена в архив. Это действие нельзя отменить в текущей версии админки.`,
+      confirmText: 'Архивировать',
+      tone: 'danger'
+    }
+  };
+  const confirmed = await dialogManager.confirm(dialogs[action]);
+  if (!confirmed) return;
+  button.disabled = true;
+  draftMessage.textContent = action === 'unpublish'
+    ? 'Снимаем статью с публикации…'
+    : action === 'publish' ? 'Публикуем статью снова…' : 'Архивируем статью…';
+  try {
+    await api(`/v1/admin/news/articles/${encodeURIComponent(article.article_id)}/actions/${action}`, { method: 'POST' });
+    draftMessage.textContent = action === 'unpublish'
+      ? 'Статья снята с публикации.'
+      : action === 'publish' ? 'Статья снова опубликована.' : 'Статья перемещена в архив.';
+    await loadArticles();
+  } catch (error) {
+    button.disabled = false;
+    draftMessage.textContent = error.message;
+  }
 }
 
 function translationCard(locale) {
