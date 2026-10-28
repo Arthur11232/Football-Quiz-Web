@@ -33,6 +33,7 @@ const locales = ['en', 'ru', 'hy'];
 let token = null;
 let activeArticleId = null;
 let activeArticleStatus = null;
+let taxonomy = { competitions: [], clubs: [] };
 
 async function api(path, options = {}) {
   const response = await fetch(`${apiBase}${path}`, {
@@ -42,6 +43,40 @@ async function api(path, options = {}) {
   const payload = await response.json().catch(() => null);
   if (!response.ok) throw new Error(payload?.error?.message || `API ${response.status}`);
   return payload.data;
+}
+
+async function loadTaxonomy() {
+  taxonomy = await api('/v1/admin/news/taxonomy');
+  renderCompetitionOptions(document.querySelector('#editor-primary-category').value, []);
+  const clubs = document.querySelector('#editor-clubs');
+  clubs.replaceChildren(...taxonomy.clubs.map((club) => {
+    const label = document.createElement('label');
+    label.className = 'club-option';
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.value = club.club_key;
+    checkbox.dataset.clubKey = club.club_key;
+    label.append(checkbox, document.createTextNode(club.name));
+    return label;
+  }));
+}
+
+function renderCompetitionOptions(category, selectedKeys) {
+  const select = document.querySelector('#editor-competition');
+  const current = selectedKeys[0] || '';
+  const empty = new Option('Без соревнования', '');
+  const labels = {
+    'premier-league': 'Premier League',
+    'la-liga': 'La Liga',
+    'serie-a': 'Serie A',
+    bundesliga: 'Bundesliga',
+    'ligue-1': 'Ligue 1'
+  };
+  const options = taxonomy.competitions
+    .filter((competition) => competition.category_key === category)
+    .map((competition) => new Option(labels[competition.competition_key] || competition.competition_key, competition.competition_key));
+  select.replaceChildren(empty, ...options);
+  select.value = current;
 }
 
 async function loadArticles() {
@@ -80,6 +115,7 @@ async function loadArticles() {
       const actions = document.createElement('div');
       actions.className = 'article-actions';
       actions.append(
+        lifecycleButton('Редактировать', 'return-draft', item, 'article-edit'),
         lifecycleButton('Опубликовать снова', 'publish', item, 'article-republish'),
         lifecycleButton('Архивировать', 'archive', item, 'article-delete')
       );
@@ -138,20 +174,36 @@ async function runLifecycleAction(action, article, button) {
       message: `Статья «${article.slug}» будет скрыта и перемещена в архив. Это действие нельзя отменить в текущей версии админки.`,
       confirmText: 'Архивировать',
       tone: 'danger'
+    },
+    'return-draft': {
+      eyebrow: 'Редактирование статьи',
+      title: 'Вернуть статью в черновик?',
+      message: `Статья «${article.slug}» останется скрытой и откроется для редактирования лиги, клубов и текста.`,
+      confirmText: 'Вернуть в черновик',
+      tone: 'success'
     }
   };
   const confirmed = await dialogManager.confirm(dialogs[action]);
   if (!confirmed) return;
   button.disabled = true;
-  draftMessage.textContent = action === 'unpublish'
-    ? 'Снимаем статью с публикации…'
-    : action === 'publish' ? 'Публикуем статью снова…' : 'Архивируем статью…';
+  const pendingMessages = {
+    unpublish: 'Снимаем статью с публикации…',
+    publish: 'Публикуем статью снова…',
+    archive: 'Архивируем статью…',
+    'return-draft': 'Возвращаем статью в черновик…'
+  };
+  draftMessage.textContent = pendingMessages[action];
   try {
     await api(`/v1/admin/news/articles/${encodeURIComponent(article.article_id)}/actions/${action}`, { method: 'POST' });
-    draftMessage.textContent = action === 'unpublish'
-      ? 'Статья снята с публикации.'
-      : action === 'publish' ? 'Статья снова опубликована.' : 'Статья перемещена в архив.';
+    const successMessages = {
+      unpublish: 'Статья снята с публикации.',
+      publish: 'Статья снова опубликована.',
+      archive: 'Статья перемещена в архив.',
+      'return-draft': 'Статья возвращена в черновик.'
+    };
+    draftMessage.textContent = successMessages[action];
     await loadArticles();
+    if (action === 'return-draft') await openEditor(article.article_id);
   } catch (error) {
     button.disabled = false;
     draftMessage.textContent = error.message;
@@ -176,6 +228,11 @@ function fillEditor(article) {
   document.querySelector('#editor-slug').value = article.slug;
   document.querySelector('#editor-news-type').value = article.news_type;
   document.querySelector('#editor-primary-category').value = article.primary_category || 'top-5';
+  renderCompetitionOptions(article.primary_category || 'top-5', article.competition_keys || []);
+  const selectedClubKeys = new Set(article.club_keys || []);
+  for (const checkbox of document.querySelectorAll('[data-club-key]')) {
+    checkbox.checked = selectedClubKeys.has(checkbox.dataset.clubKey);
+  }
   for (const locale of locales) {
     const card = translationCard(locale);
     const translation = article.translations[locale];
@@ -279,6 +336,10 @@ function draftPayload() {
     slug: document.querySelector('#editor-slug').value,
     news_type: document.querySelector('#editor-news-type').value,
     primary_category: document.querySelector('#editor-primary-category').value,
+    competition_keys: document.querySelector('#editor-competition').value
+      ? [document.querySelector('#editor-competition').value]
+      : [],
+    club_keys: [...document.querySelectorAll('[data-club-key]:checked')].map((checkbox) => checkbox.value),
     translations,
     source: {
       publisher_name: document.querySelector('#source-publisher').value,
@@ -303,6 +364,9 @@ document.querySelector('#close-editor').addEventListener('click', () => {
 for (const button of document.querySelectorAll('[data-preview-locale]')) {
   button.addEventListener('click', () => showPreview(button.dataset.previewLocale));
 }
+document.querySelector('#editor-primary-category').addEventListener('change', (event) => {
+  renderCompetitionOptions(event.currentTarget.value, []);
+});
 document.querySelector('#close-preview').addEventListener('click', () => previewDialog.close());
 document.querySelector('#submit-review').addEventListener('click', () => articleAction('submit-review', 'Проверяем готовность…'));
 document.querySelector('#return-draft').addEventListener('click', () => articleAction('return-draft', 'Возвращаем в черновик…'));
@@ -359,6 +423,7 @@ onAuthStateChanged(auth, async (user) => {
     authCard.hidden = true;
     workspace.hidden = false;
     signOutButton.hidden = false;
+    await loadTaxonomy();
     await loadArticles();
     const articleId = new URL(window.location.href).searchParams.get('article');
     if (articleId) await openEditor(articleId);

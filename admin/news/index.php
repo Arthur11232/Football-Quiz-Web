@@ -11,7 +11,7 @@ header('X-Robots-Tag: noindex, nofollow, noarchive');
   <meta name="robots" content="noindex,nofollow,noarchive">
   <title>News Admin — Football Quiz</title>
   <link rel="icon" href="/football_quiz_icon.png">
-  <link rel="stylesheet" href="/admin/news/admin.css?v=20261028-a2">
+  <link rel="stylesheet" href="/admin/news/admin.css?v=20261028-a3">
 </head>
 <body>
   <main class="admin-shell">
@@ -54,6 +54,15 @@ header('X-Robots-Tag: noindex, nofollow, noarchive');
             <label>Тип<select id="editor-news-type"><option value="club_news">Club news</option><option value="match">Match</option><option value="transfer">Transfer</option><option value="explainer">Explainer</option><option value="football_quiz">Football Quiz</option></select></label>
             <label>Основная категория<select id="editor-primary-category"><option value="top-5">Top 5</option><option value="uefa">UEFA</option><option value="world-cup">World Cup</option></select></label>
           </div>
+
+          <fieldset class="taxonomy-card">
+            <legend>Лига и клубы</legend>
+            <label>Соревнование<select id="editor-competition"><option value="">Без соревнования</option></select></label>
+            <div>
+              <span class="field-label">Клубы</span>
+              <div id="editor-clubs" class="club-options"></div>
+            </div>
+          </fieldset>
 
           <div class="translation-grid">
             <?php
@@ -147,6 +156,6 @@ header('X-Robots-Tag: noindex, nofollow, noarchive');
       </section>
     </section>
   </main>
-  <script type="module" src="/admin/news/admin.js?v=20261028-a2"></script>
+  <script type="module" src="/admin/news/admin.js?v=20261028-a3"></script>
 </body>
 </html>
