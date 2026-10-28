@@ -532,4 +532,8 @@ codex/news-web-staging-deploy
 
 Проверенная статья `real-madrid-wins-clasico-barcelona-2-1` опубликована повторно с `La Liga`, `Real Madrid`, `FC Barcelona`. Public list показывает эти tags и club counts `2`; для карточки добавлен отдельный visual со счётом `2:1`.
 
-Production News/Admin deployment и scheduler ещё не выполнялись. Не коммитить локальный `linkedin-cover-football-quiz.png` вместе с News изменениями.
+Scheduler checkpoint — 2026-10-28: backend discovery работает на staging. Официальный источник Real Madrid активирован; в общей базе 5 `new` candidates и 2 успешных fetch runs; повторный запуск создаёт 0 новых записей. Cron выключен.
+
+Локально добавлены список последних 100 кандидатов и просмотр деталей в News Admin: source link, дата, taxonomy suggestions, status, warning и excerpt при наличии. Ошибка candidates API отображается отдельно и не вызывает sign-out. Сначала deploy backend с GET candidates list/detail, затем web. Создание draft из кандидата ещё не реализовано.
+
+Production News/Admin deployment ещё не выполнялся. Не коммитить локальный `linkedin-cover-football-quiz.png` вместе с News изменениями.

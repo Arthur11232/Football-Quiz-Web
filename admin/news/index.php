@@ -11,7 +11,7 @@ header('X-Robots-Tag: noindex, nofollow, noarchive');
   <meta name="robots" content="noindex,nofollow,noarchive">
   <title>News Admin — Football Quiz</title>
   <link rel="icon" href="/football_quiz_icon.png">
-  <link rel="stylesheet" href="/admin/news/admin.css?v=20261028-a3">
+  <link rel="stylesheet" href="/admin/news/admin.css?v=20261028-candidates">
 </head>
 <body>
   <main class="admin-shell">
@@ -150,12 +150,26 @@ header('X-Robots-Tag: noindex, nofollow, noarchive');
         </form>
       </dialog>
 
+      <section class="panel" aria-labelledby="candidates-title">
+        <div class="list-heading"><h2 id="candidates-title">Кандидаты новостей</h2><button id="refresh-candidates" class="button button-secondary" type="button">Обновить</button></div>
+        <p class="candidate-intro">Материалы официальных источников для редакционной проверки. Показаны последние 100 кандидатов.</p>
+        <p id="candidates-message" class="message" role="status"></p>
+        <div id="candidate-list" class="article-list"></div>
+        <section id="candidate-detail" class="candidate-detail" aria-labelledby="candidate-title" hidden>
+          <div class="editor-heading"><h3 id="candidate-title" tabindex="-1"></h3><button id="close-candidate" class="button button-secondary" type="button">Закрыть</button></div>
+          <dl id="candidate-fields" class="candidate-fields"></dl>
+          <p id="candidate-excerpt" class="candidate-excerpt" hidden></p>
+          <p id="candidate-warning" class="message" hidden></p>
+          <a id="candidate-source" class="article-link" target="_blank" rel="noopener noreferrer" hidden>Открыть официальный источник</a>
+        </section>
+      </section>
+
       <section class="panel">
         <div class="list-heading"><h2>Последние статьи</h2><button id="refresh" class="button button-secondary" type="button">Обновить</button></div>
         <div id="article-list" class="article-list"></div>
       </section>
     </section>
   </main>
-  <script type="module" src="/admin/news/admin.js?v=20261028-a3"></script>
+  <script type="module" src="/admin/news/admin.js?v=20261028-candidates"></script>
 </body>
 </html>

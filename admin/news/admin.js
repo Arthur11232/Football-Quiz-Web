@@ -143,6 +143,105 @@ async function loadArticles() {
   }) : [Object.assign(document.createElement('p'), { textContent: 'Статей пока нет.' })]));
 }
 
+const candidateStatuses = { new: 'Новый', rejected: 'Отклонён', imported: 'Создан черновик' };
+const categoryNames = { 'top-5': 'Top 5', uefa: 'UEFA', 'world-cup': 'World Cup' };
+
+function candidateDate(value) {
+  if (!value) return 'Не указана';
+  const date = new Date(value);
+  return Number.isNaN(date.getTime()) ? 'Не указана' : date.toLocaleString('ru-RU');
+}
+
+async function loadCandidates() {
+  const message = document.querySelector('#candidates-message');
+  const refresh = document.querySelector('#refresh-candidates');
+  refresh.disabled = true;
+  message.textContent = 'Загружаем кандидатов…';
+  try {
+    const data = await api('/v1/admin/news/candidates');
+    const list = document.querySelector('#candidate-list');
+    list.replaceChildren(...data.items.map((item) => {
+      const row = document.createElement('article');
+      row.className = 'article-row';
+      const copy = document.createElement('div');
+      copy.className = 'article-copy';
+      const title = document.createElement('strong');
+      title.textContent = item.title;
+      const meta = document.createElement('span');
+      meta.textContent = `${item.publisher_name} · ${candidateDate(item.source_published_at)} · ${candidateStatuses[item.status] || item.status}`;
+      copy.append(title, meta);
+      if (item.warning_text) {
+        const warning = document.createElement('p');
+        warning.className = 'message';
+        warning.textContent = item.warning_text;
+        copy.append(warning);
+      }
+      const open = document.createElement('button');
+      open.type = 'button';
+      open.className = 'article-link article-edit';
+      open.textContent = 'Подробнее';
+      open.addEventListener('click', () => openCandidate(item.candidate_id, open));
+      row.append(copy, open);
+      return row;
+    }));
+    message.textContent = data.items.length ? `Кандидатов: ${data.items.length}` : 'Кандидатов пока нет.';
+  } catch (error) {
+    message.textContent = `Не удалось загрузить кандидатов: ${error.message}`;
+  } finally {
+    refresh.disabled = false;
+  }
+}
+
+async function openCandidate(candidateId, button) {
+  button.disabled = true;
+  const detail = document.querySelector('#candidate-detail');
+  detail.hidden = true;
+  try {
+    const item = await api(`/v1/admin/news/candidates/${encodeURIComponent(candidateId)}`);
+    document.querySelector('#candidate-title').textContent = item.title;
+    const fields = [
+      ['Источник', item.publisher_name],
+      ['Статус', candidateStatuses[item.status] || item.status],
+      ['Дата публикации', candidateDate(item.source_published_at)],
+      ['Предложенная категория', categoryNames[item.primary_category] || item.primary_category || 'Не определена'],
+      ['Предложенное соревнование', item.competition_key || 'Не определено'],
+      ['Предложенный клуб', item.club_name || 'Не определён'],
+      ['Впервые обнаружен', candidateDate(item.first_seen_at)],
+      ['Последняя проверка', candidateDate(item.last_seen_at)]
+    ];
+    document.querySelector('#candidate-fields').replaceChildren(...fields.flatMap(([label, value]) => {
+      const term = document.createElement('dt');
+      term.textContent = label;
+      const description = document.createElement('dd');
+      description.textContent = value;
+      return [term, description];
+    }));
+    const excerpt = document.querySelector('#candidate-excerpt');
+    excerpt.textContent = item.excerpt || '';
+    excerpt.hidden = !item.excerpt;
+    const warning = document.querySelector('#candidate-warning');
+    warning.textContent = item.warning_text || '';
+    warning.hidden = !item.warning_text;
+    const source = document.querySelector('#candidate-source');
+    source.removeAttribute('href');
+    source.hidden = true;
+    try {
+      const url = new URL(item.source_url);
+      if (['http:', 'https:'].includes(url.protocol) && !url.username && !url.password) {
+        source.href = url.href;
+        source.hidden = false;
+      }
+    } catch { /* Invalid source URLs are not made clickable. */ }
+    detail.hidden = false;
+    document.querySelector('#candidate-title').focus();
+    detail.scrollIntoView({ block: 'nearest' });
+  } catch (error) {
+    document.querySelector('#candidates-message').textContent = error.message;
+  } finally {
+    button.disabled = false;
+  }
+}
+
 function lifecycleButton(label, action, article, className) {
   const button = document.createElement('button');
   button.className = `article-link ${className}`;
@@ -354,6 +453,11 @@ signInButton.addEventListener('click', async () => {
   try { await signInWithPopup(auth, provider); } catch (error) { authMessage.textContent = error.message; }
 });
 signOutButton.addEventListener('click', () => signOut(auth));
+document.querySelector('#refresh-candidates').addEventListener('click', loadCandidates);
+document.querySelector('#close-candidate').addEventListener('click', () => {
+  document.querySelector('#candidate-detail').hidden = true;
+  document.querySelector('#refresh-candidates').focus();
+});
 document.querySelector('#refresh').addEventListener('click', () => loadArticles().catch((error) => { draftMessage.textContent = error.message; }));
 document.querySelector('#close-editor').addEventListener('click', () => {
   activeArticleId = null;
@@ -414,6 +518,9 @@ onAuthStateChanged(auth, async (user) => {
   workspace.hidden = true;
   signOutButton.hidden = true;
   authCard.hidden = false;
+  document.querySelector('#candidate-list').replaceChildren();
+  document.querySelector('#candidate-detail').hidden = true;
+  document.querySelector('#candidates-message').textContent = '';
   if (!user) return;
   authMessage.textContent = 'Проверяем доступ…';
   try {
@@ -425,6 +532,7 @@ onAuthStateChanged(auth, async (user) => {
     signOutButton.hidden = false;
     await loadTaxonomy();
     await loadArticles();
+    await loadCandidates();
     const articleId = new URL(window.location.href).searchParams.get('article');
     if (articleId) await openEditor(articleId);
   } catch (error) {
