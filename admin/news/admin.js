@@ -28,11 +28,14 @@ const editor = document.querySelector('#article-editor');
 const editorForm = document.querySelector('#editor-form');
 const editorMessage = document.querySelector('#editor-message');
 const previewDialog = document.querySelector('#article-preview');
+const cardPreviewDialog = document.querySelector('#card-preview-dialog');
 const dialogManager = new DialogManager(document.querySelector('#app-dialog'));
 const locales = ['en', 'ru', 'hy'];
 let token = null;
 let activeArticleId = null;
 let activeArticleStatus = null;
+let activeArticle = null;
+let cardPreviewLocale = 'en';
 let activeCandidate = null;
 let taxonomy = { competitions: [], clubs: [] };
 
@@ -365,6 +368,7 @@ function setEditorUrl(articleId) {
 }
 
 function fillEditor(article) {
+  activeArticle = article;
   activeArticleId = article.article_id;
   activeArticleStatus = article.status;
   document.querySelector('#editor-title').textContent = article.slug;
@@ -402,7 +406,7 @@ function setEditorMode(status) {
   document.querySelector('#save-draft').hidden = !editable;
   document.querySelector('#submit-review').hidden = !editable;
   document.querySelector('#return-draft').hidden = status !== 'review';
-  document.querySelector('#publish-article').hidden = status !== 'review';
+  document.querySelector('#preview-card').hidden = status !== 'review';
 }
 
 async function openEditor(articleId) {
@@ -412,6 +416,7 @@ async function openEditor(articleId) {
   try {
     fillEditor(await api(`/v1/admin/news/articles/${encodeURIComponent(articleId)}`));
   } catch (error) {
+    activeArticle = null;
     activeArticleId = null;
     activeArticleStatus = null;
     editorMessage.textContent = error.message;
@@ -427,6 +432,110 @@ function showPreview(locale) {
   previewDialog.showModal();
 }
 
+function cardVisual() {
+  const slug = document.querySelector('#editor-slug').value;
+  const articleVisuals = {
+    'real-madrid-wins-clasico-barcelona-2-1': { variant: 'clasico-result', metric: '2:1', marks: 3, label: 'Real Madrid · Barcelona' },
+    'real-madrid-five-match-october-run': { variant: 'real-schedule', metric: '5', marks: 5 },
+    'barcelona-three-golden-boy-finalists': { variant: 'barcelona-talents', metric: '3', marks: 3 },
+    'arsenal-2025-26-premier-league-champions': { variant: 'arsenal-champions', metric: '14', marks: 1 },
+    'bayern-seven-matches-in-22-days': { variant: 'bayern-schedule', metric: '7', marks: 7 },
+    'inter-nine-matches-in-29-days': { variant: 'inter-schedule', metric: '9', marks: 9 },
+    'psg-comeback-win-at-strasbourg': { variant: 'psg-comeback', metric: '3', marks: 3 }
+  };
+  if (articleVisuals[slug]) return articleVisuals[slug];
+
+  const clubKey = document.querySelector('[data-club-key]:checked')?.value || '';
+  const club = taxonomy.clubs.find((item) => item.club_key === clubKey);
+  const clubVisuals = {
+    'real-madrid': { variant: 'club-real-madrid', metric: 'RM', marks: 3 },
+    barcelona: { variant: 'club-barcelona', metric: 'FCB', marks: 3 },
+    arsenal: { variant: 'club-arsenal', metric: 'AFC', marks: 3 },
+    'bayern-munich': { variant: 'club-bayern', metric: 'FCB', marks: 3 },
+    'inter-milan': { variant: 'club-inter', metric: 'IM', marks: 3 },
+    'paris-saint-germain': { variant: 'club-psg', metric: 'PSG', marks: 3 }
+  };
+  const visual = clubVisuals[clubKey];
+  return visual
+    ? { ...visual, label: club?.name || clubKey }
+    : { variant: '', metric: 'FQ', marks: 0, label: club?.name || 'Football Quiz' };
+}
+
+function cardPreviewDate(locale) {
+  const value = activeArticle?.published_at || new Date().toISOString();
+  const date = new Date(value);
+  if (locale === 'en') {
+    return new Intl.DateTimeFormat('en', { year: 'numeric', month: 'short', day: 'numeric' }).format(date);
+  }
+  return [
+    String(date.getDate()).padStart(2, '0'),
+    String(date.getMonth() + 1).padStart(2, '0'),
+    date.getFullYear()
+  ].join('.');
+}
+
+function showCardPreview(locale = cardPreviewLocale) {
+  if (!activeArticleId) return;
+  cardPreviewLocale = locales.includes(locale) ? locale : 'en';
+  const copy = {
+    en: { category: { 'top-5': 'Top 5 leagues', uefa: 'UEFA', 'world-cup': 'World Cup' }, read: 'Read article →' },
+    ru: { category: { 'top-5': 'Топ-5 лиг', uefa: 'UEFA', 'world-cup': 'Чемпионат мира' }, read: 'Читать статью →' },
+    hy: { category: { 'top-5': 'Թոփ 5 լիգաներ', uefa: 'UEFA', 'world-cup': 'Աշխարհի առաջնություն' }, read: 'Կարդալ հոդվածը →' }
+  }[cardPreviewLocale];
+  const competitionLabels = {
+    'premier-league': 'Premier League', 'la-liga': 'La Liga', 'serie-a': 'Serie A',
+    bundesliga: 'Bundesliga', 'ligue-1': 'Ligue 1'
+  };
+  const translation = translationCard(cardPreviewLocale);
+  const visual = cardVisual();
+  const art = document.querySelector('#card-preview-art');
+  art.className = 'card-preview-art';
+  if (visual.variant) art.classList.add(`card-preview-art--${visual.variant}`);
+  document.querySelector('#card-preview-club-art').textContent = visual.label;
+  document.querySelector('#card-preview-metric').textContent = visual.metric;
+  document.querySelector('#card-preview-marks').replaceChildren(
+    ...Array.from({ length: visual.marks }, () => document.createElement('i'))
+  );
+
+  const meta = [
+    cardPreviewDate(cardPreviewLocale),
+    copy.category[document.querySelector('#editor-primary-category').value] || document.querySelector('#editor-primary-category').value
+  ];
+  const competition = document.querySelector('#editor-competition').value;
+  if (competition) meta.push(competitionLabels[competition] || competition);
+  meta.push(...[...document.querySelectorAll('[data-club-key]:checked')].map((checkbox) => (
+    taxonomy.clubs.find((club) => club.club_key === checkbox.value)?.name || checkbox.value
+  )));
+  document.querySelector('#card-preview-meta').replaceChildren(...meta.map((value) => {
+    const item = document.createElement('span');
+    item.textContent = value;
+    return item;
+  }));
+  document.querySelector('#card-preview-title').textContent = translation.querySelector('[data-field="title"]').value || 'Без заголовка';
+  document.querySelector('#card-preview-summary').textContent = translation.querySelector('[data-field="summary"]').value;
+  document.querySelector('#card-preview-read').textContent = copy.read;
+  for (const button of document.querySelectorAll('[data-card-preview-locale]')) {
+    const active = button.dataset.cardPreviewLocale === cardPreviewLocale;
+    button.classList.toggle('active', active);
+    button.setAttribute('aria-pressed', String(active));
+  }
+  document.querySelector('#publish-from-card-preview').hidden = activeArticleStatus !== 'review';
+  if (!cardPreviewDialog.open) cardPreviewDialog.showModal();
+}
+
+async function requestPublishFromPreview() {
+  cardPreviewDialog.close();
+  const confirmed = await dialogManager.confirm({
+    eyebrow: 'Публикация новости',
+    title: 'Опубликовать статью?',
+    message: 'Карточка проверена. Новость станет доступна читателям на английском, русском и армянском языках.',
+    confirmText: 'Опубликовать',
+    tone: 'success'
+  });
+  if (confirmed) await articleAction('publish', 'Публикуем…');
+  else showCardPreview(cardPreviewLocale);
+}
+
 async function articleAction(action, pendingMessage) {
   if (!activeArticleId) return;
   editorMessage.textContent = pendingMessage;
@@ -437,7 +546,10 @@ async function articleAction(action, pendingMessage) {
       ? 'Статья передана на проверку.'
       : action === 'return-draft' ? 'Статья возвращена в черновик.' : 'Статья опубликована.';
     await loadArticles();
+    if (action === 'submit-review') showCardPreview('en');
     if (action === 'publish') {
+      if (cardPreviewDialog.open) cardPreviewDialog.close();
+      activeArticle = null;
       activeArticleId = null;
       activeArticleStatus = null;
       editor.hidden = true;
@@ -461,7 +573,9 @@ async function deleteDraft(articleId, slug, button) {
   try {
     await api(`/v1/admin/news/articles/${encodeURIComponent(articleId)}`, { method: 'DELETE' });
     if (activeArticleId === articleId) {
+      activeArticle = null;
       activeArticleId = null;
+      activeArticleStatus = null;
       editor.hidden = true;
       setEditorUrl(null);
     }
@@ -518,6 +632,7 @@ document.querySelector('#close-candidate').addEventListener('click', () => {
 });
 document.querySelector('#refresh').addEventListener('click', () => loadArticles().catch((error) => { draftMessage.textContent = error.message; }));
 document.querySelector('#close-editor').addEventListener('click', () => {
+  activeArticle = null;
   activeArticleId = null;
   activeArticleStatus = null;
   editor.hidden = true;
@@ -530,18 +645,15 @@ document.querySelector('#editor-primary-category').addEventListener('change', (e
   renderCompetitionOptions(event.currentTarget.value, []);
 });
 document.querySelector('#close-preview').addEventListener('click', () => previewDialog.close());
+for (const button of document.querySelectorAll('[data-card-preview-locale]')) {
+  button.addEventListener('click', () => showCardPreview(button.dataset.cardPreviewLocale));
+}
+document.querySelector('#preview-card').addEventListener('click', () => showCardPreview('en'));
+document.querySelector('#close-card-preview').addEventListener('click', () => cardPreviewDialog.close());
+document.querySelector('#back-from-card-preview').addEventListener('click', () => cardPreviewDialog.close());
+document.querySelector('#publish-from-card-preview').addEventListener('click', requestPublishFromPreview);
 document.querySelector('#submit-review').addEventListener('click', () => articleAction('submit-review', 'Проверяем готовность…'));
 document.querySelector('#return-draft').addEventListener('click', () => articleAction('return-draft', 'Возвращаем в черновик…'));
-document.querySelector('#publish-article').addEventListener('click', async () => {
-  const confirmed = await dialogManager.confirm({
-    eyebrow: 'Публикация новости',
-    title: 'Опубликовать статью?',
-    message: 'Новость станет доступна читателям на английском, русском и армянском языках.',
-    confirmText: 'Опубликовать',
-    tone: 'success'
-  });
-  if (confirmed) articleAction('publish', 'Публикуем…');
-});
 editorForm.addEventListener('submit', async (event) => {
   event.preventDefault();
   if (!activeArticleId || activeArticleStatus !== 'draft') return;
@@ -577,6 +689,9 @@ onAuthStateChanged(auth, async (user) => {
   signOutButton.hidden = true;
   authCard.hidden = false;
   document.querySelector('#candidate-list').replaceChildren();
+  activeArticle = null;
+  activeArticleId = null;
+  activeArticleStatus = null;
   activeCandidate = null;
   document.querySelector('#candidate-detail').hidden = true;
   document.querySelector('#candidates-message').textContent = '';

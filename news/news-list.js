@@ -73,7 +73,19 @@
       'inter-nine-matches-in-29-days': { variant: 'inter-schedule', metric: 9, marks: 9 },
       'psg-comeback-win-at-strasbourg': { variant: 'psg-comeback', metric: 3, marks: 3 }
     };
-    return visuals[item.slug] || null;
+    if (visuals[item.slug]) return visuals[item.slug];
+
+    const club = item.clubs?.[0] || {};
+    const clubVisuals = {
+      'real-madrid': { variant: 'club-real-madrid', metric: 'RM', marks: 3 },
+      barcelona: { variant: 'club-barcelona', metric: 'FCB', marks: 3 },
+      arsenal: { variant: 'club-arsenal', metric: 'AFC', marks: 3 },
+      'bayern-munich': { variant: 'club-bayern', metric: 'FCB', marks: 3 },
+      'inter-milan': { variant: 'club-inter', metric: 'IM', marks: 3 },
+      'paris-saint-germain': { variant: 'club-psg', metric: 'PSG', marks: 3 }
+    };
+    const visual = clubVisuals[club.club_key || club.slug];
+    return visual ? { ...visual, label: club.name || 'Football Quiz' } : null;
   }
 
   function card(item) {

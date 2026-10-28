@@ -11,7 +11,7 @@ header('X-Robots-Tag: noindex, nofollow, noarchive');
   <meta name="robots" content="noindex,nofollow,noarchive">
   <title>News Admin — Football Quiz</title>
   <link rel="icon" href="/football_quiz_icon.png">
-  <link rel="stylesheet" href="/admin/news/admin.css?v=20261028-candidate-actions">
+  <link rel="stylesheet" href="/admin/news/admin.css?v=20261029-card-review-v1">
 </head>
 <body>
   <main class="admin-shell">
@@ -124,7 +124,7 @@ header('X-Robots-Tag: noindex, nofollow, noarchive');
             <button id="save-draft" class="button" type="submit">Сохранить черновик</button>
             <button id="submit-review" class="button button-secondary" type="button">Передать на проверку</button>
             <button id="return-draft" class="button button-secondary" type="button" hidden>Вернуть в черновик</button>
-            <button id="publish-article" class="button button-publish" type="button" hidden>Опубликовать</button>
+            <button id="preview-card" class="button button-publish" type="button" hidden>Проверить карточку</button>
             <p id="editor-message" class="message" role="status"></p>
           </div>
         </form>
@@ -136,6 +136,36 @@ header('X-Robots-Tag: noindex, nofollow, noarchive');
         <h2 id="preview-title"></h2>
         <p id="preview-summary" class="preview-summary"></p>
         <div id="preview-body" class="preview-body"></div>
+      </dialog>
+
+      <dialog id="card-preview-dialog" class="card-preview-dialog" aria-labelledby="card-preview-heading">
+        <div class="card-preview-header">
+          <div><p class="eyebrow">ПЕРЕД ПУБЛИКАЦИЕЙ</p><h2 id="card-preview-heading">Предпросмотр карточки</h2></div>
+          <button id="close-card-preview" class="preview-close" type="button" aria-label="Закрыть">×</button>
+        </div>
+        <div class="card-preview-locales" aria-label="Язык карточки">
+          <button class="button button-secondary" type="button" data-card-preview-locale="en">EN</button>
+          <button class="button button-secondary" type="button" data-card-preview-locale="ru">RU</button>
+          <button class="button button-secondary" type="button" data-card-preview-locale="hy">HY</button>
+        </div>
+        <article class="card-preview-card">
+          <div id="card-preview-art" class="card-preview-art" aria-hidden="true">
+            <span id="card-preview-club-art" class="card-preview-art-club"></span>
+            <strong id="card-preview-metric" class="card-preview-art-metric"></strong>
+            <span id="card-preview-marks" class="card-preview-art-marks"></span>
+          </div>
+          <div class="card-preview-body">
+            <div id="card-preview-meta" class="card-preview-meta"></div>
+            <h3 id="card-preview-title"></h3>
+            <p id="card-preview-summary"></p>
+            <strong id="card-preview-read" class="card-preview-read"></strong>
+          </div>
+        </article>
+        <p class="card-preview-note">Проверьте заголовок, описание, рубрики и оформление карточки на каждом языке.</p>
+        <div class="card-preview-actions">
+          <button id="back-from-card-preview" class="button button-secondary" type="button">Вернуться к проверке</button>
+          <button id="publish-from-card-preview" class="button button-publish" type="button">Опубликовать</button>
+        </div>
       </dialog>
 
       <dialog id="app-dialog" class="confirm-dialog" aria-labelledby="app-dialog-title" aria-describedby="app-dialog-message">
@@ -176,6 +206,6 @@ header('X-Robots-Tag: noindex, nofollow, noarchive');
       </section>
     </section>
   </main>
-  <script type="module" src="/admin/news/admin.js?v=20261028-candidate-actions"></script>
+  <script type="module" src="/admin/news/admin.js?v=20261029-card-review-v1"></script>
 </body>
 </html>

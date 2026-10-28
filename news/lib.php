@@ -144,10 +144,13 @@ function news_competition_label(string $locale, string $competition): string
     return news_competitions($locale)[$competition] ?? $competition;
 }
 
-/** @return array{variant: string, metric: int|string, marks: int, label?: string}|null */
-function news_article_visual(string $slug): ?array
+/**
+ * @param array<int, array<string, mixed>> $clubs
+ * @return array{variant: string, metric: int|string, marks: int, label?: string}|null
+ */
+function news_article_visual(string $slug, array $clubs = []): ?array
 {
-    return match ($slug) {
+    $articleVisual = match ($slug) {
         'real-madrid-wins-clasico-barcelona-2-1' => ['variant' => 'clasico-result', 'metric' => '2:1', 'marks' => 3, 'label' => 'Real Madrid · Barcelona'],
         'real-madrid-five-match-october-run' => ['variant' => 'real-schedule', 'metric' => 5, 'marks' => 5],
         'barcelona-three-golden-boy-finalists' => ['variant' => 'barcelona-talents', 'metric' => 3, 'marks' => 3],
@@ -155,6 +158,23 @@ function news_article_visual(string $slug): ?array
         'bayern-seven-matches-in-22-days' => ['variant' => 'bayern-schedule', 'metric' => 7, 'marks' => 7],
         'inter-nine-matches-in-29-days' => ['variant' => 'inter-schedule', 'metric' => 9, 'marks' => 9],
         'psg-comeback-win-at-strasbourg' => ['variant' => 'psg-comeback', 'metric' => 3, 'marks' => 3],
+        default => null,
+    };
+    if ($articleVisual !== null) {
+        return $articleVisual;
+    }
+
+    $club = $clubs[0] ?? [];
+    $clubKey = (string) ($club['club_key'] ?? $club['slug'] ?? '');
+    $clubName = (string) ($club['name'] ?? 'Football Quiz');
+
+    return match ($clubKey) {
+        'real-madrid' => ['variant' => 'club-real-madrid', 'metric' => 'RM', 'marks' => 3, 'label' => $clubName],
+        'barcelona' => ['variant' => 'club-barcelona', 'metric' => 'FCB', 'marks' => 3, 'label' => $clubName],
+        'arsenal' => ['variant' => 'club-arsenal', 'metric' => 'AFC', 'marks' => 3, 'label' => $clubName],
+        'bayern-munich' => ['variant' => 'club-bayern', 'metric' => 'FCB', 'marks' => 3, 'label' => $clubName],
+        'inter-milan' => ['variant' => 'club-inter', 'metric' => 'IM', 'marks' => 3, 'label' => $clubName],
+        'paris-saint-germain' => ['variant' => 'club-psg', 'metric' => 'PSG', 'marks' => 3, 'label' => $clubName],
         default => null,
     };
 }

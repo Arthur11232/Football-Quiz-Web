@@ -10,7 +10,10 @@ $slug = (string) ($_GET['slug'] ?? '');
 $validSlug = preg_match('/^[a-z0-9]+(?:-[a-z0-9]+)*$/', $slug) === 1;
 $result = $validSlug ? news_api_get('/v1/news/' . rawurlencode($slug), ['locale' => $locale]) : ['ok' => false, 'status' => 404, 'data' => null];
 $article = $result['ok'] && is_array($result['data']) ? $result['data'] : null;
-$articleVisual = $article === null ? null : news_article_visual((string) ($article['slug'] ?? $slug));
+$articleVisual = $article === null ? null : news_article_visual(
+    (string) ($article['slug'] ?? $slug),
+    is_array($article['clubs'] ?? null) ? $article['clubs'] : []
+);
 $articleClub = $article === null ? 'Football Quiz' : (string) ($article['clubs'][0]['name'] ?? 'Football Quiz');
 $articleCategory = $article === null ? null : news_category((string) ($article['categories'][0]['category_key'] ?? ''));
 $articleCompetition = $article === null ? null : news_competition(
@@ -65,7 +68,7 @@ $structuredData = $article === null ? null : [
   <?php if ($article !== null): ?><meta property="article:published_time" content="<?= news_e($article['published_at'] ?? '') ?>"><meta property="article:modified_time" content="<?= news_e($article['updated_at'] ?? '') ?>"><?php endif; ?>
   <link rel="icon" type="image/png" href="/football_quiz_icon.png">
   <link rel="stylesheet" href="/style.css?v=20261013-heading-font">
-  <link rel="stylesheet" href="/news/news.css?v=20261028-card-visuals-v1">
+  <link rel="stylesheet" href="/news/news.css?v=20261029-club-visuals-v2">
   <?php if ($structuredData !== null): ?><script type="application/ld+json"><?= json_encode($structuredData, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_THROW_ON_ERROR) ?></script><?php endif; ?>
 </head>
 <body class="<?= news_e($articleBodyClass) ?>">

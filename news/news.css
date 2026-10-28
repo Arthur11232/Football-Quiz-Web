@@ -509,6 +509,76 @@
     repeating-linear-gradient(0deg, transparent 0 38px, rgba(255, 255, 255, 0.045) 39px 40px);
 }
 
+.news-card-art--club-real-madrid,
+.news-card-art--club-barcelona,
+.news-card-art--club-arsenal,
+.news-card-art--club-bayern,
+.news-card-art--club-inter,
+.news-card-art--club-psg {
+  min-height: 220px;
+  align-content: center;
+  justify-items: start;
+  padding: 30px 34px;
+}
+
+.news-card-art--club-real-madrid::before,
+.news-card-art--club-barcelona::before,
+.news-card-art--club-arsenal::before,
+.news-card-art--club-bayern::before,
+.news-card-art--club-inter::before,
+.news-card-art--club-psg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(116deg, transparent 0 58%, rgba(255, 255, 255, 0.11) 58% 60%, transparent 60%),
+    repeating-linear-gradient(90deg, transparent 0 47px, rgba(255, 255, 255, 0.055) 48px 49px);
+  opacity: 0.52;
+}
+
+.news-card-art--club-real-madrid {
+  background:
+    radial-gradient(circle at 82% 20%, rgba(255, 204, 84, 0.48), transparent 24%),
+    linear-gradient(135deg, #f7f4e9 0 48%, #d8b55a 48% 55%, #172248 55% 100%);
+}
+
+.news-card-art--club-real-madrid .news-card-art-club,
+.news-card-art--club-real-madrid .news-card-art-metric {
+  color: #111a36;
+  text-shadow: 0 12px 30px rgba(255, 255, 255, 0.34);
+}
+
+.news-card-art--club-barcelona {
+  background: radial-gradient(circle at 82% 20%, rgba(255, 208, 72, 0.38), transparent 24%), linear-gradient(135deg, #071d4a 0 48%, #a7143e 48% 72%, #153d83 72% 100%);
+}
+
+.news-card-art--club-arsenal {
+  background: radial-gradient(circle at 82% 20%, rgba(255, 221, 125, 0.38), transparent 24%), linear-gradient(135deg, #720916, #c9142c 58%, #16203d);
+}
+
+.news-card-art--club-bayern {
+  background: radial-gradient(circle at 82% 20%, rgba(255, 255, 255, 0.28), transparent 24%), linear-gradient(135deg, #7b061c, #d10b2f 55%, #153d83);
+}
+
+.news-card-art--club-inter {
+  background: radial-gradient(circle at 82% 20%, rgba(71, 159, 255, 0.4), transparent 24%), linear-gradient(135deg, #020817, #0650a3 58%, #05050a);
+}
+
+.news-card-art--club-psg {
+  background: radial-gradient(circle at 82% 20%, rgba(255, 216, 117, 0.36), transparent 24%), linear-gradient(135deg, #06163f 0 52%, #a40d35 52% 66%, #12387b 66% 100%);
+}
+
+.news-card-art--club-real-madrid .news-card-art-metric,
+.news-card-art--club-barcelona .news-card-art-metric,
+.news-card-art--club-arsenal .news-card-art-metric,
+.news-card-art--club-bayern .news-card-art-metric,
+.news-card-art--club-inter .news-card-art-metric,
+.news-card-art--club-psg .news-card-art-metric {
+  font-size: clamp(3.9rem, 7vw, 5.8rem);
+  letter-spacing: -0.055em;
+}
+
 .news-card-art-club {
   position: relative;
   z-index: 1;
@@ -744,6 +814,12 @@
 .article-theme--bayern-schedule { --article-club-glow: rgba(222, 15, 52, 0.34); }
 .article-theme--inter-schedule { --article-club-glow: rgba(38, 116, 232, 0.4); }
 .article-theme--psg-comeback { --article-club-glow: rgba(170, 16, 57, 0.38); }
+.article-theme--club-real-madrid { --article-club-glow: rgba(255, 211, 111, 0.4); }
+.article-theme--club-barcelona { --article-club-glow: rgba(42, 100, 220, 0.38); }
+.article-theme--club-arsenal { --article-club-glow: rgba(222, 26, 52, 0.38); }
+.article-theme--club-bayern { --article-club-glow: rgba(222, 15, 52, 0.36); }
+.article-theme--club-inter { --article-club-glow: rgba(38, 116, 232, 0.42); }
+.article-theme--club-psg { --article-club-glow: rgba(170, 16, 57, 0.4); }
 
 .article-masthead-content {
   position: relative;
