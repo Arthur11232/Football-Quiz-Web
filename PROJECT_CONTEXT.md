@@ -510,3 +510,26 @@ Markdown источники:
 8. Проверить, что legal links и Google Play CTA работают.
 9. Проверить `.cpanel.yml` при новых assets.
 10. Потом делать local commit только после подтверждения владельца.
+
+## News Admin staging checkpoint — 2026-10-28
+
+Актуальная ветка и HEAD:
+
+```text
+codex/news-web-staging-deploy
+0b68e71 Add competition and club selectors to News admin
+```
+
+На staging `https://staging.footballquiz.club/admin/news/` работают:
+
+- Firebase login и backend UID permission boundary;
+- ручное создание/редактирование/удаление draft;
+- EN/RU/HY editor, preview, submit-review и explicit publish;
+- reusable `DialogManager` для publish/delete/lifecycle confirmations;
+- unpublish, return-to-draft, republish и archive controls;
+- выбор primary category, competition и нескольких clubs;
+- ссылки на опубликованные RU/EN/HY версии.
+
+Проверенная статья `real-madrid-wins-clasico-barcelona-2-1` опубликована повторно с `La Liga`, `Real Madrid`, `FC Barcelona`. Public list показывает эти tags и club counts `2`; для карточки добавлен отдельный visual со счётом `2:1`.
+
+Production News/Admin deployment и scheduler ещё не выполнялись. Не коммитить локальный `linkedin-cover-football-quiz.png` вместе с News изменениями.

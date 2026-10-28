@@ -4,6 +4,8 @@
 Статус: `Local read MVP + category taxonomy implemented; not committed or deployed`
 Область: `Football Quiz Web` + `Football-Quiz-Backend`
 
+> Актуальный checkpoint (`2026-10-28`): public News read MVP и закрытая ручная Admin Panel уже развёрнуты на staging. Backend HEAD `e08abe8`, Web HEAD `0b68e71`. Работают draft/review/publish, unpublish/republish, audit/revisions и выбор primary category/competition/clubs. Scheduler и production deployment ещё не выполнялись. Подробности: `PROJECT_CONTEXT.md` и cross-project `news_admin_scheduler_handoff_ru.md`.
+
 ## 1. Цель
 
 Добавить на `https://footballquiz.club` редакционный раздел с актуальными новостями об известных футбольных клубах, не смешивая его с игровым каталогом вопросов и не делая новости обязательной частью offline-first gameplay.
