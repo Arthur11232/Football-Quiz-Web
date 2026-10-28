@@ -437,6 +437,13 @@ async function articleAction(action, pendingMessage) {
       ? 'Статья передана на проверку.'
       : action === 'return-draft' ? 'Статья возвращена в черновик.' : 'Статья опубликована.';
     await loadArticles();
+    if (action === 'publish') {
+      activeArticleId = null;
+      activeArticleStatus = null;
+      editor.hidden = true;
+      setEditorUrl(null);
+      document.querySelector('#refresh').focus();
+    }
   } catch (error) { editorMessage.textContent = error.message; }
 }
 
