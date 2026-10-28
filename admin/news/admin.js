@@ -33,6 +33,7 @@ const locales = ['en', 'ru', 'hy'];
 let token = null;
 let activeArticleId = null;
 let activeArticleStatus = null;
+let activeCandidate = null;
 let taxonomy = { competitions: [], clubs: [] };
 
 async function api(path, options = {}) {
@@ -198,6 +199,11 @@ async function openCandidate(candidateId, button) {
   detail.hidden = true;
   try {
     const item = await api(`/v1/admin/news/candidates/${encodeURIComponent(candidateId)}`);
+    activeCandidate = item;
+    document.querySelector('#import-candidate').hidden = item.status !== 'new';
+    document.querySelector('#reject-candidate').hidden = item.status !== 'new';
+    document.querySelector('#open-candidate-draft').hidden = !item.imported_article_id;
+    document.querySelector('#candidate-action-message').textContent = '';
     document.querySelector('#candidate-title').textContent = item.title;
     const fields = [
       ['Источник', item.publisher_name],
@@ -239,6 +245,44 @@ async function openCandidate(candidateId, button) {
     document.querySelector('#candidates-message').textContent = error.message;
   } finally {
     button.disabled = false;
+  }
+}
+
+async function candidateAction(action) {
+  const item = activeCandidate;
+  if (!item || item.status !== 'new') return;
+  const create = action === 'create-draft';
+  const confirmed = await dialogManager.confirm({
+    eyebrow: 'Кандидат новости',
+    title: create ? 'Создать черновик?' : 'Отклонить кандидата?',
+    message: create
+      ? `Источник, категория и клуб для «${item.title}» будут перенесены в черновик. Slug и тексты EN/RU/HY нужно заполнить в редакторе.`
+      : `Материал «${item.title}» останется в истории со статусом «Отклонён».`,
+    confirmText: create ? 'Создать черновик' : 'Отклонить',
+    tone: create ? 'success' : 'danger'
+  });
+  if (!confirmed || activeCandidate !== item) return;
+  const buttons = [...document.querySelectorAll('#candidate-actions button')];
+  buttons.forEach((button) => { button.disabled = true; });
+  const message = document.querySelector('#candidate-action-message');
+  message.textContent = create ? 'Создаём черновик…' : 'Отклоняем…';
+  try {
+    const result = await api(`/v1/admin/news/candidates/${encodeURIComponent(item.candidate_id)}/${action}`, { method: 'POST' });
+    activeCandidate = { ...item, status: result.status, imported_article_id: result.article_id || null };
+    document.querySelector('#import-candidate').hidden = true;
+    document.querySelector('#reject-candidate').hidden = true;
+    document.querySelector('#open-candidate-draft').hidden = !result.article_id;
+    await loadCandidates();
+    await openCandidate(item.candidate_id, document.querySelector('#refresh-candidates'));
+    message.textContent = create ? 'Черновик создан. Заполните slug и переводы перед проверкой.' : 'Кандидат отклонён.';
+    if (create) {
+      await loadArticles();
+      await openEditor(result.article_id);
+    }
+  } catch (error) {
+    message.textContent = error.message;
+  } finally {
+    buttons.forEach((button) => { button.disabled = false; });
   }
 }
 
@@ -454,6 +498,13 @@ signInButton.addEventListener('click', async () => {
 });
 signOutButton.addEventListener('click', () => signOut(auth));
 document.querySelector('#refresh-candidates').addEventListener('click', loadCandidates);
+document.querySelector('#import-candidate').addEventListener('click', () => candidateAction('create-draft'));
+document.querySelector('#reject-candidate').addEventListener('click', () => candidateAction('reject'));
+document.querySelector('#open-candidate-draft').addEventListener('click', async () => {
+  if (!activeCandidate?.imported_article_id) return;
+  try { await openEditor(activeCandidate.imported_article_id); }
+  catch (error) { document.querySelector('#candidate-action-message').textContent = error.message; }
+});
 document.querySelector('#close-candidate').addEventListener('click', () => {
   document.querySelector('#candidate-detail').hidden = true;
   document.querySelector('#refresh-candidates').focus();
@@ -519,6 +570,7 @@ onAuthStateChanged(auth, async (user) => {
   signOutButton.hidden = true;
   authCard.hidden = false;
   document.querySelector('#candidate-list').replaceChildren();
+  activeCandidate = null;
   document.querySelector('#candidate-detail').hidden = true;
   document.querySelector('#candidates-message').textContent = '';
   if (!user) return;

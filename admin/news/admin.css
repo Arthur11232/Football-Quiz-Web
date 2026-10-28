@@ -62,6 +62,7 @@ select { appearance: none; padding-right: 44px; background-image: url("data:imag
 .candidate-excerpt { line-height: 1.7; white-space: pre-wrap; overflow-wrap: anywhere; }
 .candidate-detail .article-link { display: inline-block; margin-top: 20px; }
 .candidate-detail .editor-heading { flex-wrap: wrap; }
+.candidate-actions { margin-top: 24px; }
 .candidate-detail button:disabled,#refresh-candidates:disabled { opacity: .6; cursor: wait; }
 @media (max-width: 540px) { .candidate-fields { grid-template-columns: minmax(0, 1fr); gap: 6px; }.candidate-fields dd { margin-bottom: 12px; } }
 @media (max-width: 900px) { .form-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }.form-grid h2,.form-grid .message { grid-column: 1 / -1; }.form-grid .button { justify-self: start; }.editor-meta,.source-grid { grid-template-columns: 1fr 1fr; } }

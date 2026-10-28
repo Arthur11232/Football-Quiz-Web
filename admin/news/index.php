@@ -11,7 +11,7 @@ header('X-Robots-Tag: noindex, nofollow, noarchive');
   <meta name="robots" content="noindex,nofollow,noarchive">
   <title>News Admin — Football Quiz</title>
   <link rel="icon" href="/football_quiz_icon.png">
-  <link rel="stylesheet" href="/admin/news/admin.css?v=20261028-candidates">
+  <link rel="stylesheet" href="/admin/news/admin.css?v=20261028-candidate-actions">
 </head>
 <body>
   <main class="admin-shell">
@@ -161,6 +161,12 @@ header('X-Robots-Tag: noindex, nofollow, noarchive');
           <p id="candidate-excerpt" class="candidate-excerpt" hidden></p>
           <p id="candidate-warning" class="message" hidden></p>
           <a id="candidate-source" class="article-link" target="_blank" rel="noopener noreferrer" hidden>Открыть официальный источник</a>
+          <div id="candidate-actions" class="editor-actions candidate-actions">
+            <button id="import-candidate" class="button" type="button" hidden>Создать черновик</button>
+            <button id="reject-candidate" class="button button-secondary" type="button" hidden>Отклонить</button>
+            <button id="open-candidate-draft" class="button button-secondary" type="button" hidden>Открыть статью</button>
+            <p id="candidate-action-message" class="message" role="status"></p>
+          </div>
         </section>
       </section>
 
@@ -170,6 +176,6 @@ header('X-Robots-Tag: noindex, nofollow, noarchive');
       </section>
     </section>
   </main>
-  <script type="module" src="/admin/news/admin.js?v=20261028-candidates"></script>
+  <script type="module" src="/admin/news/admin.js?v=20261028-candidate-actions"></script>
 </body>
 </html>

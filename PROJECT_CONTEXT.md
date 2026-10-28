@@ -534,6 +534,8 @@ codex/news-web-staging-deploy
 
 Scheduler checkpoint — 2026-10-28: backend discovery работает на staging. Официальный источник Real Madrid активирован; в общей базе 5 `new` candidates и 2 успешных fetch runs; повторный запуск создаёт 0 новых записей. Cron выключен.
 
-Локально добавлены список последних 100 кандидатов и просмотр деталей в News Admin: source link, дата, taxonomy suggestions, status, warning и excerpt при наличии. Ошибка candidates API отображается отдельно и не вызывает sign-out. Сначала deploy backend с GET candidates list/detail, затем web. Создание draft из кандидата ещё не реализовано.
+Список последних 100 кандидатов и просмотр деталей проверены в Chrome на staging: все 5 карточек открываются, refresh/close работают, источник доступен, console errors отсутствуют. Ошибка candidates API отображается отдельно и не вызывает sign-out.
+
+Локально добавлены «Создать черновик» / «Отклонить» через DialogManager и открытие связанной статьи. После импорта редактор получает source/category/club; технический slug и пустые EN/RU/HY требуют подготовки редактором. Кнопки скрываются после обработки, status обновляется. Backend обеспечивает транзакцию и идемпотентность. Сначала deploy backend candidate actions, затем web; миграций нет. Staging smoke этих действий ещё не выполнен.
 
 Production News/Admin deployment ещё не выполнялся. Не коммитить локальный `linkedin-cover-football-quiz.png` вместе с News изменениями.
