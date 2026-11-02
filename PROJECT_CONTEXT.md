@@ -540,4 +540,6 @@ Scheduler checkpoint — 2026-10-28: backend discovery работает на sta
 
 Card-review checkpoint — 2026-10-29: перед первой публикацией review-статьи админка показывает отдельный preview публичной карточки с переключением EN/RU/HY. Preview автоматически открывается после submit-review; прямую кнопку публикации заменяет «Проверить карточку», а publish выполняется из preview после confirm. Новые материалы получают data-driven оформление по первому клубу вместо ручной привязки только к известным slug; SSR, pagination JS и article masthead используют одинаковое club fallback-правило.
 
+Automation card-quality checkpoint — 2026-11-02: Admin preview локализует club label по EN/RU/HY и использует проверенную цифру/счёт из заголовка как data-driven metric (`346` для материала Куртуа) вместо общего `RM`. Backend может передать `source_image_url` только для закрытого preview с предупреждением о правах. Public list/detail используют изображение лишь при наличии разрешённого `hero_image_url` на домене Football Quiz; иначе сохраняется безопасный фирменный fallback. Editor поддерживает localized hero alt, credit и rights note.
+
 Production News/Admin deployment ещё не выполнялся. Не коммитить локальный `linkedin-cover-football-quiz.png` вместе с News изменениями.

@@ -85,7 +85,10 @@
       'paris-saint-germain': { variant: 'club-psg', metric: 'PSG', marks: 3 }
     };
     const visual = clubVisuals[club.club_key || club.slug];
-    return visual ? { ...visual, label: club.name || 'Football Quiz' } : null;
+    if (!visual) return null;
+    const score = item.title?.match(/\b\d{1,2}\s*[-:]\s*\d{1,2}\b/u)?.[0]?.replace('-', ':');
+    const number = item.title?.match(/\b\d{1,4}\b/u)?.[0];
+    return { ...visual, metric: score || number || visual.metric, label: club.name || 'Football Quiz' };
   }
 
   function card(item) {
@@ -94,9 +97,17 @@
 
     const art = document.createElement('div');
     art.className = 'news-card-art';
-    art.setAttribute('aria-hidden', 'true');
     const visual = articleVisual(item);
-    if (visual) {
+    if (item.hero_image_url) {
+      art.classList.add('news-card-art--image');
+      const image = document.createElement('img');
+      image.src = item.hero_image_url;
+      image.alt = item.hero_image_alt || '';
+      image.loading = 'lazy';
+      image.decoding = 'async';
+      art.append(image);
+    } else if (visual) {
+      art.setAttribute('aria-hidden', 'true');
       art.classList.add(`news-card-art--${visual.variant}`);
       const club = document.createElement('span');
       club.className = 'news-card-art-club';
@@ -111,6 +122,7 @@
       }
       art.append(club, metric, marks);
     } else {
+      art.setAttribute('aria-hidden', 'true');
       const mark = document.createElement('span');
       mark.className = 'news-card-art-fallback';
       mark.textContent = 'FQ';

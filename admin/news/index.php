@@ -11,7 +11,7 @@ header('X-Robots-Tag: noindex, nofollow, noarchive');
   <meta name="robots" content="noindex,nofollow,noarchive">
   <title>News Admin — Football Quiz</title>
   <link rel="icon" href="/football_quiz_icon.png">
-  <link rel="stylesheet" href="/admin/news/admin.css?v=20261029-card-review-v1">
+  <link rel="stylesheet" href="/admin/news/admin.css?v=20261102-official-images">
 </head>
 <body>
   <main class="admin-shell">
@@ -72,6 +72,7 @@ header('X-Robots-Tag: noindex, nofollow, noarchive');
                     'title' => 'Title',
                     'summary' => 'Short description',
                     'body' => 'Article text (Markdown)',
+                    'hero_alt' => 'Hero image description',
                     'seo_title' => 'SEO title',
                     'seo_description' => 'SEO description',
                 ],
@@ -80,6 +81,7 @@ header('X-Robots-Tag: noindex, nofollow, noarchive');
                     'title' => 'Заголовок',
                     'summary' => 'Краткое описание',
                     'body' => 'Текст статьи (Markdown)',
+                    'hero_alt' => 'Описание главного изображения',
                     'seo_title' => 'SEO-заголовок',
                     'seo_description' => 'SEO-описание',
                 ],
@@ -88,6 +90,7 @@ header('X-Robots-Tag: noindex, nofollow, noarchive');
                     'title' => 'Վերնագիր',
                     'summary' => 'Կարճ նկարագրություն',
                     'body' => 'Հոդվածի տեքստ (Markdown)',
+                    'hero_alt' => 'Գլխավոր նկարի նկարագրություն',
                     'seo_title' => 'SEO վերնագիր',
                     'seo_description' => 'SEO նկարագրություն',
                 ],
@@ -99,6 +102,7 @@ header('X-Robots-Tag: noindex, nofollow, noarchive');
                 <label><?= $labels['title'] ?><input data-field="title" maxlength="220"></label>
                 <label><?= $labels['summary'] ?><textarea data-field="summary" maxlength="2000" rows="3"></textarea></label>
                 <label><?= $labels['body'] ?><textarea data-field="body_markdown" maxlength="100000" rows="8"></textarea></label>
+                <label><?= $labels['hero_alt'] ?><input data-field="hero_image_alt" maxlength="255"></label>
                 <label><?= $labels['seo_title'] ?><input data-field="seo_title" maxlength="220"></label>
                 <label><?= $labels['seo_description'] ?><textarea data-field="seo_description" maxlength="320" rows="2"></textarea></label>
               </fieldset>
@@ -113,6 +117,16 @@ header('X-Robots-Tag: noindex, nofollow, noarchive');
               <label>Дата публикации<input id="source-published-at" type="date"></label>
             </div>
             <a id="open-source" class="article-link source-link" href="#" target="_blank" rel="noopener noreferrer" hidden>Открыть источник</a>
+          </fieldset>
+
+          <fieldset class="source-card">
+            <legend>Главное изображение</legend>
+            <div class="source-grid">
+              <label>Кандидат из официального источника<input id="source-image-url" type="url" readonly placeholder="Появится после автоматической проверки"></label>
+              <label>Публичный URL на домене Football Quiz<input id="hero-image-url" type="url" maxlength="2048" placeholder="https://staging.footballquiz.club/assets/news/image.jpg"></label>
+              <label>Credit<input id="image-credit" maxlength="255" placeholder="Real Madrid"></label>
+              <label>Права использования<textarea id="image-rights-note" maxlength="2000" rows="3" placeholder="Проверено редактором перед публикацией"></textarea></label>
+            </div>
           </fieldset>
 
           <div class="preview-actions" aria-label="Предпросмотр переводов">
@@ -150,10 +164,12 @@ header('X-Robots-Tag: noindex, nofollow, noarchive');
         </div>
         <article class="card-preview-card">
           <div id="card-preview-art" class="card-preview-art" aria-hidden="true">
+            <img id="card-preview-image" class="card-preview-image" src="" alt="" hidden>
             <span id="card-preview-club-art" class="card-preview-art-club"></span>
             <strong id="card-preview-metric" class="card-preview-art-metric"></strong>
             <span id="card-preview-marks" class="card-preview-art-marks"></span>
           </div>
+          <p id="card-preview-image-rights" class="card-preview-image-rights" hidden></p>
           <div class="card-preview-body">
             <div id="card-preview-meta" class="card-preview-meta"></div>
             <h3 id="card-preview-title"></h3>
@@ -206,6 +222,6 @@ header('X-Robots-Tag: noindex, nofollow, noarchive');
       </section>
     </section>
   </main>
-  <script type="module" src="/admin/news/admin.js?v=20261029-card-review-v1"></script>
+  <script type="module" src="/admin/news/admin.js?v=20261102-official-images"></script>
 </body>
 </html>

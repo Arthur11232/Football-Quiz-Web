@@ -148,7 +148,7 @@ function news_competition_label(string $locale, string $competition): string
  * @param array<int, array<string, mixed>> $clubs
  * @return array{variant: string, metric: int|string, marks: int, label?: string}|null
  */
-function news_article_visual(string $slug, array $clubs = []): ?array
+function news_article_visual(string $slug, array $clubs = [], string $title = ''): ?array
 {
     $articleVisual = match ($slug) {
         'real-madrid-wins-clasico-barcelona-2-1' => ['variant' => 'clasico-result', 'metric' => '2:1', 'marks' => 3, 'label' => 'Real Madrid · Barcelona'],
@@ -168,7 +168,7 @@ function news_article_visual(string $slug, array $clubs = []): ?array
     $clubKey = (string) ($club['club_key'] ?? $club['slug'] ?? '');
     $clubName = (string) ($club['name'] ?? 'Football Quiz');
 
-    return match ($clubKey) {
+    $clubVisual = match ($clubKey) {
         'real-madrid' => ['variant' => 'club-real-madrid', 'metric' => 'RM', 'marks' => 3, 'label' => $clubName],
         'barcelona' => ['variant' => 'club-barcelona', 'metric' => 'FCB', 'marks' => 3, 'label' => $clubName],
         'arsenal' => ['variant' => 'club-arsenal', 'metric' => 'AFC', 'marks' => 3, 'label' => $clubName],
@@ -177,6 +177,17 @@ function news_article_visual(string $slug, array $clubs = []): ?array
         'paris-saint-germain' => ['variant' => 'club-psg', 'metric' => 'PSG', 'marks' => 3, 'label' => $clubName],
         default => null,
     };
+    if ($clubVisual === null) {
+        return null;
+    }
+    $metric = null;
+    if (preg_match('/\b\d{1,2}\s*[-:]\s*\d{1,2}\b/u', $title, $score) === 1) {
+        $metric = str_replace('-', ':', preg_replace('/\s+/', '', $score[0]) ?? $score[0]);
+    } elseif (preg_match('/\b\d{1,4}\b/u', $title, $number) === 1) {
+        $metric = $number[0];
+    }
+
+    return $metric === null ? $clubVisual : [...$clubVisual, 'metric' => $metric];
 }
 
 function news_category_page_title(

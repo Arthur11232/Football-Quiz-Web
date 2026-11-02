@@ -383,10 +383,14 @@ function fillEditor(article) {
   for (const locale of locales) {
     const card = translationCard(locale);
     const translation = article.translations[locale];
-    for (const field of ['title', 'summary', 'body_markdown', 'seo_title', 'seo_description']) {
+    for (const field of ['title', 'summary', 'body_markdown', 'hero_image_alt', 'seo_title', 'seo_description']) {
       card.querySelector(`[data-field="${field}"]`).value = translation[field] || '';
     }
   }
+  document.querySelector('#hero-image-url').value = article.hero_image_url || '';
+  document.querySelector('#source-image-url').value = article.source_image_url || '';
+  document.querySelector('#image-credit').value = article.image_credit || '';
+  document.querySelector('#image-rights-note').value = article.image_rights_note || '';
   const source = article.source || {};
   document.querySelector('#source-publisher').value = source.publisher_name || '';
   document.querySelector('#source-url').value = source.source_url || '';
@@ -432,7 +436,7 @@ function showPreview(locale) {
   previewDialog.showModal();
 }
 
-function cardVisual() {
+function cardVisual(locale = 'en') {
   const slug = document.querySelector('#editor-slug').value;
   const articleVisuals = {
     'real-madrid-wins-clasico-barcelona-2-1': { variant: 'clasico-result', metric: '2:1', marks: 3, label: 'Real Madrid · Barcelona' },
@@ -447,6 +451,7 @@ function cardVisual() {
 
   const clubKey = document.querySelector('[data-club-key]:checked')?.value || '';
   const club = taxonomy.clubs.find((item) => item.club_key === clubKey);
+  const localizedClubName = club?.names?.[locale] || club?.name || clubKey;
   const clubVisuals = {
     'real-madrid': { variant: 'club-real-madrid', metric: 'RM', marks: 3 },
     barcelona: { variant: 'club-barcelona', metric: 'FCB', marks: 3 },
@@ -456,9 +461,13 @@ function cardVisual() {
     'paris-saint-germain': { variant: 'club-psg', metric: 'PSG', marks: 3 }
   };
   const visual = clubVisuals[clubKey];
+  const headline = translationCard(locale)?.querySelector('[data-field="title"]')?.value || '';
+  const score = headline.match(/\b\d{1,2}\s*[-:]\s*\d{1,2}\b/u)?.[0]?.replace('-', ':');
+  const number = headline.match(/\b\d{1,4}\b/u)?.[0];
+  const metric = score || number || visual?.metric || 'FQ';
   return visual
-    ? { ...visual, label: club?.name || clubKey }
-    : { variant: '', metric: 'FQ', marks: 0, label: club?.name || 'Football Quiz' };
+    ? { ...visual, metric, label: localizedClubName }
+    : { variant: '', metric, marks: 0, label: localizedClubName || 'Football Quiz' };
 }
 
 function cardPreviewDate(locale) {
@@ -487,10 +496,30 @@ function showCardPreview(locale = cardPreviewLocale) {
     bundesliga: 'Bundesliga', 'ligue-1': 'Ligue 1'
   };
   const translation = translationCard(cardPreviewLocale);
-  const visual = cardVisual();
+  const visual = cardVisual(cardPreviewLocale);
   const art = document.querySelector('#card-preview-art');
   art.className = 'card-preview-art';
-  if (visual.variant) art.classList.add(`card-preview-art--${visual.variant}`);
+  const previewImage = document.querySelector('#card-preview-image');
+  const imageUrl = activeArticle?.hero_image_url || activeArticle?.source_image_url || '';
+  const sourcePreviewOnly = !activeArticle?.hero_image_url && Boolean(activeArticle?.source_image_url);
+  previewImage.hidden = !imageUrl;
+  if (imageUrl) previewImage.src = imageUrl;
+  else previewImage.removeAttribute('src');
+  const imageRights = document.querySelector('#card-preview-image-rights');
+  imageRights.hidden = !imageUrl;
+  imageRights.textContent = sourcePreviewOnly
+    ? 'Только внутренний preview изображения из официального источника. Для публикации загрузите разрешённый файл на домен Football Quiz и укажите credit/права.'
+    : imageUrl
+      ? (activeArticle?.image_rights_note || 'Проверьте credit и право использования перед публикацией.')
+    : '';
+  if (imageUrl) {
+    art.classList.add('card-preview-art--image');
+  } else if (visual.variant) {
+    art.classList.add(`card-preview-art--${visual.variant}`);
+  }
+  document.querySelector('#card-preview-club-art').hidden = Boolean(imageUrl);
+  document.querySelector('#card-preview-metric').hidden = Boolean(imageUrl);
+  document.querySelector('#card-preview-marks').hidden = Boolean(imageUrl);
   document.querySelector('#card-preview-club-art').textContent = visual.label;
   document.querySelector('#card-preview-metric').textContent = visual.metric;
   document.querySelector('#card-preview-marks').replaceChildren(
@@ -503,9 +532,10 @@ function showCardPreview(locale = cardPreviewLocale) {
   ];
   const competition = document.querySelector('#editor-competition').value;
   if (competition) meta.push(competitionLabels[competition] || competition);
-  meta.push(...[...document.querySelectorAll('[data-club-key]:checked')].map((checkbox) => (
-    taxonomy.clubs.find((club) => club.club_key === checkbox.value)?.name || checkbox.value
-  )));
+  meta.push(...[...document.querySelectorAll('[data-club-key]:checked')].map((checkbox) => {
+    const club = taxonomy.clubs.find((item) => item.club_key === checkbox.value);
+    return club?.names?.[cardPreviewLocale] || club?.name || checkbox.value;
+  }));
   document.querySelector('#card-preview-meta').replaceChildren(...meta.map((value) => {
     const item = document.createElement('span');
     item.textContent = value;
@@ -592,7 +622,7 @@ function draftPayload() {
   for (const locale of locales) {
     const card = translationCard(locale);
     translations[locale] = Object.fromEntries(
-      ['title', 'summary', 'body_markdown', 'seo_title', 'seo_description']
+      ['title', 'summary', 'body_markdown', 'hero_image_alt', 'seo_title', 'seo_description']
         .map((field) => [field, card.querySelector(`[data-field="${field}"]`).value])
     );
   }
@@ -604,6 +634,9 @@ function draftPayload() {
       ? [document.querySelector('#editor-competition').value]
       : [],
     club_keys: [...document.querySelectorAll('[data-club-key]:checked')].map((checkbox) => checkbox.value),
+    hero_image_url: document.querySelector('#hero-image-url').value,
+    image_credit: document.querySelector('#image-credit').value,
+    image_rights_note: document.querySelector('#image-rights-note').value,
     translations,
     source: {
       publisher_name: document.querySelector('#source-publisher').value,

@@ -65,7 +65,7 @@ $pageTitle = news_category_page_title($locale, $category, $copy['title'], $compe
   <meta property="og:image" content="https://footballquiz.club/assets/og/football-quiz-1200x630.png">
   <link rel="icon" type="image/png" href="/football_quiz_icon.png">
   <link rel="stylesheet" href="/style.css?v=20261013-heading-font">
-  <link rel="stylesheet" href="/news/news.css?v=20261029-club-visuals-v2">
+  <link rel="stylesheet" href="/news/news.css?v=20261102-official-images">
 </head>
 <body class="news-body<?= $competition !== null ? ' news-body--league news-body--' . news_e($competition) : '' ?><?= $competition === null && $category !== null ? ' news-body--category news-body--category-' . news_e($category) : '' ?><?= $category === null ? ' news-body--all-news' : '' ?>">
   <div class="page news-page">
@@ -133,14 +133,22 @@ $pageTitle = news_category_page_title($locale, $category, $copy['title'], $compe
           <?php foreach ($items as $item): ?>
             <?php
               $itemSlug = (string) ($item['slug'] ?? '');
-              $artVisual = news_article_visual($itemSlug, is_array($item['clubs'] ?? null) ? $item['clubs'] : []);
+              $artVisual = news_article_visual(
+                  $itemSlug,
+                  is_array($item['clubs'] ?? null) ? $item['clubs'] : [],
+                  (string) ($item['title'] ?? '')
+              );
               $artVariant = $artVisual['variant'] ?? null;
               $artMetric = $artVisual['metric'] ?? '';
               $artMarks = $artVisual['marks'] ?? 0;
               $artClub = (string) ($artVisual['label'] ?? $item['clubs'][0]['name'] ?? 'Football Quiz');
+              $heroImageUrl = is_string($item['hero_image_url'] ?? null) ? trim($item['hero_image_url']) : '';
+              $heroImageAlt = is_string($item['hero_image_alt'] ?? null) ? trim($item['hero_image_alt']) : '';
             ?>
             <article class="news-card">
-              <?php if ($artVariant !== null): ?>
+              <?php if ($heroImageUrl !== ''): ?>
+                <div class="news-card-art news-card-art--image"><img src="<?= news_e($heroImageUrl) ?>" alt="<?= news_e($heroImageAlt) ?>" loading="lazy" decoding="async"></div>
+              <?php elseif ($artVariant !== null): ?>
                 <div class="news-card-art news-card-art--<?= news_e($artVariant) ?>" aria-hidden="true">
                   <span class="news-card-art-club"><?= news_e($artClub) ?></span>
                   <strong class="news-card-art-metric"><?= news_e($artMetric) ?></strong>
@@ -187,6 +195,6 @@ $pageTitle = news_category_page_title($locale, $category, $copy['title'], $compe
       <div class="footer-links"><a class="pill-link" href="/"><?= news_e($copy['home']) ?></a><a class="pill-link install-link" href="https://play.google.com/store/apps/details?id=com.arthuralexandryan.footballquiz"><?= news_e($copy['play']) ?></a></div>
     </footer>
   </div>
-  <script src="/news/news-list.js?v=20261029-club-visuals-v2" defer></script>
+  <script src="/news/news-list.js?v=20261102-official-images" defer></script>
 </body>
 </html>
