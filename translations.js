@@ -2,8 +2,7 @@ const translations = {
   en: {
     brand_name: "Football Quiz",
     brand_sub: "Official site",
-    nav_news: "News",
-    nav_news_badge: "New",
+    nav_news: "Latest news",
     nav_how: "How it works",
     nav_certificates: "Certificates",
     nav_features: "Features",
@@ -99,8 +98,7 @@ const translations = {
   ru: {
     brand_name: "Football Quiz",
     brand_sub: "Официальный сайт",
-    nav_news: "Новости",
-    nav_news_badge: "Новое",
+    nav_news: "Свежие новости",
     nav_how: "Как это работает",
     nav_certificates: "Сертификаты",
     nav_features: "Особенности",
@@ -196,8 +194,7 @@ const translations = {
   am: {
     brand_name: "Football Quiz",
     brand_sub: "Պաշտոնական կայք",
-    nav_news: "Նորություններ",
-    nav_news_badge: "Նոր",
+    nav_news: "Թարմ լուրեր",
     nav_how: "Ինչպես է աշխատում",
     nav_certificates: "Վկայականներ",
     nav_features: "Առանձնահատկություններ",
