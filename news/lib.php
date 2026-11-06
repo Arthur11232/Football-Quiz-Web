@@ -56,6 +56,7 @@ function news_copy(string $locale): array
             'read' => 'Read article', 'source' => 'Sources', 'back' => 'Back to all news', 'published' => 'Published',
             'play' => 'Play Football Quiz', 'support' => 'Support', 'filter' => 'Filter by club', 'category_filter' => 'News sections',
             'competition_filter' => 'Top 5 leagues', 'all_competitions' => 'All Top 5',
+            'social_kicker' => 'Football Quiz community', 'social_follow' => 'Follow us for new videos and updates',
         ],
         'ru' => [
             'official' => 'Официальный сайт', 'news' => 'Новости', 'home' => 'Главная',
@@ -65,6 +66,7 @@ function news_copy(string $locale): array
             'read' => 'Читать материал', 'source' => 'Источники', 'back' => 'Ко всем новостям', 'published' => 'Опубликовано',
             'play' => 'Играть в Football Quiz', 'support' => 'Поддержка', 'filter' => 'Фильтр по клубу', 'category_filter' => 'Разделы новостей',
             'competition_filter' => 'Лиги Топ-5', 'all_competitions' => 'Все лиги Топ-5',
+            'social_kicker' => 'Сообщество Football Quiz', 'social_follow' => 'Подписывайтесь: новые видео и обновления',
         ],
         'hy' => [
             'official' => 'Պաշտոնական կայք', 'news' => 'Նորություններ', 'home' => 'Գլխավոր',
@@ -74,6 +76,7 @@ function news_copy(string $locale): array
             'read' => 'Կարդալ նյութը', 'source' => 'Աղբյուրներ', 'back' => 'Բոլոր նորություններին', 'published' => 'Հրապարակվել է',
             'play' => 'Խաղալ Football Quiz', 'support' => 'Աջակցություն', 'filter' => 'Զտել ըստ ակումբի', 'category_filter' => 'Նորությունների բաժիններ',
             'competition_filter' => 'Թոփ 5 լիգաներ', 'all_competitions' => 'Բոլոր Թոփ 5 լիգաները',
+            'social_kicker' => 'Football Quiz համայնք', 'social_follow' => 'Հետևեք նոր տեսանյութերին և թարմացումներին',
         ],
     ];
 

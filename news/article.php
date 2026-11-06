@@ -68,7 +68,7 @@ $structuredData = $article === null ? null : [
   <meta property="og:image" content="<?= news_e($article['hero_image_url'] ?? 'https://footballquiz.club/assets/og/football-quiz-1200x630.png') ?>">
   <?php if ($article !== null): ?><meta property="article:published_time" content="<?= news_e($article['published_at'] ?? '') ?>"><meta property="article:modified_time" content="<?= news_e($article['updated_at'] ?? '') ?>"><?php endif; ?>
   <link rel="icon" type="image/png" href="/football_quiz_icon.png">
-  <link rel="stylesheet" href="/style.css?v=20261106-social-links">
+  <link rel="stylesheet" href="/style.css?v=20261106-social-spotlight">
   <link rel="stylesheet" href="/news/news.css?v=20261102-official-images">
   <?php if ($structuredData !== null): ?><script type="application/ld+json"><?= json_encode($structuredData, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_THROW_ON_ERROR) ?></script><?php endif; ?>
 </head>
@@ -78,6 +78,11 @@ $structuredData = $article === null ? null : [
       <a class="brand" href="/"><img src="/football_quiz_icon.png" alt="Football Quiz"><div class="brand-title"><strong>Football Quiz</strong><span><?= news_e($copy['official']) ?></span></div></a>
       <nav class="top-actions"><a class="pill-link" href="<?= news_e(news_list_url($locale)) ?>"><?= news_e($copy['news']) ?></a><a class="pill-link install-link" href="https://play.google.com/store/apps/details?id=com.arthuralexandryan.footballquiz"><?= news_e($copy['play']) ?></a></nav>
     </header>
+
+    <aside class="social-spotlight" aria-label="Football Quiz social media">
+      <div class="social-spotlight-copy"><span><?= news_e($copy['social_kicker']) ?></span><strong><?= news_e($copy['social_follow']) ?></strong></div>
+      <?= news_social_links() ?>
+    </aside>
 
     <main>
       <?php if ($article === null): ?>
@@ -130,7 +135,6 @@ $structuredData = $article === null ? null : [
     <footer class="footer-card news-footer">
       <p>Football Quiz · <a href="mailto:support@footballquiz.club">support@footballquiz.club</a></p>
       <div class="footer-actions">
-        <?= news_social_links() ?>
         <div class="footer-links"><a class="pill-link" href="/"><?= news_e($copy['home']) ?></a></div>
       </div>
     </footer>

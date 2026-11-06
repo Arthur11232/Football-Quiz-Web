@@ -1605,6 +1605,72 @@ html[lang="hy"] h1 {
   gap: 8px;
 }
 
+.social-spotlight {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin: 0 0 20px;
+  padding: 13px 15px 13px 18px;
+  border: 1px solid rgba(252, 174, 64, 0.24);
+  border-radius: 20px;
+  background:
+    radial-gradient(circle at 8% 50%, rgba(0, 166, 90, 0.14), transparent 34%),
+    linear-gradient(105deg, rgba(8, 27, 18, 0.96), rgba(22, 27, 18, 0.88));
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.035);
+}
+
+.social-spotlight::after {
+  content: "";
+  position: absolute;
+  inset: 0 0 0 auto;
+  width: 34%;
+  pointer-events: none;
+  background: linear-gradient(110deg, transparent, rgba(252, 174, 64, 0.055));
+}
+
+.social-spotlight-copy {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.social-spotlight-copy span {
+  color: var(--gold-2);
+  font-size: 0.7rem;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.social-spotlight-copy strong {
+  color: #f7f6ee;
+  font-size: 0.94rem;
+  line-height: 1.35;
+}
+
+.social-spotlight .social-links {
+  position: relative;
+  z-index: 1;
+  flex: 0 0 auto;
+}
+
+.social-spotlight .social-link {
+  min-height: 38px;
+  padding: 6px 10px 6px 7px;
+  background: rgba(3, 12, 8, 0.58);
+}
+
+.social-spotlight .social-link-icon {
+  width: 25px;
+  height: 25px;
+}
+
 .social-link {
   min-height: 42px;
   padding: 8px 12px 8px 9px;
@@ -1653,6 +1719,24 @@ html[lang="hy"] h1 {
 
   .social-links {
     justify-content: flex-start;
+  }
+
+  .social-spotlight {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 11px;
+    padding: 14px;
+  }
+
+  .social-spotlight .social-links {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+  }
+
+  .social-spotlight .social-link {
+    justify-content: flex-start;
+    min-width: 0;
   }
 }
 
