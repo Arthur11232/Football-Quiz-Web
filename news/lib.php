@@ -453,3 +453,15 @@ function news_markdown(string $markdown): string
 
     return implode("\n", $html);
 }
+
+function news_social_links(): string
+{
+    return <<<'HTML'
+<nav class="social-links" aria-label="Football Quiz social media">
+  <a class="social-link social-link--youtube" href="https://www.youtube.com/@FootballQuiz-Club" target="_blank" rel="noopener noreferrer" aria-label="Football Quiz on YouTube"><span class="social-link-icon" aria-hidden="true">▶</span><span>YouTube</span></a>
+  <a class="social-link social-link--tiktok" href="https://www.tiktok.com/@footballquiz11232" target="_blank" rel="noopener noreferrer" aria-label="Football Quiz on TikTok"><span class="social-link-icon" aria-hidden="true">♪</span><span>TikTok</span></a>
+  <a class="social-link social-link--instagram" href="https://www.instagram.com/footballquiz.club/" target="_blank" rel="noopener noreferrer" aria-label="Football Quiz on Instagram"><span class="social-link-icon" aria-hidden="true">◎</span><span>Instagram</span></a>
+  <a class="social-link social-link--facebook" href="https://www.facebook.com/footballquiz.club" target="_blank" rel="noopener noreferrer" aria-label="Football Quiz on Facebook"><span class="social-link-icon" aria-hidden="true">f</span><span>Facebook</span></a>
+</nav>
+HTML;
+}

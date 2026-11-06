@@ -64,7 +64,7 @@ $pageTitle = news_category_page_title($locale, $category, $copy['title'], $compe
   <meta property="og:description" content="<?= news_e($copy['intro']) ?>">
   <meta property="og:image" content="https://footballquiz.club/assets/og/football-quiz-1200x630.png">
   <link rel="icon" type="image/png" href="/football_quiz_icon.png">
-  <link rel="stylesheet" href="/style.css?v=20261013-heading-font">
+  <link rel="stylesheet" href="/style.css?v=20261106-social-links">
   <link rel="stylesheet" href="/news/news.css?v=20261102-official-images">
 </head>
 <body class="news-body<?= $competition !== null ? ' news-body--league news-body--' . news_e($competition) : '' ?><?= $competition === null && $category !== null ? ' news-body--category news-body--category-' . news_e($category) : '' ?><?= $category === null ? ' news-body--all-news' : '' ?>">
@@ -192,7 +192,10 @@ $pageTitle = news_category_page_title($locale, $category, $copy['title'], $compe
 
     <footer class="footer-card news-footer">
       <p>Football Quiz · <a href="mailto:support@footballquiz.club">support@footballquiz.club</a></p>
-      <div class="footer-links"><a class="pill-link" href="/"><?= news_e($copy['home']) ?></a><a class="pill-link install-link" href="https://play.google.com/store/apps/details?id=com.arthuralexandryan.footballquiz"><?= news_e($copy['play']) ?></a></div>
+      <div class="footer-actions">
+        <?= news_social_links() ?>
+        <div class="footer-links"><a class="pill-link" href="/"><?= news_e($copy['home']) ?></a><a class="pill-link install-link" href="https://play.google.com/store/apps/details?id=com.arthuralexandryan.footballquiz"><?= news_e($copy['play']) ?></a></div>
+      </div>
     </footer>
   </div>
   <script src="/news/news-list.js?v=20261102-official-images" defer></script>
