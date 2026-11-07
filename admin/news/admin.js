@@ -140,6 +140,8 @@ async function loadArticles() {
         remove.textContent = 'Удалить';
         remove.addEventListener('click', () => deleteDraft(item.article_id, item.slug, remove));
         actions.append(remove);
+      } else {
+        actions.append(lifecycleButton('Архивировать', 'archive', item, 'article-delete'));
       }
       row.append(actions);
     }
