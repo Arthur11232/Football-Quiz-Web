@@ -101,6 +101,12 @@ async function loadArticles() {
       const actions = document.createElement('nav');
       actions.className = 'article-actions';
       actions.setAttribute('aria-label', `Действия со статьёй ${item.slug}`);
+      const preview = document.createElement('button');
+      preview.className = 'article-link article-edit';
+      preview.type = 'button';
+      preview.textContent = 'Предпросмотр карточки';
+      preview.addEventListener('click', () => openCardPreview(item.article_id));
+      actions.append(preview);
       for (const locale of ['ru', 'en', 'hy']) {
         const link = document.createElement('a');
         link.className = 'article-link';
@@ -412,7 +418,7 @@ function setEditorMode(status) {
   document.querySelector('#save-draft').hidden = !editable;
   document.querySelector('#submit-review').hidden = !editable;
   document.querySelector('#return-draft').hidden = status !== 'review';
-  document.querySelector('#preview-card').hidden = status !== 'review';
+  document.querySelector('#preview-card').hidden = !['review', 'published'].includes(status);
 }
 
 async function openEditor(articleId) {
@@ -427,6 +433,11 @@ async function openEditor(articleId) {
     activeArticleStatus = null;
     editorMessage.textContent = error.message;
   }
+}
+
+async function openCardPreview(articleId) {
+  await openEditor(articleId);
+  if (activeArticleId === articleId) showCardPreview('en');
 }
 
 function showPreview(locale) {
@@ -488,6 +499,13 @@ function cardPreviewDate(locale) {
 function showCardPreview(locale = cardPreviewLocale) {
   if (!activeArticleId) return;
   cardPreviewLocale = locales.includes(locale) ? locale : 'en';
+  const isPublished = activeArticleStatus === 'published';
+  document.querySelector('#card-preview-eyebrow').textContent = isPublished ? 'ОПУБЛИКОВАННАЯ СТАТЬЯ' : 'ПЕРЕД ПУБЛИКАЦИЕЙ';
+  document.querySelector('#card-preview-heading').textContent = isPublished ? 'Предпросмотр опубликованной карточки' : 'Предпросмотр карточки';
+  document.querySelector('#card-preview-note').textContent = isPublished
+    ? 'Так карточка опубликованной статьи выглядит для читателей на каждом языке.'
+    : 'Проверьте заголовок, описание, рубрики и оформление карточки на каждом языке.';
+  document.querySelector('#back-from-card-preview').textContent = isPublished ? 'Закрыть' : 'Вернуться к проверке';
   const copy = {
     en: { category: { 'top-5': 'Top 5 leagues', uefa: 'UEFA', 'world-cup': 'World Cup' }, read: 'Read article →' },
     ru: { category: { 'top-5': 'Топ-5 лиг', uefa: 'UEFA', 'world-cup': 'Чемпионат мира' }, read: 'Читать статью →' },

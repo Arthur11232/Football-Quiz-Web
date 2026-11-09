@@ -154,7 +154,7 @@ header('X-Robots-Tag: noindex, nofollow, noarchive');
 
       <dialog id="card-preview-dialog" class="card-preview-dialog" aria-labelledby="card-preview-heading">
         <div class="card-preview-header">
-          <div><p class="eyebrow">ПЕРЕД ПУБЛИКАЦИЕЙ</p><h2 id="card-preview-heading">Предпросмотр карточки</h2></div>
+          <div><p id="card-preview-eyebrow" class="eyebrow">ПЕРЕД ПУБЛИКАЦИЕЙ</p><h2 id="card-preview-heading">Предпросмотр карточки</h2></div>
           <button id="close-card-preview" class="preview-close" type="button" aria-label="Закрыть">×</button>
         </div>
         <div class="card-preview-locales" aria-label="Язык карточки">
@@ -177,7 +177,7 @@ header('X-Robots-Tag: noindex, nofollow, noarchive');
             <strong id="card-preview-read" class="card-preview-read"></strong>
           </div>
         </article>
-        <p class="card-preview-note">Проверьте заголовок, описание, рубрики и оформление карточки на каждом языке.</p>
+        <p id="card-preview-note" class="card-preview-note">Проверьте заголовок, описание, рубрики и оформление карточки на каждом языке.</p>
         <div class="card-preview-actions">
           <button id="back-from-card-preview" class="button button-secondary" type="button">Вернуться к проверке</button>
           <button id="publish-from-card-preview" class="button button-publish" type="button">Опубликовать</button>
@@ -222,6 +222,6 @@ header('X-Robots-Tag: noindex, nofollow, noarchive');
       </section>
     </section>
   </main>
-  <script type="module" src="/admin/news/admin.js?v=20261102-official-images"></script>
+  <script type="module" src="/admin/news/admin.js?v=20261109-published-preview"></script>
 </body>
 </html>
