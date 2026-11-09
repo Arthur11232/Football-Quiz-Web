@@ -222,6 +222,6 @@ header('X-Robots-Tag: noindex, nofollow, noarchive');
       </section>
     </section>
   </main>
-  <script type="module" src="/admin/news/admin.js?v=20261109-branded-covers"></script>
+  <script type="module" src="/admin/news/admin.js?v=20261109-published-parity"></script>
 </body>
 </html>

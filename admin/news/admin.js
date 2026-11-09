@@ -541,8 +541,9 @@ function showCardPreview(locale = cardPreviewLocale) {
   const art = document.querySelector('#card-preview-art');
   art.className = 'card-preview-art';
   const previewImage = document.querySelector('#card-preview-image');
-  const imageUrl = activeArticle?.hero_image_url || activeArticle?.source_image_url || '';
-  const sourcePreviewOnly = !activeArticle?.hero_image_url && Boolean(activeArticle?.source_image_url);
+  const sourceImageUrl = isPublished ? '' : (activeArticle?.source_image_url || '');
+  const imageUrl = activeArticle?.hero_image_url || sourceImageUrl;
+  const sourcePreviewOnly = !activeArticle?.hero_image_url && Boolean(sourceImageUrl);
   previewImage.hidden = !imageUrl;
   if (imageUrl) previewImage.src = imageUrl;
   else previewImage.removeAttribute('src');
