@@ -85,10 +85,35 @@
       'paris-saint-germain': { variant: 'club-psg', metric: 'PSG', marks: 3 }
     };
     const visual = clubVisuals[club.club_key || club.slug];
-    if (!visual) return null;
     const score = item.title?.match(/\b\d{1,2}\s*[-:]\s*\d{1,2}\b/u)?.[0]?.replace('-', ':');
     const number = item.title?.match(/\b\d{1,4}\b/u)?.[0];
-    return { ...visual, metric: score || number || visual.metric, label: club.name || 'Football Quiz' };
+    const award = item.slug?.includes('player-of-the-week') || /\bplayer of the week\b/iu.test(item.title || '')
+      ? 'POTW'
+      : /(?:rising-star|(?:player|goal|save|young-player)-of-the-(?:month|season|year))/.test(item.slug || '')
+          || /\b(?:player|goal|save|rising star|young player) of the (?:month|season|year)\b/iu.test(item.title || '')
+        ? 'AWARD'
+        : '';
+    if (visual) {
+      return { ...visual, metric: score || award || number || visual.metric, label: club.name || 'Football Quiz' };
+    }
+
+    const categoryKey = item.categories?.[0]?.category_key || '';
+    const competitionKey = item.competitions?.[0]?.competition_key || '';
+    const categoryVisuals = {
+      uefa: { variant: 'category-uefa', metric: 'UEFA', marks: 4, label: 'Football Quiz · UEFA' },
+      'world-cup': { variant: 'category-world-cup', metric: 'WC', marks: 3, label: 'Football Quiz · World Cup' }
+    };
+    const competitionVisuals = {
+      'premier-league': { variant: 'league-premier', metric: 'PL', marks: 3, label: 'Premier League' },
+      'la-liga': { variant: 'league-la-liga', metric: 'LL', marks: 3, label: 'La Liga' },
+      'serie-a': { variant: 'league-serie-a', metric: 'SA', marks: 3, label: 'Serie A' },
+      bundesliga: { variant: 'league-bundesliga', metric: 'BL', marks: 3, label: 'Bundesliga' },
+      'ligue-1': { variant: 'league-ligue-1', metric: 'L1', marks: 3, label: 'Ligue 1' }
+    };
+    const fallback = competitionVisuals[competitionKey]
+      || categoryVisuals[categoryKey]
+      || { variant: 'brand-news', metric: 'NEWS', marks: 3, label: 'Football Quiz' };
+    return { ...fallback, metric: score || award || number || fallback.metric };
   }
 
   function card(item) {
@@ -121,12 +146,6 @@
         marks.append(document.createElement('i'));
       }
       art.append(club, metric, marks);
-    } else {
-      art.setAttribute('aria-hidden', 'true');
-      const mark = document.createElement('span');
-      mark.className = 'news-card-art-fallback';
-      mark.textContent = 'FQ';
-      art.append(mark);
     }
 
     const body = document.createElement('div');

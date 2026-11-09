@@ -477,10 +477,31 @@ function cardVisual(locale = 'en') {
   const headline = translationCard(locale)?.querySelector('[data-field="title"]')?.value || '';
   const score = headline.match(/\b\d{1,2}\s*[-:]\s*\d{1,2}\b/u)?.[0]?.replace('-', ':');
   const number = headline.match(/\b\d{1,4}\b/u)?.[0];
-  const metric = score || number || visual?.metric || 'FQ';
-  return visual
-    ? { ...visual, metric, label: localizedClubName }
-    : { variant: '', metric, marks: 0, label: localizedClubName || 'Football Quiz' };
+  const award = slug.includes('player-of-the-week') || /\bplayer of the week\b/iu.test(headline)
+    ? 'POTW'
+    : /(?:rising-star|(?:player|goal|save|young-player)-of-the-(?:month|season|year))/.test(slug)
+        || /\b(?:player|goal|save|rising star|young player) of the (?:month|season|year)\b/iu.test(headline)
+      ? 'AWARD'
+      : '';
+  if (visual) return { ...visual, metric: score || award || number || visual.metric, label: localizedClubName };
+
+  const categoryVisuals = {
+    uefa: { variant: 'category-uefa', metric: 'UEFA', marks: 4, label: 'Football Quiz · UEFA' },
+    'world-cup': { variant: 'category-world-cup', metric: 'WC', marks: 3, label: 'Football Quiz · World Cup' }
+  };
+  const competitionVisuals = {
+    'premier-league': { variant: 'league-premier', metric: 'PL', marks: 3, label: 'Premier League' },
+    'la-liga': { variant: 'league-la-liga', metric: 'LL', marks: 3, label: 'La Liga' },
+    'serie-a': { variant: 'league-serie-a', metric: 'SA', marks: 3, label: 'Serie A' },
+    bundesliga: { variant: 'league-bundesliga', metric: 'BL', marks: 3, label: 'Bundesliga' },
+    'ligue-1': { variant: 'league-ligue-1', metric: 'L1', marks: 3, label: 'Ligue 1' }
+  };
+  const category = document.querySelector('#editor-primary-category').value;
+  const competition = document.querySelector('#editor-competition').value;
+  const fallback = competitionVisuals[competition]
+    || categoryVisuals[category]
+    || { variant: 'brand-news', metric: 'NEWS', marks: 3, label: 'Football Quiz' };
+  return { ...fallback, metric: score || award || number || fallback.metric };
 }
 
 function cardPreviewDate(locale) {

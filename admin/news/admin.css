@@ -61,6 +61,16 @@ select { appearance: none; padding-right: 44px; background-image: url("data:imag
 .card-preview-art--bayern-schedule { background: radial-gradient(circle at 82% 20%, rgba(255,255,255,.24), transparent 24%), linear-gradient(135deg, #770419 0%, #d10b2f 54%, #32000b 100%); }
 .card-preview-art--inter-schedule { background: radial-gradient(circle at 82% 20%, rgba(68,154,255,.34), transparent 25%), linear-gradient(135deg, #020817 0%, #052c70 55%, #02040b 100%); }
 .card-preview-art--psg-comeback { background: radial-gradient(circle at 82% 19%, rgba(255,216,117,.34), transparent 24%), linear-gradient(135deg, #06163f 0%, #12387b 48%, #8c0b2c 100%); }
+.card-preview-art--category-uefa { background: radial-gradient(circle at 80% 18%, rgba(83,181,255,.42), transparent 25%), linear-gradient(135deg, #06132f 0%, #123b82 52%, #070a23 100%); }
+.card-preview-art--category-world-cup { background: radial-gradient(circle at 82% 18%, rgba(255,214,112,.42), transparent 24%), linear-gradient(135deg, #4c0719 0%, #941537 52%, #1c0a20 100%); }
+.card-preview-art--league-premier { background: radial-gradient(circle at 82% 18%, rgba(72,255,208,.3), transparent 24%), linear-gradient(135deg, #25033f 0%, #54157b 55%, #061929 100%); }
+.card-preview-art--league-la-liga { background: radial-gradient(circle at 82% 18%, rgba(255,202,74,.38), transparent 24%), linear-gradient(135deg, #6d0712 0%, #c52a22 54%, #201031 100%); }
+.card-preview-art--league-serie-a { background: radial-gradient(circle at 82% 18%, rgba(85,181,255,.38), transparent 24%), linear-gradient(135deg, #061d55 0%, #1261ae 54%, #07172c 100%); }
+.card-preview-art--league-bundesliga { background: radial-gradient(circle at 82% 18%, rgba(255,238,210,.32), transparent 24%), linear-gradient(135deg, #6c0710 0%, #d71920 54%, #270207 100%); }
+.card-preview-art--league-ligue-1 { background: radial-gradient(circle at 82% 18%, rgba(192,255,65,.34), transparent 24%), linear-gradient(135deg, #071c35 0%, #0a4c61 55%, #071720 100%); }
+.card-preview-art--brand-news { background: radial-gradient(circle at 82% 18%, rgba(252,174,64,.36), transparent 24%), linear-gradient(135deg, #073817 0%, #0d6b2d 55%, #05170b 100%); }
+.card-preview-art--category-uefa .card-preview-art-metric,.card-preview-art--category-world-cup .card-preview-art-metric,.card-preview-art--brand-news .card-preview-art-metric { font-size: clamp(3rem, 10vw, 5rem); }
+.card-preview-art--category-uefa .card-preview-art-marks i { border-color: rgba(135,207,255,.92); border-radius: 3px; transform: rotate(45deg); background: rgba(72,158,255,.25); }
 .card-preview-art--club-real-madrid .card-preview-art-club,.card-preview-art--club-real-madrid .card-preview-art-metric,.card-preview-art--clasico-result .card-preview-art-club,.card-preview-art--clasico-result .card-preview-art-metric { color: #111a36; text-shadow: 0 12px 30px rgba(255,255,255,.34); }
 .card-preview-art-club { position: relative; z-index: 1; color: rgba(255,255,255,.8); font-size: .78rem; font-weight: 900; letter-spacing: .16em; text-transform: uppercase; }
 .card-preview-art-metric { position: relative; z-index: 1; margin-top: -4px; color: #fff7e5; font-size: clamp(3.9rem, 12vw, 6rem); font-weight: 1000; line-height: .95; letter-spacing: -.055em; text-shadow: 0 16px 40px rgba(0,0,0,.38); }

@@ -20,6 +20,30 @@
     return ['en', 'ru', 'am'].includes(stored) ? stored : 'en';
   }
 
+  function articleVisual(item) {
+    const title = item.title || '';
+    const score = title.match(/\b\d{1,2}\s*[-:]\s*\d{1,2}\b/u)?.[0]?.replace('-', ':');
+    const award = item.slug?.includes('player-of-the-week') || /\bplayer of the week\b/iu.test(title)
+      ? 'POTW'
+      : /(?:rising-star|(?:player|goal|save|young-player)-of-the-(?:month|season|year))/.test(item.slug || '')
+          || /\b(?:player|goal|save|rising star|young player) of the (?:month|season|year)\b/iu.test(title)
+        ? 'AWARD'
+        : '';
+    const category = item.categories?.[0]?.category_key || '';
+    const competition = item.competitions?.[0]?.competition_key || '';
+    const visuals = {
+      uefa: { variant: 'category-uefa', metric: 'UEFA', label: 'UEFA' },
+      'world-cup': { variant: 'category-world-cup', metric: 'WC', label: 'World Cup' },
+      'premier-league': { variant: 'league-premier', metric: 'PL', label: 'Premier League' },
+      'la-liga': { variant: 'league-la-liga', metric: 'LL', label: 'La Liga' },
+      'serie-a': { variant: 'league-serie-a', metric: 'SA', label: 'Serie A' },
+      bundesliga: { variant: 'league-bundesliga', metric: 'BL', label: 'Bundesliga' },
+      'ligue-1': { variant: 'league-ligue-1', metric: 'L1', label: 'Ligue 1' }
+    };
+    const visual = visuals[competition] || visuals[category] || { variant: 'brand-news', metric: 'NEWS', label: 'Football Quiz' };
+    return { ...visual, metric: score || award || visual.metric };
+  }
+
   function articleCard(item, uiLang, apiLocale) {
     const article = document.createElement('article');
     article.className = 'latest-news-card';
@@ -27,7 +51,23 @@
     const art = document.createElement('div');
     art.className = 'latest-news-art';
     art.setAttribute('aria-hidden', 'true');
-    art.textContent = 'FQ';
+    if (item.hero_image_url) {
+      art.classList.add('latest-news-art--image');
+      const image = document.createElement('img');
+      image.src = item.hero_image_url;
+      image.alt = '';
+      image.loading = 'lazy';
+      image.decoding = 'async';
+      art.append(image);
+    } else {
+      const visual = articleVisual(item);
+      art.classList.add(`latest-news-art--${visual.variant}`);
+      const label = document.createElement('span');
+      label.textContent = visual.label;
+      const metric = document.createElement('strong');
+      metric.textContent = visual.metric;
+      art.append(label, metric);
+    }
 
     const body = document.createElement('div');
     body.className = 'latest-news-card-body';

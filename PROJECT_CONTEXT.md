@@ -542,6 +542,8 @@ Card-review checkpoint — 2026-10-29: перед первой публикац�
 
 Published-card preview checkpoint — 2026-11-09: опубликованные статьи также можно открыть из списка админки через отдельное действие «Предпросмотр карточки». Диалог остаётся read-only, переключает EN/RU/HY, явно показывает статус опубликованной статьи и не предлагает повторную публикацию.
 
+Branded-cover checkpoint — 2026-11-09: при отсутствии разрешённого `hero_image_url` публичный список, detail masthead, landing latest-news и admin preview автоматически строят фирменную Football Quiz обложку по категории или лиге. UEFA Player of the Week получает тему UEFA и метрику `POTW`; Top-5 leagues, World Cup и общий news fallback имеют собственные безопасные CSS-варианты без сторонних фотографий и логотипов.
+
 Automation card-quality checkpoint — 2026-11-02: Admin preview локализует club label по EN/RU/HY и использует проверенную цифру/счёт из заголовка как data-driven metric (`346` для материала Куртуа) вместо общего `RM`. Backend может передать `source_image_url` только для закрытого preview с предупреждением о правах. Public list/detail используют изображение лишь при наличии разрешённого `hero_image_url` на домене Football Quiz; иначе сохраняется безопасный фирменный fallback. Editor поддерживает localized hero alt, credit и rights note.
 
 Production News/Admin deployment ещё не выполнялся. Не коммитить локальный `linkedin-cover-football-quiz.png` вместе с News изменениями.

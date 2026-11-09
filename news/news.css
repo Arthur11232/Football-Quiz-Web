@@ -587,6 +587,61 @@
   background: radial-gradient(circle at 82% 20%, rgba(255, 216, 117, 0.36), transparent 24%), linear-gradient(135deg, #06163f 0 52%, #a40d35 52% 66%, #12387b 66% 100%);
 }
 
+.news-card-art--category-uefa,
+.news-card-art--category-world-cup,
+.news-card-art--league-premier,
+.news-card-art--league-la-liga,
+.news-card-art--league-serie-a,
+.news-card-art--league-bundesliga,
+.news-card-art--league-ligue-1,
+.news-card-art--brand-news {
+  min-height: 220px;
+  align-content: center;
+  justify-items: start;
+  padding: 30px 34px;
+}
+
+.news-card-art--category-uefa::before,
+.news-card-art--category-world-cup::before,
+.news-card-art--league-premier::before,
+.news-card-art--league-la-liga::before,
+.news-card-art--league-serie-a::before,
+.news-card-art--league-bundesliga::before,
+.news-card-art--league-ligue-1::before,
+.news-card-art--brand-news::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.58;
+  background:
+    linear-gradient(118deg, transparent 0 58%, rgba(255, 255, 255, 0.12) 58% 60%, transparent 60%),
+    repeating-linear-gradient(90deg, transparent 0 47px, rgba(255, 255, 255, 0.055) 48px 49px);
+}
+
+.news-card-art--category-uefa { background: radial-gradient(circle at 80% 18%, rgba(83, 181, 255, 0.42), transparent 25%), linear-gradient(135deg, #06132f 0%, #123b82 52%, #070a23 100%); }
+.news-card-art--category-world-cup { background: radial-gradient(circle at 82% 18%, rgba(255, 214, 112, 0.42), transparent 24%), linear-gradient(135deg, #4c0719 0%, #941537 52%, #1c0a20 100%); }
+.news-card-art--league-premier { background: radial-gradient(circle at 82% 18%, rgba(72, 255, 208, 0.3), transparent 24%), linear-gradient(135deg, #25033f 0%, #54157b 55%, #061929 100%); }
+.news-card-art--league-la-liga { background: radial-gradient(circle at 82% 18%, rgba(255, 202, 74, 0.38), transparent 24%), linear-gradient(135deg, #6d0712 0%, #c52a22 54%, #201031 100%); }
+.news-card-art--league-serie-a { background: radial-gradient(circle at 82% 18%, rgba(85, 181, 255, 0.38), transparent 24%), linear-gradient(135deg, #061d55 0%, #1261ae 54%, #07172c 100%); }
+.news-card-art--league-bundesliga { background: radial-gradient(circle at 82% 18%, rgba(255, 238, 210, 0.32), transparent 24%), linear-gradient(135deg, #6c0710 0%, #d71920 54%, #270207 100%); }
+.news-card-art--league-ligue-1 { background: radial-gradient(circle at 82% 18%, rgba(192, 255, 65, 0.34), transparent 24%), linear-gradient(135deg, #071c35 0%, #0a4c61 55%, #071720 100%); }
+.news-card-art--brand-news { background: radial-gradient(circle at 82% 18%, rgba(252, 174, 64, 0.36), transparent 24%), linear-gradient(135deg, #073817 0%, #0d6b2d 55%, #05170b 100%); }
+
+.news-card-art--category-uefa .news-card-art-metric,
+.news-card-art--category-world-cup .news-card-art-metric,
+.news-card-art--brand-news .news-card-art-metric {
+  font-size: clamp(3.3rem, 7vw, 5.5rem);
+  letter-spacing: -0.055em;
+}
+
+.news-card-art--category-uefa .news-card-art-marks i {
+  border-color: rgba(135, 207, 255, 0.92);
+  border-radius: 3px;
+  transform: rotate(45deg);
+  background: rgba(72, 158, 255, 0.25);
+}
+
 .news-card-art--club-real-madrid .news-card-art-metric,
 .news-card-art--club-barcelona .news-card-art-metric,
 .news-card-art--club-arsenal .news-card-art-metric,
@@ -838,6 +893,14 @@
 .article-theme--club-bayern { --article-club-glow: rgba(222, 15, 52, 0.36); }
 .article-theme--club-inter { --article-club-glow: rgba(38, 116, 232, 0.42); }
 .article-theme--club-psg { --article-club-glow: rgba(170, 16, 57, 0.4); }
+.article-theme--category-uefa { --article-club-glow: rgba(72, 158, 255, 0.44); }
+.article-theme--category-world-cup { --article-club-glow: rgba(212, 32, 75, 0.42); }
+.article-theme--league-premier { --article-club-glow: rgba(114, 44, 170, 0.44); }
+.article-theme--league-la-liga { --article-club-glow: rgba(220, 54, 35, 0.4); }
+.article-theme--league-serie-a { --article-club-glow: rgba(38, 128, 222, 0.42); }
+.article-theme--league-bundesliga { --article-club-glow: rgba(215, 25, 32, 0.42); }
+.article-theme--league-ligue-1 { --article-club-glow: rgba(102, 199, 92, 0.38); }
+.article-theme--brand-news { --article-club-glow: rgba(252, 174, 64, 0.32); }
 
 .article-masthead-content {
   position: relative;
@@ -874,6 +937,13 @@
   line-height: 0.84;
   letter-spacing: -0.1em;
   text-shadow: 0 24px 70px rgba(0, 0, 0, 0.24);
+}
+
+.article-theme--category-uefa .article-masthead-accent strong,
+.article-theme--category-world-cup .article-masthead-accent strong,
+.article-theme--brand-news .article-masthead-accent strong {
+  font-size: clamp(5rem, 13vw, 9rem);
+  letter-spacing: -0.065em;
 }
 
 .article-content {

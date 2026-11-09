@@ -149,9 +149,15 @@ function news_competition_label(string $locale, string $competition): string
 
 /**
  * @param array<int, array<string, mixed>> $clubs
- * @return array{variant: string, metric: int|string, marks: int, label?: string}|null
+ * @return array{variant: string, metric: int|string, marks: int, label?: string}
  */
-function news_article_visual(string $slug, array $clubs = [], string $title = ''): ?array
+function news_article_visual(
+    string $slug,
+    array $clubs = [],
+    string $title = '',
+    string $category = '',
+    string $competition = ''
+): ?array
 {
     $articleVisual = match ($slug) {
         'real-madrid-wins-clasico-barcelona-2-1' => ['variant' => 'clasico-result', 'metric' => '2:1', 'marks' => 3, 'label' => 'Real Madrid · Barcelona'],
@@ -180,17 +186,40 @@ function news_article_visual(string $slug, array $clubs = [], string $title = ''
         'paris-saint-germain' => ['variant' => 'club-psg', 'metric' => 'PSG', 'marks' => 3, 'label' => $clubName],
         default => null,
     };
-    if ($clubVisual === null) {
-        return null;
-    }
     $metric = null;
     if (preg_match('/\b\d{1,2}\s*[-:]\s*\d{1,2}\b/u', $title, $score) === 1) {
         $metric = str_replace('-', ':', preg_replace('/\s+/', '', $score[0]) ?? $score[0]);
+    } elseif (str_contains($slug, 'player-of-the-week') || preg_match('/\bplayer of the week\b/iu', $title) === 1) {
+        $metric = 'POTW';
+    } elseif (preg_match('/(?:rising-star|(?:player|goal|save|young-player)-of-the-(?:month|season|year))/', $slug) === 1
+        || preg_match('/\b(?:player|goal|save|rising star|young player) of the (?:month|season|year)\b/iu', $title) === 1) {
+        $metric = 'AWARD';
     } elseif (preg_match('/\b\d{1,4}\b/u', $title, $number) === 1) {
         $metric = $number[0];
     }
 
-    return $metric === null ? $clubVisual : [...$clubVisual, 'metric' => $metric];
+    if ($clubVisual !== null) {
+        return $metric === null ? $clubVisual : [...$clubVisual, 'metric' => $metric];
+    }
+
+    $categoryVisual = match ($category) {
+        'uefa' => ['variant' => 'category-uefa', 'metric' => 'UEFA', 'marks' => 4, 'label' => 'Football Quiz · UEFA'],
+        'world-cup' => ['variant' => 'category-world-cup', 'metric' => 'WC', 'marks' => 3, 'label' => 'Football Quiz · World Cup'],
+        default => null,
+    };
+    $competitionVisual = match ($competition) {
+        'premier-league' => ['variant' => 'league-premier', 'metric' => 'PL', 'marks' => 3, 'label' => 'Premier League'],
+        'la-liga' => ['variant' => 'league-la-liga', 'metric' => 'LL', 'marks' => 3, 'label' => 'La Liga'],
+        'serie-a' => ['variant' => 'league-serie-a', 'metric' => 'SA', 'marks' => 3, 'label' => 'Serie A'],
+        'bundesliga' => ['variant' => 'league-bundesliga', 'metric' => 'BL', 'marks' => 3, 'label' => 'Bundesliga'],
+        'ligue-1' => ['variant' => 'league-ligue-1', 'metric' => 'L1', 'marks' => 3, 'label' => 'Ligue 1'],
+        default => null,
+    };
+    $visual = $competitionVisual
+        ?? $categoryVisual
+        ?? ['variant' => 'brand-news', 'metric' => 'NEWS', 'marks' => 3, 'label' => 'Football Quiz'];
+
+    return $metric === null ? $visual : [...$visual, 'metric' => $metric];
 }
 
 function news_category_page_title(

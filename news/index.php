@@ -65,7 +65,7 @@ $pageTitle = news_category_page_title($locale, $category, $copy['title'], $compe
   <meta property="og:image" content="https://footballquiz.club/assets/og/football-quiz-1200x630.png">
   <link rel="icon" type="image/png" href="/football_quiz_icon.png">
   <link rel="stylesheet" href="/style.css?v=20261106-social-spotlight">
-  <link rel="stylesheet" href="/news/news.css?v=20261102-official-images">
+  <link rel="stylesheet" href="/news/news.css?v=20261109-branded-covers">
 </head>
 <body class="news-body<?= $competition !== null ? ' news-body--league news-body--' . news_e($competition) : '' ?><?= $competition === null && $category !== null ? ' news-body--category news-body--category-' . news_e($category) : '' ?><?= $category === null ? ' news-body--all-news' : '' ?>">
   <div class="page news-page">
@@ -141,7 +141,9 @@ $pageTitle = news_category_page_title($locale, $category, $copy['title'], $compe
               $artVisual = news_article_visual(
                   $itemSlug,
                   is_array($item['clubs'] ?? null) ? $item['clubs'] : [],
-                  (string) ($item['title'] ?? '')
+                  (string) ($item['title'] ?? ''),
+                  (string) ($item['categories'][0]['category_key'] ?? ''),
+                  (string) ($item['competitions'][0]['competition_key'] ?? '')
               );
               $artVariant = $artVisual['variant'] ?? null;
               $artMetric = $artVisual['metric'] ?? '';
@@ -161,8 +163,6 @@ $pageTitle = news_category_page_title($locale, $category, $copy['title'], $compe
                     <?php for ($markIndex = 0; $markIndex < (int) $artMarks; $markIndex++): ?><i></i><?php endfor; ?>
                   </span>
                 </div>
-              <?php else: ?>
-                <div class="news-card-art" aria-hidden="true"><span class="news-card-art-fallback">FQ</span></div>
               <?php endif; ?>
               <div class="news-card-body">
                 <div class="news-meta">
@@ -202,6 +202,6 @@ $pageTitle = news_category_page_title($locale, $category, $copy['title'], $compe
       </div>
     </footer>
   </div>
-  <script src="/news/news-list.js?v=20261102-official-images" defer></script>
+  <script src="/news/news-list.js?v=20261109-branded-covers" defer></script>
 </body>
 </html>

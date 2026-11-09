@@ -774,6 +774,7 @@ html[lang="hy"] h1 {
 }
 
 .latest-news-art {
+  position: relative;
   min-height: 116px;
   display: grid;
   place-items: center;
@@ -784,6 +785,22 @@ html[lang="hy"] h1 {
   font-size: 1.3rem;
   font-weight: 1000;
 }
+
+.latest-news-art--image { overflow: hidden; }
+.latest-news-art--image img { width: 100%; height: 116px; object-fit: cover; }
+.latest-news-art:not(.latest-news-art--image) { align-content: center; justify-items: start; gap: 2px; padding: 20px 24px; }
+.latest-news-art:not(.latest-news-art--image)::after { content: ""; position: absolute; inset: 0; background: linear-gradient(118deg, transparent 0 60%, rgba(255,255,255,.1) 60% 62%, transparent 62%), repeating-linear-gradient(90deg, transparent 0 38px, rgba(255,255,255,.045) 39px 40px); }
+.latest-news-art span,.latest-news-art strong { position: relative; z-index: 1; }
+.latest-news-art span { color: rgba(255,255,255,.76); font-size: .66rem; letter-spacing: .14em; text-transform: uppercase; }
+.latest-news-art strong { color: #fff7e5; font-size: clamp(2rem, 4vw, 3.2rem); line-height: .95; letter-spacing: -.06em; }
+.latest-news-art--category-uefa { background: radial-gradient(circle at 80% 18%, rgba(83,181,255,.42), transparent 25%), linear-gradient(135deg, #06132f, #123b82 52%, #070a23); }
+.latest-news-art--category-world-cup { background: radial-gradient(circle at 82% 18%, rgba(255,214,112,.42), transparent 24%), linear-gradient(135deg, #4c0719, #941537 52%, #1c0a20); }
+.latest-news-art--league-premier { background: linear-gradient(135deg, #25033f, #54157b 55%, #061929); }
+.latest-news-art--league-la-liga { background: linear-gradient(135deg, #6d0712, #c52a22 54%, #201031); }
+.latest-news-art--league-serie-a { background: linear-gradient(135deg, #061d55, #1261ae 54%, #07172c); }
+.latest-news-art--league-bundesliga { background: linear-gradient(135deg, #6c0710, #d71920 54%, #270207); }
+.latest-news-art--league-ligue-1 { background: linear-gradient(135deg, #071c35, #0a4c61 55%, #071720); }
+.latest-news-art--brand-news { background: radial-gradient(circle at 82% 18%, rgba(252,174,64,.36), transparent 24%), linear-gradient(135deg, #073817, #0d6b2d 55%, #05170b); }
 
 .latest-news-card-body {
   padding: 19px;
