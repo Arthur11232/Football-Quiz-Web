@@ -2045,6 +2045,19 @@ html[lang="hy"] h1 {
     width: 132px;
   }
 
+  .qr-install-card {
+    width: 100%;
+    grid-template-columns: 84px minmax(0, 1fr);
+    gap: 16px;
+    padding: 12px;
+  }
+
+  .qr-install-card span {
+    min-width: 0;
+    font-size: 0.95rem;
+    text-align: left;
+  }
+
   .proof-media {
     grid-template-columns: 1fr;
   }
