@@ -93,6 +93,7 @@
       ? `/news/article.php?locale=${apiLocale}&slug=${encodeURIComponent(item.slug)}`
       : `/${apiLocale}/news/${encodeURIComponent(item.slug)}/`;
     titleLink.textContent = item.title;
+    titleLink.dataset.newsPlacement = 'latest_news_card';
     title.appendChild(titleLink);
 
     const summary = document.createElement('p');
@@ -102,6 +103,7 @@
     read.className = 'latest-news-read';
     read.href = titleLink.href;
     read.textContent = `${translations[uiLang]?.latest_news_read || 'Read article'} →`;
+    read.dataset.newsPlacement = 'latest_news_card';
 
     body.append(meta, title, summary, read);
     article.append(art, body);

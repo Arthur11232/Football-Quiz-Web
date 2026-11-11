@@ -67,7 +67,14 @@ $pageTitle = news_category_page_title($locale, $category, $copy['title'], $compe
   <link rel="stylesheet" href="/style.css?v=20261106-social-spotlight">
   <link rel="stylesheet" href="/news/news.css?v=20261109-branded-covers">
 </head>
-<body class="news-body<?= $competition !== null ? ' news-body--league news-body--' . news_e($competition) : '' ?><?= $competition === null && $category !== null ? ' news-body--category news-body--category-' . news_e($category) : '' ?><?= $category === null ? ' news-body--all-news' : '' ?>">
+<body
+  class="news-body<?= $competition !== null ? ' news-body--league news-body--' . news_e($competition) : '' ?><?= $competition === null && $category !== null ? ' news-body--category news-body--category-' . news_e($category) : '' ?><?= $category === null ? ' news-body--all-news' : '' ?>"
+  data-analytics-surface="news_list"
+  data-analytics-locale="<?= news_e($locale) ?>"
+  data-analytics-category="<?= news_e($category ?? '') ?>"
+  data-analytics-competition="<?= news_e($competition ?? '') ?>"
+  data-analytics-club="<?= news_e($club ?? '') ?>"
+>
   <div class="page news-page">
     <header class="topbar news-topbar">
       <a class="brand" href="/">
@@ -97,9 +104,9 @@ $pageTitle = news_category_page_title($locale, $category, $copy['title'], $compe
       </section>
 
       <nav class="category-filter" aria-label="<?= news_e($copy['category_filter']) ?>">
-        <a class="<?= $category === null ? 'active' : '' ?>"<?= $category === null ? ' aria-current="page"' : '' ?> href="<?= news_e(news_list_url($locale)) ?>"><?= news_e($copy['all_news']) ?></a>
+        <a class="<?= $category === null ? 'active' : '' ?>"<?= $category === null ? ' aria-current="page"' : '' ?> href="<?= news_e(news_list_url($locale)) ?>" data-analytics-event="news_category_filter_select" data-category-key="all"><?= news_e($copy['all_news']) ?></a>
         <?php foreach ($categories as $categoryKey => $categoryLabel): ?>
-          <a class="<?= $category === $categoryKey ? 'active' : '' ?>"<?= $category === $categoryKey ? ' aria-current="page"' : '' ?> href="<?= news_e(news_list_url($locale, $categoryKey)) ?>">
+          <a class="<?= $category === $categoryKey ? 'active' : '' ?>"<?= $category === $categoryKey ? ' aria-current="page"' : '' ?> href="<?= news_e(news_list_url($locale, $categoryKey)) ?>" data-analytics-event="news_category_filter_select" data-category-key="<?= news_e($categoryKey) ?>">
             <?= news_e($categoryLabel) ?>
           </a>
         <?php endforeach; ?>
@@ -107,11 +114,11 @@ $pageTitle = news_category_page_title($locale, $category, $copy['title'], $compe
 
       <?php if ($category === 'top-5'): ?>
         <nav class="competition-filter" aria-label="<?= news_e($copy['competition_filter']) ?>">
-          <a class="<?= $competition === null ? 'active' : '' ?>"<?= $competition === null ? ' aria-current="page"' : '' ?> href="<?= news_e(news_list_url($locale, 'top-5')) ?>">
+          <a class="<?= $competition === null ? 'active' : '' ?>"<?= $competition === null ? ' aria-current="page"' : '' ?> href="<?= news_e(news_list_url($locale, 'top-5')) ?>" data-analytics-event="news_competition_filter_select" data-category-key="top-5" data-competition-key="all">
             <?= news_e($copy['all_competitions']) ?>
           </a>
           <?php foreach ($competitions as $competitionKey => $competitionLabel): ?>
-            <a class="<?= $competition === $competitionKey ? 'active' : '' ?>"<?= $competition === $competitionKey ? ' aria-current="page"' : '' ?> href="<?= news_e(news_list_url($locale, 'top-5', $competitionKey)) ?>">
+            <a class="<?= $competition === $competitionKey ? 'active' : '' ?>"<?= $competition === $competitionKey ? ' aria-current="page"' : '' ?> href="<?= news_e(news_list_url($locale, 'top-5', $competitionKey)) ?>" data-analytics-event="news_competition_filter_select" data-category-key="top-5" data-competition-key="<?= news_e($competitionKey) ?>">
               <?= news_e($competitionLabel) ?> <span><?= (int) ($competitionCounts[$competitionKey] ?? 0) ?></span>
             </a>
           <?php endforeach; ?>
@@ -120,9 +127,9 @@ $pageTitle = news_category_page_title($locale, $category, $copy['title'], $compe
 
       <?php if ($clubs !== []): ?>
         <nav class="club-filter" aria-label="<?= news_e($copy['filter']) ?>">
-          <a class="<?= $club === null ? 'active' : '' ?>"<?= $club === null ? ' aria-current="page"' : '' ?> href="<?= news_e(news_list_url($locale, $category, $competition)) ?>"><?= news_e($copy['all']) ?></a>
+          <a class="<?= $club === null ? 'active' : '' ?>"<?= $club === null ? ' aria-current="page"' : '' ?> href="<?= news_e(news_list_url($locale, $category, $competition)) ?>" data-analytics-event="news_club_filter_select" data-club-key="all"><?= news_e($copy['all']) ?></a>
           <?php foreach ($clubs as $clubItem): ?>
-            <a class="<?= $club === ($clubItem['slug'] ?? '') ? 'active' : '' ?>"<?= $club === ($clubItem['slug'] ?? '') ? ' aria-current="page"' : '' ?> href="<?= news_e(news_list_url($locale, $category, $competition, (string) ($clubItem['slug'] ?? ''))) ?>">
+            <a class="<?= $club === ($clubItem['slug'] ?? '') ? 'active' : '' ?>"<?= $club === ($clubItem['slug'] ?? '') ? ' aria-current="page"' : '' ?> href="<?= news_e(news_list_url($locale, $category, $competition, (string) ($clubItem['slug'] ?? ''))) ?>" data-analytics-event="news_club_filter_select" data-club-key="<?= news_e($clubItem['slug'] ?? '') ?>">
               <?= news_e($clubItem['name'] ?? '') ?> <span><?= (int) ($clubItem['article_count'] ?? 0) ?></span>
             </a>
           <?php endforeach; ?>
@@ -202,6 +209,8 @@ $pageTitle = news_category_page_title($locale, $category, $copy['title'], $compe
       </div>
     </footer>
   </div>
-  <script src="/news/news-list.js?v=20261109-branded-covers" defer></script>
+  <script src="/site-analytics.js?v=20261111-first-party" defer></script>
+  <script src="/news/news-analytics.js?v=20261111-first-party" defer></script>
+  <script src="/news/news-list.js?v=20261111-first-party" defer></script>
 </body>
 </html>

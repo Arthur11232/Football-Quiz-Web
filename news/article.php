@@ -76,11 +76,18 @@ $structuredData = $article === null ? null : [
   <link rel="stylesheet" href="/news/news.css?v=20261109-branded-covers">
   <?php if ($structuredData !== null): ?><script type="application/ld+json"><?= json_encode($structuredData, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_THROW_ON_ERROR) ?></script><?php endif; ?>
 </head>
-<body class="<?= news_e($articleBodyClass) ?>">
+<body
+  class="<?= news_e($articleBodyClass) ?>"
+  data-analytics-surface="news_article"
+  data-analytics-locale="<?= news_e($locale) ?>"
+  data-analytics-category="<?= news_e($articleCategory ?? '') ?>"
+  data-analytics-competition="<?= news_e($articleCompetition ?? '') ?>"
+  data-analytics-article-id="<?= news_e($article['article_id'] ?? '') ?>"
+>
   <div class="page news-page">
     <header class="topbar news-topbar">
       <a class="brand" href="/"><img src="/football_quiz_icon.png" alt="Football Quiz"><div class="brand-title"><strong>Football Quiz</strong><span><?= news_e($copy['official']) ?></span></div></a>
-      <nav class="top-actions"><a class="pill-link" href="<?= news_e(news_list_url($locale)) ?>"><?= news_e($copy['news']) ?></a><a class="pill-link install-link" href="https://play.google.com/store/apps/details?id=com.arthuralexandryan.footballquiz"><?= news_e($copy['play']) ?></a></nav>
+      <nav class="top-actions"><a class="pill-link" href="<?= news_e(news_list_url($locale)) ?>"><?= news_e($copy['news']) ?></a><a class="pill-link install-link" href="https://play.google.com/store/apps/details?id=com.arthuralexandryan.footballquiz" data-analytics-event="news_play_store_click" data-article-id="<?= news_e($article['article_id'] ?? '') ?>" data-placement="article_header"><?= news_e($copy['play']) ?></a></nav>
     </header>
 
     <aside class="social-spotlight" aria-label="Football Quiz social media">
@@ -126,11 +133,11 @@ $structuredData = $article === null ? null : [
             <?php if (!empty($article['sources'])): ?>
               <section class="article-sources">
                 <h2><?= news_e($copy['source']) ?></h2>
-                <ul><?php foreach ($article['sources'] as $source): ?><li><a href="<?= news_e($source['source_url'] ?? '') ?>" target="_blank" rel="noopener noreferrer nofollow"><?= news_e($source['publisher_name'] ?? '') ?></a><?php if (!empty($source['source_published_at'])): ?> · <?= news_e(news_date($source['source_published_at'], $locale)) ?><?php endif; ?></li><?php endforeach; ?></ul>
+                <ul><?php foreach ($article['sources'] as $sourceIndex => $source): ?><li><a href="<?= news_e($source['source_url'] ?? '') ?>" target="_blank" rel="noopener noreferrer nofollow" data-analytics-event="news_source_click" data-article-id="<?= news_e($article['article_id'] ?? '') ?>" data-position="<?= (int) $sourceIndex + 1 ?>"><?= news_e($source['publisher_name'] ?? '') ?></a><?php if (!empty($source['source_published_at'])): ?> · <?= news_e(news_date($source['source_published_at'], $locale)) ?><?php endif; ?></li><?php endforeach; ?></ul>
               </section>
             <?php endif; ?>
 
-            <aside class="article-cta"><div><strong>Football Quiz</strong><p><?= news_e($copy['intro']) ?></p></div><a class="button primary" href="https://play.google.com/store/apps/details?id=com.arthuralexandryan.footballquiz"><?= news_e($copy['play']) ?></a></aside>
+            <aside class="article-cta"><div><strong>Football Quiz</strong><p><?= news_e($copy['intro']) ?></p></div><a class="button primary" href="https://play.google.com/store/apps/details?id=com.arthuralexandryan.footballquiz" data-analytics-event="news_play_store_click" data-article-id="<?= news_e($article['article_id'] ?? '') ?>" data-placement="article_cta"><?= news_e($copy['play']) ?></a></aside>
           </div>
         </article>
       <?php endif; ?>
@@ -143,5 +150,7 @@ $structuredData = $article === null ? null : [
       </div>
     </footer>
   </div>
+  <script src="/site-analytics.js?v=20261111-first-party" defer></script>
+  <script src="/news/news-analytics.js?v=20261111-first-party" defer></script>
 </body>
 </html>

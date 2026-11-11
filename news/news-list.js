@@ -161,6 +161,8 @@
       label.className = 'news-category-tag';
       label.href = listUrl(button.dataset.locale, category.slug);
       label.textContent = categoryLabel(button.dataset.locale, category.category_key);
+      label.dataset.analyticsEvent = 'news_category_filter_select';
+      label.dataset.categoryKey = category.category_key;
       meta.append(label);
     });
     (item.competitions || []).forEach(competition => {
@@ -168,6 +170,9 @@
       label.className = 'news-competition-tag';
       label.href = listUrl(button.dataset.locale, 'top-5', competition.slug);
       label.textContent = competitionLabel(button.dataset.locale, competition.competition_key);
+      label.dataset.analyticsEvent = 'news_competition_filter_select';
+      label.dataset.categoryKey = 'top-5';
+      label.dataset.competitionKey = competition.competition_key;
       meta.append(label);
     });
     (item.clubs || []).forEach(club => {
@@ -197,6 +202,13 @@
     if (!button.dataset.cursor || button.disabled) return;
     button.disabled = true;
     button.setAttribute('aria-busy', 'true');
+    window.footballQuizAnalytics?.track('news_load_more', {
+      locale: button.dataset.locale,
+      category_key: button.dataset.category,
+      competition_key: button.dataset.competition,
+      club_key: button.dataset.club,
+      position: grid.querySelectorAll('.news-card').length
+    });
     const params = new URLSearchParams({
       locale: button.dataset.locale,
       limit: localApi ? '2' : '12',

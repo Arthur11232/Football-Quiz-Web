@@ -11,6 +11,11 @@ function getUtmParams() {
 }
 
 function trackEvent(eventName, params = {}) {
+  window.footballQuizAnalytics?.track(eventName, {
+    locale: currentLang,
+    ...params
+  });
+
   // Use Firebase Analytics if available
   if (typeof window.logFirebaseEvent === 'function') {
     window.logFirebaseEvent(eventName, {
@@ -135,7 +140,34 @@ document.addEventListener('DOMContentLoaded', () => {
       previewCaption.textContent = caption;
       previewModal.hidden = false;
       document.body.classList.add('modal-open');
-      trackEvent('screenshot_preview_opened', { caption });
+      trackEvent('screenshot_preview_opened', {
+        target_key: trigger.getAttribute('data-analytics-target') || 'question'
+      });
+    });
+  });
+
+  document.addEventListener('click', event => {
+    const link = event.target.closest('[data-news-placement]');
+    if (link) {
+      trackEvent('landing_news_clicked', {
+        placement: link.getAttribute('data-news-placement')
+      });
+    }
+  });
+
+  document.querySelectorAll('[data-social-target]').forEach(link => {
+    link.addEventListener('click', () => {
+      trackEvent('social_link_clicked', {
+        target_key: link.getAttribute('data-social-target')
+      });
+    });
+  });
+
+  document.querySelectorAll('[data-legal-target]').forEach(link => {
+    link.addEventListener('click', () => {
+      trackEvent('legal_link_clicked', {
+        target_key: link.getAttribute('data-legal-target')
+      });
     });
   });
 
