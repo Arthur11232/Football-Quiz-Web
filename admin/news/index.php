@@ -11,7 +11,7 @@ header('X-Robots-Tag: noindex, nofollow, noarchive');
   <meta name="robots" content="noindex,nofollow,noarchive">
   <title>News Admin — Football Quiz</title>
   <link rel="icon" href="/football_quiz_icon.png">
-  <link rel="stylesheet" href="/admin/news/admin.css?v=20261109-branded-covers">
+  <link rel="stylesheet" href="/admin/news/admin.css?v=20261112-analytics">
 </head>
 <body>
   <main class="admin-shell">
@@ -33,6 +33,25 @@ header('X-Robots-Tag: noindex, nofollow, noarchive');
         <div><p class="eyebrow">NEWS WORKFLOW</p><h1>Черновики и статьи</h1></div>
         <span id="admin-uid" class="uid"></span>
       </div>
+
+      <section class="panel analytics-panel" aria-labelledby="analytics-title">
+        <div class="list-heading">
+          <div><p class="eyebrow">PRIVACY-FIRST</p><h2 id="analytics-title">Аналитика сайта</h2></div>
+          <div class="analytics-controls">
+            <label>Период<select id="analytics-days"><option value="7">7 дней</option><option value="30">30 дней</option><option value="90">90 дней</option></select></label>
+            <button id="refresh-analytics" class="button button-secondary" type="button">Обновить</button>
+          </div>
+        </div>
+        <p class="candidate-intro">Только агрегированные события landing и News. Без IP, email, Firebase UID, cookies и идентификаторов сессий.</p>
+        <p id="analytics-message" class="message" role="status"></p>
+        <div id="analytics-summary" class="analytics-summary"></div>
+        <div class="analytics-details">
+          <section><h3>По дням</h3><div id="analytics-daily" class="analytics-bars"></div></section>
+          <section><h3>Языки</h3><div id="analytics-locales" class="analytics-ranking"></div></section>
+          <section><h3>Популярные статьи</h3><div id="analytics-articles" class="analytics-ranking"></div></section>
+          <section><h3>Фильтры News</h3><div id="analytics-filters" class="analytics-ranking"></div></section>
+        </div>
+      </section>
 
       <form id="draft-form" class="panel form-grid">
         <h2>Новый черновик</h2>
@@ -222,6 +241,6 @@ header('X-Robots-Tag: noindex, nofollow, noarchive');
       </section>
     </section>
   </main>
-  <script type="module" src="/admin/news/admin.js?v=20261109-published-parity"></script>
+  <script type="module" src="/admin/news/admin.js?v=20261112-analytics"></script>
 </body>
 </html>

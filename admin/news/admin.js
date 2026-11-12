@@ -49,6 +49,74 @@ async function api(path, options = {}) {
   return payload.data;
 }
 
+const analyticsSummaryLabels = {
+  total_events: 'Всего событий',
+  landing_views: 'Просмотры landing',
+  landing_news_clicks: 'Переходы в News',
+  news_section_views: 'Просмотры News',
+  news_article_opens: 'Открытия статей',
+  play_store_clicks: 'Переходы в Google Play',
+  source_clicks: 'Открытия источников'
+};
+
+function analyticsRankingRow(label, total, maximum) {
+  const row = document.createElement('div');
+  row.className = 'analytics-rank-row';
+  const copy = document.createElement('span');
+  copy.textContent = label;
+  const value = document.createElement('strong');
+  value.textContent = String(total);
+  const bar = document.createElement('i');
+  bar.style.setProperty('--analytics-width', `${maximum > 0 ? Math.max(5, (total / maximum) * 100) : 0}%`);
+  row.append(copy, value, bar);
+  return row;
+}
+
+function renderAnalyticsRanking(target, rows, labelFor) {
+  const container = document.querySelector(target);
+  if (!rows.length) {
+    container.replaceChildren(Object.assign(document.createElement('p'), { className: 'analytics-empty', textContent: 'Пока нет данных.' }));
+    return;
+  }
+  const maximum = Math.max(...rows.map((item) => item.total));
+  container.replaceChildren(...rows.map((item) => analyticsRankingRow(labelFor(item), item.total, maximum)));
+}
+
+async function loadAnalytics() {
+  const button = document.querySelector('#refresh-analytics');
+  const message = document.querySelector('#analytics-message');
+  const days = document.querySelector('#analytics-days').value;
+  button.disabled = true;
+  message.textContent = 'Загружаем агрегаты…';
+  try {
+    const data = await api(`/v1/admin/analytics/overview?days=${encodeURIComponent(days)}`);
+    const summary = document.querySelector('#analytics-summary');
+    summary.replaceChildren(...Object.entries(analyticsSummaryLabels).map(([key, label]) => {
+      const card = document.createElement('article');
+      const value = document.createElement('strong');
+      value.textContent = Number(data.summary[key] || 0).toLocaleString('ru-RU');
+      const caption = document.createElement('span');
+      caption.textContent = label;
+      card.append(value, caption);
+      return card;
+    }));
+    renderAnalyticsRanking('#analytics-daily', data.daily, (item) => new Date(`${item.date}T00:00:00`).toLocaleDateString('ru-RU', { day: '2-digit', month: 'short' }));
+    renderAnalyticsRanking('#analytics-locales', data.locales, (item) => item.locale.toUpperCase());
+    renderAnalyticsRanking('#analytics-articles', data.top_articles, (item) => item.title || item.slug || item.article_id);
+    const filters = [
+      ...data.filters.categories.map((item) => ({ ...item, key: `Категория: ${item.key}` })),
+      ...data.filters.competitions.map((item) => ({ ...item, key: `Лига: ${item.key}` })),
+      ...data.filters.clubs.map((item) => ({ ...item, key: `Клуб: ${item.key}` }))
+    ].sort((a, b) => b.total - a.total).slice(0, 10);
+    renderAnalyticsRanking('#analytics-filters', filters, (item) => item.key);
+    message.textContent = `Данные за ${data.range.days} дней · среда: ${data.range.site_environment}`;
+  } catch (error) {
+    message.textContent = error.message;
+  } finally {
+    button.disabled = false;
+  }
+}
+
 async function loadTaxonomy() {
   taxonomy = await api('/v1/admin/news/taxonomy');
   renderCompetitionOptions(document.querySelector('#editor-primary-category').value, []);
@@ -694,6 +762,8 @@ signInButton.addEventListener('click', async () => {
 });
 signOutButton.addEventListener('click', () => signOut(auth));
 document.querySelector('#refresh-candidates').addEventListener('click', loadCandidates);
+document.querySelector('#refresh-analytics').addEventListener('click', loadAnalytics);
+document.querySelector('#analytics-days').addEventListener('change', loadAnalytics);
 document.querySelector('#import-candidate').addEventListener('click', () => candidateAction('create-draft'));
 document.querySelector('#reject-candidate').addEventListener('click', () => candidateAction('reject'));
 document.querySelector('#open-candidate-draft').addEventListener('click', async () => {
@@ -780,6 +850,7 @@ onAuthStateChanged(auth, async (user) => {
     workspace.hidden = false;
     signOutButton.hidden = false;
     await loadTaxonomy();
+    await loadAnalytics();
     await loadArticles();
     await loadCandidates();
     const articleId = new URL(window.location.href).searchParams.get('article');
