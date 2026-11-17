@@ -243,6 +243,6 @@ header('X-Robots-Tag: noindex, nofollow, noarchive');
       </section>
     </section>
   </main>
-  <script type="module" src="/admin/news/admin.js?v=20261112-analytics"></script>
+  <script type="module" src="/admin/news/admin.js?v=20261117-utm"></script>
 </body>
 </html>

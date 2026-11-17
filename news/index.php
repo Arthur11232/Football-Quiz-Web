@@ -209,7 +209,7 @@ $pageTitle = news_category_page_title($locale, $category, $copy['title'], $compe
       </div>
     </footer>
   </div>
-  <script src="/site-analytics.js?v=20261111-first-party" defer></script>
+  <script src="/site-analytics.js?v=20261117-utm" defer></script>
   <script src="/news/news-analytics.js?v=20261111-first-party" defer></script>
   <script src="/news/news-list.js?v=20261111-first-party" defer></script>
 </body>
