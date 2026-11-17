@@ -31,7 +31,6 @@ const previewDialog = document.querySelector('#article-preview');
 const cardPreviewDialog = document.querySelector('#card-preview-dialog');
 const dialogManager = new DialogManager(document.querySelector('#app-dialog'));
 const locales = ['en', 'ru', 'hy'];
-let token = null;
 let activeArticleId = null;
 let activeArticleStatus = null;
 let activeArticle = null;
@@ -39,12 +38,16 @@ let cardPreviewLocale = 'en';
 let activeCandidate = null;
 let taxonomy = { competitions: [], clubs: [] };
 
-async function api(path, options = {}) {
+async function api(path, options = {}, forceRefresh = false) {
+  const user = auth.currentUser;
+  if (!user) throw new Error('Firebase session is unavailable.');
+  const idToken = await user.getIdToken(forceRefresh);
   const response = await fetch(`${apiBase}${path}`, {
     ...options,
-    headers: { Accept: 'application/json', Authorization: `Bearer ${token}`, ...(options.headers || {}) }
+    headers: { Accept: 'application/json', Authorization: `Bearer ${idToken}`, ...(options.headers || {}) }
   });
   const payload = await response.json().catch(() => null);
+  if (response.status === 401 && !forceRefresh) return api(path, options, true);
   if (!response.ok) throw new Error(payload?.error?.message || `API ${response.status}`);
   return payload.data;
 }
@@ -839,7 +842,6 @@ document.querySelector('#draft-form').addEventListener('submit', async (event) =
 });
 
 onAuthStateChanged(auth, async (user) => {
-  token = null;
   workspace.hidden = true;
   signOutButton.hidden = true;
   authCard.hidden = false;
@@ -853,7 +855,6 @@ onAuthStateChanged(auth, async (user) => {
   if (!user) return;
   authMessage.textContent = 'Проверяем доступ…';
   try {
-    token = await user.getIdToken(true);
     const session = await api('/v1/admin/news/session');
     document.querySelector('#admin-uid').textContent = `Admin: ${session.uid}`;
     authCard.hidden = true;
@@ -866,7 +867,6 @@ onAuthStateChanged(auth, async (user) => {
     const articleId = new URL(window.location.href).searchParams.get('article');
     if (articleId) await openEditor(articleId);
   } catch (error) {
-    token = null;
     authMessage.textContent = error.message;
     await signOut(auth);
   }
