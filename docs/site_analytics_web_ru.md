@@ -27,9 +27,13 @@ Firebase Analytics пока остаётся на landing параллельно
 - IP и user-agent;
 - полный referrer URL;
 - произвольный текст страницы;
-- UTM-параметры в first-party endpoint.
+- произвольные UTM-значения: допускаются только нормализованные lowercase campaign keys длиной до 64 символов.
 
 Запрос выполняется с `credentials: omit` и `referrerPolicy: no-referrer`. Клиентский и серверный allowlist одновременно отбрасывают неизвестные события и поля.
+
+## Marketing attribution
+
+При наличии в URL клиент принимает `utm_source`, `utm_medium`, `utm_campaign`, `utm_content`, проверяет slug-like формат и сохраняет только эти значения в `sessionStorage` текущей вкладки. Это позволяет связать переход из соцсети, открытие News и клик в Google Play без cookie или пользовательского идентификатора. Невалидные и свободные значения игнорируются.
 
 ## Landing events
 
@@ -56,12 +60,12 @@ Firebase Analytics пока остаётся на landing параллельно
 
 ## Rollout order
 
-1. Deploy backend с `ANALYTICS_ENABLED=false`.
-2. Сделать backup общей staging/production DB.
-3. Применить additive migration `2026_11_11_site_analytics_events.sql`.
-4. На staging задать `ANALYTICS_ENABLED=true` и `ANALYTICS_SITE_ENVIRONMENT=staging`.
-5. Deploy web.
-6. Проверить новые staging-события SQL-запросом.
-7. Оставить production analytics выключенной до отдельного решения.
+Текущее состояние: first-party analytics и агрегированный admin dashboard включены на staging и production.
 
-Admin dashboard и агрегированные отчёты относятся к следующему этапу после проверки реального потока событий.
+Для marketing attribution порядок rollout следующий:
+
+1. Сделать backup общей staging/production DB.
+2. Один раз применить additive migration `2026_11_17_site_analytics_utm.sql`.
+3. Deploy backend-код, который записывает UTM-поля.
+4. Deploy web.
+5. Открыть тестовую ссылку с безопасными UTM-параметрами, пройти Landing → News → статья и проверить агрегаты в admin dashboard.

@@ -3,11 +3,11 @@ let currentLang = localStorage.getItem('football_quiz_lang') || 'en';
 
 function getUtmParams() {
   const searchParams = new URLSearchParams(window.location.search);
-  return {
-    utm_source: searchParams.get('utm_source') || '',
-    utm_medium: searchParams.get('utm_medium') || '',
-    utm_campaign: searchParams.get('utm_campaign') || ''
-  };
+  return ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content'].reduce((result, field) => {
+    const value = (searchParams.get(field) || '').trim().toLowerCase();
+    if (/^[a-z0-9][a-z0-9_-]{0,63}$/.test(value)) result[field] = value;
+    return result;
+  }, {});
 }
 
 function trackEvent(eventName, params = {}) {

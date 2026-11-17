@@ -25,6 +25,39 @@
     news_source_click: ['article_id', 'position'],
     news_play_store_click: ['article_id', 'placement']
   });
+  const campaignFields = Object.freeze(['utm_source', 'utm_medium', 'utm_campaign', 'utm_content']);
+  const campaignStorageKey = 'football_quiz_campaign';
+
+  function normalizedCampaignValue(value) {
+    if (typeof value !== 'string') return '';
+    const normalized = value.trim().toLowerCase();
+    return /^[a-z0-9][a-z0-9_-]{0,63}$/.test(normalized) ? normalized : '';
+  }
+
+  function campaignContext() {
+    const search = new URLSearchParams(window.location.search);
+    const fromUrl = {};
+    campaignFields.forEach(field => {
+      const value = normalizedCampaignValue(search.get(field));
+      if (value) fromUrl[field] = value;
+    });
+
+    try {
+      if (Object.keys(fromUrl).length) {
+        window.sessionStorage.setItem(campaignStorageKey, JSON.stringify(fromUrl));
+        return fromUrl;
+      }
+      const stored = JSON.parse(window.sessionStorage.getItem(campaignStorageKey) || '{}');
+      const safe = {};
+      campaignFields.forEach(field => {
+        const value = normalizedCampaignValue(stored[field]);
+        if (value) safe[field] = value;
+      });
+      return safe;
+    } catch (_error) {
+      return fromUrl;
+    }
+  }
 
   function eventId() {
     const secureCrypto = window.crypto;
@@ -59,6 +92,7 @@
         payload[field] = field === 'from_locale' ? normalizedLocale(value) : value;
       }
     });
+    Object.assign(payload, campaignContext());
 
     return fetch(`${apiBase}/v1/analytics/events`, {
       method: 'POST',

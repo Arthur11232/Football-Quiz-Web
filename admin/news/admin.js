@@ -109,6 +109,16 @@ async function loadAnalytics() {
       ...data.filters.clubs.map((item) => ({ ...item, key: `Клуб: ${item.key}` }))
     ].sort((a, b) => b.total - a.total).slice(0, 10);
     renderAnalyticsRanking('#analytics-filters', filters, (item) => item.key);
+    const acquisition = [
+      ...(data.acquisition?.sources || []).map((item) => ({ ...item, key: `Источник: ${item.key}` })),
+      ...(data.acquisition?.mediums || []).map((item) => ({ ...item, key: `Канал: ${item.key}` }))
+    ].sort((a, b) => b.total - a.total).slice(0, 10);
+    renderAnalyticsRanking('#analytics-acquisition', acquisition, (item) => item.key);
+    const campaigns = [
+      ...(data.acquisition?.campaigns || []).map((item) => ({ ...item, key: `Кампания: ${item.key}` })),
+      ...(data.acquisition?.content || []).map((item) => ({ ...item, key: `Креатив: ${item.key}` }))
+    ].sort((a, b) => b.total - a.total).slice(0, 10);
+    renderAnalyticsRanking('#analytics-campaigns', campaigns, (item) => item.key);
     message.textContent = `Данные за ${data.range.days} дней · среда: ${data.range.site_environment}`;
   } catch (error) {
     message.textContent = error.message;

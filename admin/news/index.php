@@ -50,6 +50,8 @@ header('X-Robots-Tag: noindex, nofollow, noarchive');
           <section><h3>Языки</h3><div id="analytics-locales" class="analytics-ranking"></div></section>
           <section><h3>Популярные статьи</h3><div id="analytics-articles" class="analytics-ranking"></div></section>
           <section><h3>Фильтры News</h3><div id="analytics-filters" class="analytics-ranking"></div></section>
+          <section><h3>Маркетинговые каналы</h3><div id="analytics-acquisition" class="analytics-ranking"></div></section>
+          <section><h3>Кампании и креативы</h3><div id="analytics-campaigns" class="analytics-ranking"></div></section>
         </div>
       </section>
 
